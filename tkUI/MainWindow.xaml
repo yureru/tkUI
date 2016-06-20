@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:tkUI"
+        xmlns:helper="clr-namespace:tkUI.Helper_Classes"
         xmlns:wm="media"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" UseLayoutRounding="True" WindowStyle="None" ResizeMode="CanResizeWithGrip" BorderBrush="AliceBlue"
@@ -69,7 +70,7 @@
         <WindowChrome/>
     </WindowChrome.WindowChrome>-->
     <WindowChrome.WindowChrome>
-        <local:WChrome/>
+        <helper:WChrome/>
     </WindowChrome.WindowChrome>
     
     <Grid>
