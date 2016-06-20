@@ -4,4 +4,4 @@ UI implementation for timekeeping app, hopefully going to do this with the MVVM 
 
 # Screenshots
 ------
-![](screenshots/currentMain.png)
+![](tkUI/screenshots/currentMain.png)
