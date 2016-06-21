@@ -124,8 +124,19 @@
         </Grid>
 
         <!-- Left Navigation Menu -->
-        <StackPanel Grid.Row="1" HorizontalAlignment="Left" KeyboardNavigation.AcceptsReturn="True">
-            <RadioButton Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}" helper:Icons.Image="Resources/IconsNavigation/DashboardIcon.png"
+         <StackPanel Grid.Row="1" HorizontalAlignment="Left" KeyboardNavigation.AcceptsReturn="True">
+            <ItemsControl ItemsSource="{Binding PageViewModels}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}"
+                                     Content="{Binding Name}"
+                                     helper:Icons.Image="{Binding Normal}"
+                                     helper:IconsSelected.ImageSelected="{Binding Selected}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+             <!-- Commented to create the navigation with bindings -->
+            <!--<RadioButton Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}" helper:Icons.Image="Resources/IconsNavigation/DashboardIcon.png"
                          helper:IconsSelected.ImageSelected="Resources/IconsNavigation/DashboardSelectedIcon.png">Dashboard</RadioButton>
 
             <RadioButton Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}" helper:Icons.Image="Resources/IconsNavigation/HumanIcon.png"
@@ -145,6 +156,7 @@
 
             <RadioButton Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}" helper:Icons.Image="Resources/IconsNavigation/PersonalIDIcon.png"
                          helper:IconsSelected.ImageSelected="Resources/IconsNavigation/PersonalIDSelectedIcon.png">Administración</RadioButton>
+        -->
         </StackPanel>
     </Grid>
 </Window>

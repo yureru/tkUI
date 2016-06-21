@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using tkUI.Helper_Classes;
 using System.Windows.Input;
+using tkUI.Helper_Classes;
+using tkUI.ViewModels;
+
 
 namespace tkUI
 {
@@ -23,11 +25,12 @@ namespace tkUI
         public ApplicationViewModel()
         {
             // Add available pages
+            PageViewModels.Add(new DashboardViewModel());
             /*PageViewModels.Add(new HomeViewModel());
             PageViewModels.Add(new ProductsViewModel());*/
 
             // Set starting page
-            /*CurrentPageViewModel = PageViewModels[0];*/
+            CurrentPageViewModel = PageViewModels[0];
         }
 
         #region Properties / Commands
