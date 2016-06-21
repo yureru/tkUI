@@ -10,22 +10,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace tkUI
 {
     /// <summary>
-    /// Lógica de interacción para MainWindow.xaml
+    /// Lógica de interacción para ApplicationView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ApplicationView : Window
     {
 
         bool wasMoving;
 
-        
 
-        public MainWindow()
+
+        public ApplicationView()
         {
             InitializeComponent();
             // Use this if need WindowStyle="None"
@@ -73,25 +72,25 @@ namespace tkUI
             }
         }*/
 
-       /* private void BorderResize_MouseMove(object sender, MouseEventArgs e)
+        /* private void BorderResize_MouseMove(object sender, MouseEventArgs e)
+         {*/
+        /* if (BorderResize.Background == Brushes.AliceBlue)
+         {
+             BorderResize.Background = Brushes.CornflowerBlue;
+         }
+         else
+         {
+             BorderResize.Background = Brushes.AliceBlue;
+         }*/
+        /*if (WindowState == WindowState.Maximized && wasMaximized)
         {*/
-            /* if (BorderResize.Background == Brushes.AliceBlue)
-             {
-                 BorderResize.Background = Brushes.CornflowerBlue;
-             }
-             else
-             {
-                 BorderResize.Background = Brushes.AliceBlue;
-             }*/
-            /*if (WindowState == WindowState.Maximized && wasMaximized)
-            {*/
-           /* if (wasMoving)
-            {
-                WindowState = WindowState.Normal;
-                this.DragMove();
-                wasMoving = false;
-            }*/
-            /*}*/
+        /* if (wasMoving)
+         {
+             WindowState = WindowState.Normal;
+             this.DragMove();
+             wasMoving = false;
+         }*/
+        /*}*/
         //}
 
         private void BorderResize_MouseMove_1(object sender, MouseEventArgs e)
