@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using System.Windows.Shell;
 
-namespace tkUI
+namespace tkUI.Helper_Classes
 {
     /// <summary>
     /// Inherits from WindowChrome to set the Height of the Caption, since by default is aprox 28.

@@ -6,7 +6,7 @@ using System.Windows.Media;
 /// Each one is used for a certain State: Normal, When the image is selected, when is clicked, and
 /// when is on hover.
 /// </summary>
-namespace tkUI
+namespace tkUI.Helper_Classes
 {
     /// <summary>
     /// Image used in a normal state.
