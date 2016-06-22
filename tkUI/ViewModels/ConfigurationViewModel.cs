@@ -8,28 +8,15 @@ using tkUI.Helper_Classes;
 
 namespace tkUI.ViewModels
 {
-    /*lass DashboardViewModel : ObservableObject, IPageViewModel, ISourceIcons*/
-    class DashboardViewModel : PageFromNavigation
+    class ConfigurationViewModel : PageFromNavigation
     {
-
-        #region CLR Properties
-
-
-
-        #endregion // CLR Properties
-
-        #region Commands
-
-
-
-        #endregion // Commands
 
         #region Interface Implementations
         public override string Name
         {
             get
             {
-                return "Dashboard";
+                return "Configuración";
             }
         }
 
@@ -54,7 +41,7 @@ namespace tkUI.ViewModels
         {
             get
             {
-                return "Resources/IconsNavigation/DashboardIcon.png";
+                return "Resources/IconsNavigation/ClipBoardIcon.png";
             }
         }
 
@@ -62,12 +49,11 @@ namespace tkUI.ViewModels
         {
             get
             {
-                return "Resources/IconsNavigation/DashboardSelectedIcon.png";
+                return "Resources/IconsNavigation/ClipBoardSelectedIcon.png";
             }
         }
 
         #endregion // Interface Implementations
-
 
     }
 }
