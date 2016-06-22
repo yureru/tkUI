@@ -5,12 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:tkUI"
         xmlns:helper="clr-namespace:tkUI.Helper_Classes"
+        xmlns:Views="clr-namespace:tkUI.Views"
+        xmlns:ViewModels="clr-namespace:tkUI.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" UseLayoutRounding="True" WindowStyle="None" ResizeMode="CanResizeWithGrip" BorderBrush="AliceBlue"
          >
     <!--AllowsTransparency="True-->
 
     <Window.Resources>
+
+        <!-- Navigation's Views -->
+        <!-- Dashboard -->
+        <DataTemplate DataType="{x:Type ViewModels:DashboardViewModel}">
+            <Views:DashBoardView/>
+        </DataTemplate>
+        
+        <!-- Employees -->
+        <DataTemplate DataType="{x:Type ViewModels:EmployeesViewModel}">
+            <Views:EmployeesView/>
+        </DataTemplate>
+        
+        <!-- Payments -->
+        <DataTemplate DataType="{x:Type ViewModels:PaymentsViewModel}">
+            <Views:PaymentsView/>
+        </DataTemplate>
+
+        <!-- Documents -->
+        <DataTemplate DataType="{x:Type ViewModels:DocumentsViewModel}">
+            <Views:DocumentsView/>
+        </DataTemplate>
+
+        <!-- Search -->
+        <DataTemplate DataType="{x:Type ViewModels:SearchViewModel}">
+            <Views:SearchView/>
+        </DataTemplate>
+
+        <!-- Configuration -->
+        <DataTemplate DataType="{x:Type ViewModels:ConfigurationViewModel}">
+            <Views:ConfigurationView/>
+        </DataTemplate>
+
+        <!-- Administration -->
+        <DataTemplate DataType="{x:Type ViewModels:AdministrationViewModel}">
+            <Views:AdministrationView/>
+        </DataTemplate>
+
         <ImageBrush x:Key="play" ImageSource="Resources\Header\Header-bg-bar.png" RenderOptions.BitmapScalingMode="Fant"/>
         <Style x:Key="TextNeue">
             <Setter Property="TextBlock.FontFamily" Value="Resources/#NeueHaasGroteskDisp W02"></Setter>
@@ -123,19 +162,31 @@
             </StackPanel>
         </Grid>
 
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
         <!-- Left Navigation Menu -->
-         <StackPanel Grid.Row="1" HorizontalAlignment="Left" KeyboardNavigation.AcceptsReturn="True">
+         <StackPanel HorizontalAlignment="Left" KeyboardNavigation.AcceptsReturn="True">
             <ItemsControl ItemsSource="{Binding PageViewModels}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <RadioButton GroupName="NavigationButtons" Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}"
                                      Content="{Binding Name}"
                                      helper:Icons.Image="{Binding Normal}"
-                                     helper:IconsSelected.ImageSelected="{Binding Selected}"/>
+                                     helper:IconsSelected.ImageSelected="{Binding Selected}"
+                                     Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                     CommandParameter="{Binding }"
+                                     />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-             <!-- Commented to create the navigation with bindings -->
+        </StackPanel>
+
+            <ContentControl Grid.Column="1" Content="{Binding CurrentPageViewModel}" />
+        </Grid>
+        <!-- Commented to create the navigation with bindings -->
             <!--<RadioButton Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}" helper:Icons.Image="Resources/IconsNavigation/DashboardIcon.png"
                          helper:IconsSelected.ImageSelected="Resources/IconsNavigation/DashboardSelectedIcon.png">Dashboard</RadioButton>
 
@@ -156,7 +207,7 @@
 
             <RadioButton Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}" helper:Icons.Image="Resources/IconsNavigation/PersonalIDIcon.png"
                          helper:IconsSelected.ImageSelected="Resources/IconsNavigation/PersonalIDSelectedIcon.png">Administración</RadioButton>
-        -->
-        </StackPanel>
+        </StackPanel>-->
+        
     </Grid>
 </Window>
