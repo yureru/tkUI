@@ -128,7 +128,7 @@
             <ItemsControl ItemsSource="{Binding PageViewModels}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <RadioButton Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}"
+                        <RadioButton GroupName="NavigationButtons" Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}"
                                      Content="{Binding Name}"
                                      helper:Icons.Image="{Binding Normal}"
                                      helper:IconsSelected.ImageSelected="{Binding Selected}"/>

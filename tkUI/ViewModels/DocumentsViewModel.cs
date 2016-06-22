@@ -8,28 +8,15 @@ using tkUI.Helper_Classes;
 
 namespace tkUI.ViewModels
 {
-    /*lass DashboardViewModel : ObservableObject, IPageViewModel, ISourceIcons*/
-    class DashboardViewModel : PageFromNavigation
+    class DocumentsViewModel : PageFromNavigation
     {
-
-        #region CLR Properties
-
-
-
-        #endregion // CLR Properties
-
-        #region Commands
-
-
-
-        #endregion // Commands
 
         #region Interface Implementations
         public override string Name
         {
             get
             {
-                return "Dashboard";
+                return "Documentos";
             }
         }
 
@@ -54,7 +41,7 @@ namespace tkUI.ViewModels
         {
             get
             {
-                return "Resources/IconsNavigation/DashboardIcon.png";
+                return "Resources/IconsNavigation/WrenchIcon.png";
             }
         }
 
@@ -62,12 +49,11 @@ namespace tkUI.ViewModels
         {
             get
             {
-                return "Resources/IconsNavigation/DashboardSelectedIcon.png";
+                return "Resources/IconsNavigation/WrenchSelectedIcon.png";
             }
         }
 
         #endregion // Interface Implementations
-
 
     }
 }

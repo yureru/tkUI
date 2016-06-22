@@ -26,6 +26,12 @@ namespace tkUI
         {
             // Add available pages
             PageViewModels.Add(new DashboardViewModel());
+            PageViewModels.Add(new EmployeesViewModel());
+            PageViewModels.Add(new PaymentsViewModel());
+            PageViewModels.Add(new DocumentsViewModel());
+            PageViewModels.Add(new SearchViewModel());
+            PageViewModels.Add(new ConfigurationViewModel());
+            PageViewModels.Add(new AdministrationViewModel());
             /*PageViewModels.Add(new HomeViewModel());
             PageViewModels.Add(new ProductsViewModel());*/
 
