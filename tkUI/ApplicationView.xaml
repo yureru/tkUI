@@ -164,14 +164,14 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition MinWidth="180"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
         <!-- Left Navigation Menu -->
          <StackPanel HorizontalAlignment="Left" KeyboardNavigation.AcceptsReturn="True">
-            <ItemsControl ItemsSource="{Binding PageViewModels}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
+                <ItemsControl ItemsSource="{Binding PageViewModels}">
+                    <ItemsControl.ItemTemplate>
+                    <DataTemplate >
                         <RadioButton GroupName="NavigationButtons" Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}"
                                      Content="{Binding Name}"
                                      helper:Icons.Image="{Binding Normal}"
