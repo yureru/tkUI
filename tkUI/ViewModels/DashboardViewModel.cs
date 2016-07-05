@@ -14,8 +14,6 @@ namespace tkUI.ViewModels
 
         #region CLR Properties
 
-
-
         #endregion // CLR Properties
 
         #region Commands

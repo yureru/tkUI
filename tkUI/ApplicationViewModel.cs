@@ -25,7 +25,7 @@ namespace tkUI
         public ApplicationViewModel()
         {
             // Add available pages
-            PageViewModels.Add(new DashboardViewModel());
+            PageViewModels.Add(new DashboardViewModel() { Checked = true }); // Checked is true since it's the default button selected
             PageViewModels.Add(new EmployeesViewModel());
             PageViewModels.Add(new PaymentsViewModel());
             PageViewModels.Add(new DocumentsViewModel());
