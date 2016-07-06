@@ -10,7 +10,7 @@ namespace tkUI.Helper_Classes
     /// Class that should be implemented to create a page in a MVVM way, with the
     /// proper navigation button.
     /// </summary>
-    abstract class PageFromNavigation : IPageViewModel, ISourceIcons
+    abstract class PageFromNavigation : ObservableObject, IPageViewModel, ISourceIcons, IRadioButtonChecked
     {
         #region Fields
 
@@ -27,10 +27,6 @@ namespace tkUI.Helper_Classes
         public abstract string Normal { get; }
         public abstract string Selected { get; }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// This property is used for the IsChecked property of the Navigation's RadioButtons.
         /// The reason is that we need the first RadioButton to be IsChecked="True" by default
@@ -39,8 +35,14 @@ namespace tkUI.Helper_Classes
         public bool Checked
         {
             get { return _isChecked; }
-            set { _isChecked = value;  }
+            set { _isChecked = value; }
         }
+
+        #endregion
+
+        #region Properties
+
+
 
         #endregion
     }

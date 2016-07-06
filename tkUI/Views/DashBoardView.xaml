@@ -4,12 +4,61 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:tkUI.Views"
+             xmlns:Viewss="clr-namespace:tkUI.Subpages.GraphQuickBoxes.Views"
+             xmlns:ViewModelss="clr-namespace:tkUI.Subpages.GraphQuickBoxes.ViewModels"
              mc:Ignorable="d" 
              >
     <!-- d:DesignHeight="300" d:DesignWidth="300" -->
+    <UserControl.Resources>
+        <!-- Graph Quickboxes  -->
+        <DataTemplate DataType="{x:Type ViewModelss:ExpectedPaymentViewModel}">
+            <Viewss:ExpectedPaymentView/>
+        </DataTemplate>
+        
+        <!-- Original Styles-->
+        <!-- Allows to use Return key in the Navigation-->
+        <Style x:Key="CanUseEnter">
+            <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True"/>
+        </Style>
+        <!--New RadioButtons Styles-->
+        <ControlTemplate x:Key="navigationRadioButtons" TargetType="RadioButton">
+            <Border Name="navigationBorder" Width="171" Height="25" Padding="10,0,0,0" Margin="6,0,0,5" CornerRadius="3">
+                <StackPanel Orientation="Horizontal">
+                    <Image Name="Icon" Width="16" Height="16"
+                            RenderOptions.BitmapScalingMode="Fant" Margin="0,0,11,0"/>
+                    <ContentPresenter Name="RadioButtonText"  TextBlock.FontSize="17.333" TextBlock.Foreground="#002c3d" Margin="0,2,0,0"/>
+                </StackPanel>
+            </Border>
+            <!-- Styles for feedback -->
+            <ControlTemplate.Triggers>
+                <!-- When Clicked -->
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="navigationBorder" Property="Background" Value="White"/>
+                    <Setter TargetName="RadioButtonText" Property="TextBlock.Foreground" Value="#54a3e2"/>
+                </Trigger>
+                <!-- When Hover -->
+                <Trigger Property="Border.IsMouseOver" Value="True">
+                    <Setter TargetName="navigationBorder" Property="Background" Value="#cae0f0"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
     <Grid>
         <TextBlock Text="This is the Dashboard Page" 
                    FontWeight="Bold" FontSize="18"
                    HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <ItemsControl ItemsSource="{Binding PageViewModels}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate >
+                    <RadioButton GroupName="QuickBoxesButtons" Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}"
+                                     Content="{Binding Name}"
+                                     
+                                     Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                     CommandParameter="{Binding }"
+                                     IsChecked="{Binding Checked}"
+                                     />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

@@ -54,6 +54,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -76,8 +77,11 @@
       <DependentUpon>ApplicationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ApplicationViewModel.cs" />
+    <Compile Include="Helper Classes\GraphQuickBoxes.cs" />
     <Compile Include="Helper Classes\IPageViewModel.cs" />
+    <Compile Include="Helper Classes\IRadioButtonChecked.cs" />
     <Compile Include="Helper Classes\ISourceIcons.cs" />
+    <Compile Include="Helper Classes\ISubpageViewModel.cs" />
     <Compile Include="Helper Classes\ObservableObject.cs" />
     <Compile Include="Helper Classes\PageFromNavigation.cs" />
     <Compile Include="Helper Classes\RelayCommand.cs" />
@@ -95,6 +99,16 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Helper Classes\WChrome.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\Models\DashboardGraphsModel.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\Models\ExpectedPaymentModel.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\Utils\IBoxes.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\Utils\PageFromQuickBoxes.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\ViewModels\DashboardGraphsViewModel.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\ViewModels\ExpectedPaymentViewModel.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\Views\DashboardGraphsView.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\Views\ExpectedPaymentView.xaml.cs">
+      <DependentUpon>ExpectedPaymentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\AdministrationViewModel.cs" />
     <Compile Include="ViewModels\ConfigurationViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
@@ -131,6 +145,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Subpages\GraphQuickBoxes\Views\ExpectedPaymentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AdministrationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

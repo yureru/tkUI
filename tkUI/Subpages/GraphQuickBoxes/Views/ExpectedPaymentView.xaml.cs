@@ -13,20 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using tkUI.Subpages.GraphQuickBoxes.ViewModels;
-
-namespace tkUI.Views
+namespace tkUI.Subpages.GraphQuickBoxes.Views
 {
     /// <summary>
-    /// Lógica de interacción para DashBoardView.xaml
+    /// Lógica de interacción para ExpectedPaymentView.xaml
     /// </summary>
-    public partial class DashBoardView : UserControl
+    public partial class ExpectedPaymentView : UserControl
     {
-        public DashBoardView()
+        public ExpectedPaymentView()
         {
             InitializeComponent();
-            /*ExpectedPaymentViewModel context = new ExpectedPaymentViewModel();
-            this.DataContext = context;*/
         }
     }
 }
