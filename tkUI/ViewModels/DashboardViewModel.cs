@@ -29,6 +29,7 @@ namespace tkUI.ViewModels
         {
             // Add available Pages
             PageViewModels.Add(new ExpectedPaymentViewModel());
+            PageViewModels.Add(new EmployeesInCompanyViewModel());
 
             // Set default graph
             CurrentPageViewModel = PageViewModels[0];

@@ -7,6 +7,7 @@
              xmlns:Viewss="clr-namespace:tkUI.Subpages.GraphQuickBoxes.Views"
              xmlns:ViewModelss="clr-namespace:tkUI.Subpages.GraphQuickBoxes.ViewModels"
              mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="500"
              >
     <!-- d:DesignHeight="300" d:DesignWidth="300" -->
     <UserControl.Resources>
@@ -21,42 +22,70 @@
             <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True"/>
         </Style>
         <!--New RadioButtons Styles-->
+        <Style x:Key="HeaderQuickBox">
+            <Setter Property="TextBlock.FontSize" Value="16"/>
+            <Setter Property="TextBlock.Foreground" Value="#002c3d"/>
+        </Style>
+        <Style x:Key="QuantityQuicBox">
+            <Setter Property="TextBlock.FontSize" Value="26"/>
+            <Setter Property="TextBlock.Foreground" Value="#002c3d"/>
+        </Style>
         <ControlTemplate x:Key="navigationRadioButtons" TargetType="RadioButton">
-            <Border Name="navigationBorder" Width="171" Height="25" Padding="10,0,0,0" Margin="6,0,0,5" CornerRadius="3">
+            <Border Name="navigationBorder" Width="Auto" HorizontalAlignment="Center" BorderBrush="#dddee5" BorderThickness="1" Height="Auto" Padding="5,10" Margin="6,0,0,5" CornerRadius="3">
                 <StackPanel Orientation="Horizontal">
-                    <Image Name="Icon" Width="16" Height="16"
-                            RenderOptions.BitmapScalingMode="Fant" Margin="0,0,11,0"/>
-                    <ContentPresenter Name="RadioButtonText"  TextBlock.FontSize="17.333" TextBlock.Foreground="#002c3d" Margin="0,2,0,0"/>
+                    <ContentPresenter Name="RadioButtonText"  TextBlock.FontSize="16" TextBlock.Foreground="#002c3d" Margin="0,2,0,0"/>
+                    
                 </StackPanel>
             </Border>
             <!-- Styles for feedback -->
             <ControlTemplate.Triggers>
                 <!-- When Clicked -->
                 <Trigger Property="IsChecked" Value="True">
-                    <Setter TargetName="navigationBorder" Property="Background" Value="White"/>
+                    <Setter TargetName="navigationBorder" Property="BorderBrush" Value="#5aa4e2"/>
                     <Setter TargetName="RadioButtonText" Property="TextBlock.Foreground" Value="#54a3e2"/>
                 </Trigger>
                 <!-- When Hover -->
                 <Trigger Property="Border.IsMouseOver" Value="True">
                     <Setter TargetName="navigationBorder" Property="Background" Value="#cae0f0"/>
+                    <Setter TargetName="navigationBorder" Property="BorderBrush" Value="#5aa4e2"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
     </UserControl.Resources>
     <Grid>
-        <TextBlock Text="This is the Dashboard Page" 
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <!--<TextBlock Text="This is the Dashboard Page, a bit longer now" 
                    FontWeight="Bold" FontSize="18"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                   HorizontalAlignment="Center" VerticalAlignment="Center" />-->
+        <!--<RadioButton Grid.Row="1">as</RadioButton>
+        <RadioButton Grid.Row="2">sd</RadioButton>-->
         <ItemsControl ItemsSource="{Binding PageViewModels}">
             <ItemsControl.ItemTemplate>
-                <DataTemplate >
-                    <RadioButton GroupName="QuickBoxesButtons" Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}"
-                                     Content="{Binding Name}"
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton GroupName="QuickBoxesButtons" Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}"
                                      
-                                     Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                     
+                                     Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                      CommandParameter="{Binding }"
                                      IsChecked="{Binding Checked}"
-                                     />
+                                     >
+                            <ItemsControl>
+                                <TextBlock Style="{StaticResource HeaderQuickBox}" HorizontalAlignment="Center" Text="{Binding BoxName}"/>
+                                <TextBlock Style="{StaticResource QuantityQuicBox}"  HorizontalAlignment="Center" Text="{Binding Quantity}"/>
+                            </ItemsControl>
+                        </RadioButton>
+                    </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

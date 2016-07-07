@@ -100,12 +100,17 @@
     </Compile>
     <Compile Include="Helper Classes\WChrome.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Models\DashboardGraphsModel.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\Models\EmployeesInCompanyModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Models\ExpectedPaymentModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Utils\IBoxes.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Utils\PageFromQuickBoxes.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\DashboardGraphsViewModel.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\ViewModels\EmployeesInCompanyViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\ExpectedPaymentViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Views\DashboardGraphsView.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\Views\EmployeesInCompanyView.xaml.cs">
+      <DependentUpon>EmployeesInCompanyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Subpages\GraphQuickBoxes\Views\ExpectedPaymentView.xaml.cs">
       <DependentUpon>ExpectedPaymentView.xaml</DependentUpon>
     </Compile>
@@ -145,6 +150,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Subpages\GraphQuickBoxes\Views\EmployeesInCompanyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Subpages\GraphQuickBoxes\Views\ExpectedPaymentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
