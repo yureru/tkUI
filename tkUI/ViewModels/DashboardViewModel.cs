@@ -21,6 +21,8 @@ namespace tkUI.ViewModels
         private IBoxes _currentPageViewModel;
         private List<IBoxes> _pageViewModels;
 
+        static int _UID;
+
         #endregion // Fields
 
         #region Commands
@@ -30,6 +32,7 @@ namespace tkUI.ViewModels
             // Add available Pages
             PageViewModels.Add(new ExpectedPaymentViewModel());
             PageViewModels.Add(new EmployeesInCompanyViewModel());
+            PageViewModels.Add(new EmployeesHiredViewModel());
 
             // Set default graph
             CurrentPageViewModel = PageViewModels[0];
@@ -124,6 +127,11 @@ namespace tkUI.ViewModels
                     OnPropertyChanged("CurrentPageViewModel");
                 }
             }
+        }
+
+        public int IDColumn
+        {
+            get { return _UID++; }
         }
 
         #endregion

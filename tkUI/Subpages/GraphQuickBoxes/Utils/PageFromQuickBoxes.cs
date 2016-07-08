@@ -17,6 +17,7 @@ namespace tkUI.Subpages.GraphQuickBoxes.Utils
 
         #endregion // Fields
 
+
         #region Interface Implementations
 
         // Interface IBoxes
