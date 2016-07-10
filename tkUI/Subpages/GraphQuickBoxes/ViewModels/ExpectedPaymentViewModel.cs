@@ -20,6 +20,8 @@ namespace tkUI.Subpages.GraphQuickBoxes.ViewModels
         #region Fields
 
         ExpectedPaymentModel model;
+ 
+        static SeriesCollection graph;
 
         // Chart variables
         public SeriesCollection SeriesCollection { get; set; }
@@ -48,6 +50,7 @@ namespace tkUI.Subpages.GraphQuickBoxes.ViewModels
             model.Payments.Add(110000);
             model.Payments.Add(234987);
 
+
             var valTemp = new ChartValues<double>();
 
             foreach (var i in model.Payments)
@@ -63,15 +66,18 @@ namespace tkUI.Subpages.GraphQuickBoxes.ViewModels
                     Values = valTemp
                 }
             };
-
+            
             /*for (Dates.Month month = Dates.Month.Enero; month < Dates.Month.Diciembre; ++month)
             {
                 model.Months.Add(new Dates(month));
             }
 
             Labels */
+
             Labels = new[] { "Ago", "Sep", "Oct", "Nov", "Dic", "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul" };
             YFormatter = value => value.ToString("C");
+
+            graph = SeriesCollection;
         }
 
         #region Interface Implementations

@@ -8,6 +8,8 @@ using tkUI.Helper_Classes;
 using tkUI.Subpages.GraphQuickBoxes.Utils;
 using tkUI.Subpages.GraphQuickBoxes.ViewModels;
 
+using System.Windows;
+
 namespace tkUI.ViewModels
 {
     /*lass DashboardViewModel : ObservableObject, IPageViewModel, ISourceIcons*/
@@ -23,6 +25,11 @@ namespace tkUI.ViewModels
 
         static int _UID;
 
+        // Debug
+        static bool changePage;
+        static IBoxes fp;
+        static IBoxes sp;
+
         #endregion // Fields
 
         #region Commands
@@ -30,6 +37,7 @@ namespace tkUI.ViewModels
         public DashboardViewModel()
         {
             // Add available Pages
+
             PageViewModels.Add(new ExpectedPaymentViewModel());
             PageViewModels.Add(new EmployeesInCompanyViewModel());
             PageViewModels.Add(new EmployeesHiredViewModel());
@@ -37,6 +45,11 @@ namespace tkUI.ViewModels
 
             // Set default graph
             CurrentPageViewModel = PageViewModels[0];
+
+            // Debug
+            fp = PageViewModels[0];
+            sp = PageViewModels[1];
+
         }
 
         #endregion // Commands
@@ -147,8 +160,29 @@ namespace tkUI.ViewModels
             CurrentPageViewModel = PageViewModels
                 .FirstOrDefault(vm => vm == viewModel);
         }
+    }
+
+        /* This is where the problem lies, everytime we change views the ViewModel is created*/
+        // Debug
+        /*private void ChangeViewModel(IBoxes viewModel)
+        {
+
+            if (!changePage)
+            {
+
+                CurrentPageViewModel = sp;
+                changePage = true;
+            }
+            else
+            {
+                CurrentPageViewModel = fp;
+                changePage = false;
+            }
+        }*/
+
+
 
         #endregion
 
-    }
 }
+
