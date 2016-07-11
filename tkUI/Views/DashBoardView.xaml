@@ -63,11 +63,13 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition MinHeight="80"/>
+            <RowDefinition MinHeight="100"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
         <!-- Graph QuickBoxes -->
+        <ScrollViewer Name="SV" ScrollViewer.HorizontalScrollBarVisibility="Auto"  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <StackPanel Orientation="Horizontal">
         <ItemsControl ItemsSource="{Binding PageViewModels}" Name="ICQB">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -89,7 +91,9 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        
+                <!--<Button>Test heheh test test heheh test </Button>-->
+            </StackPanel>
+        </ScrollViewer>
         <!-- Graphs -->
         <ContentControl Grid.Row="1" Content="{Binding CurrentPageViewModel}" />
     </Grid>
