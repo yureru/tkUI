@@ -23,12 +23,15 @@ namespace tkUI.ViewModels
         private IBoxes _currentPageViewModel;
         private List<IBoxes> _pageViewModels;
 
-        static int _UID;
-
-        // Debug
-        static bool changePage;
-        static IBoxes fp;
-        static IBoxes sp;
+        
+        //TODO: Track down this behaviour.
+        /* Note: Since we need to make the first QuickBox IsChecked = true to show the border in the selected state,
+         * we set the property Checked of the first ViewModel to true. But this causes to call the ChangePageCommand
+         * before the View is rendered (and therefore the Chart added to the container) causing to lose this object.
+         * So when the ChangePageCommand is called for first time (this is done automatically by the IsChecked property)
+         * we don't actually execute the command by using the bool _avoidChange.
+         */
+        static bool _avoidChange;
 
         #endregion // Fields
 
@@ -37,19 +40,13 @@ namespace tkUI.ViewModels
         public DashboardViewModel()
         {
             // Add available Pages
-
-            PageViewModels.Add(new ExpectedPaymentViewModel());
+            PageViewModels.Add(new ExpectedPaymentViewModel() { Checked = true });
             PageViewModels.Add(new EmployeesInCompanyViewModel());
             PageViewModels.Add(new EmployeesHiredViewModel());
             PageViewModels.Add(new EmployeesDismissedViewModel());
 
             // Set default graph
             CurrentPageViewModel = PageViewModels[0];
-
-            // Debug
-            fp = PageViewModels[0];
-            sp = PageViewModels[1];
-
         }
 
         #endregion // Commands
@@ -105,11 +102,12 @@ namespace tkUI.ViewModels
         {
             get
             {
-                if (_changePageCommand == null)
+                if (_changePageCommand == null || !_avoidChange) // _avoidChange -> See field definition for more info
                 {
                     _changePageCommand = new RelayCommand(
                         p => ChangeViewModel((IBoxes)p),
                         p => p is IBoxes);
+                    _avoidChange = true;
                 }
 
                 return _changePageCommand;
@@ -142,12 +140,6 @@ namespace tkUI.ViewModels
                 }
             }
         }
-
-        public int IDColumn
-        {
-            get { return _UID++; }
-        }
-
         #endregion
 
         #region Methods
@@ -161,27 +153,6 @@ namespace tkUI.ViewModels
                 .FirstOrDefault(vm => vm == viewModel);
         }
     }
-
-        /* This is where the problem lies, everytime we change views the ViewModel is created*/
-        // Debug
-        /*private void ChangeViewModel(IBoxes viewModel)
-        {
-
-            if (!changePage)
-            {
-
-                CurrentPageViewModel = sp;
-                changePage = true;
-            }
-            else
-            {
-                CurrentPageViewModel = fp;
-                changePage = false;
-            }
-        }*/
-
-
-
         #endregion
 
 }
