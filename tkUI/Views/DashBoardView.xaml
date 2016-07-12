@@ -63,9 +63,10 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition MinHeight="100"/>
-            <RowDefinition Height="4*"/>
+
+            <RowDefinition MinHeight="80"/>
+            <RowDefinition Height="2*"/>
+
         </Grid.RowDefinitions>
 
         <!-- Range Date Selector -->
@@ -80,28 +81,27 @@
         <!-- Graph QuickBoxes -->
         <ScrollViewer Grid.Row="1" Name="SV" ScrollViewer.HorizontalScrollBarVisibility="Auto"  ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <StackPanel Orientation="Horizontal">
-        <ItemsControl ItemsSource="{Binding PageViewModels}" Name="ICQB">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <RadioButton GroupName="QuickBoxesButtons" Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}"
+                <ItemsControl ItemsSource="{Binding PageViewModels}" Name="ICQB">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton GroupName="QuickBoxesButtons" Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}"
                                      Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                      CommandParameter="{Binding }"
                                      IsChecked="{Binding Checked}"
                                      >
-                        <ItemsControl>
-                            <TextBlock Style="{StaticResource HeaderQuickBox}" HorizontalAlignment="Center" Text="{Binding BoxName}"/>
-                            <TextBlock Style="{StaticResource QuantityQuicBox}"  HorizontalAlignment="Center" Text="{Binding Quantity}"/>
-                        </ItemsControl>
-                    </RadioButton>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-                <!--<Button>Test heheh test test heheh test </Button>-->
+                                <ItemsControl>
+                                    <TextBlock Style="{StaticResource HeaderQuickBox}" HorizontalAlignment="Center" Text="{Binding BoxName}"/>
+                                    <TextBlock Style="{StaticResource QuantityQuicBox}"  HorizontalAlignment="Center" Text="{Binding Quantity}"/>
+                                </ItemsControl>
+                            </RadioButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
         </ScrollViewer>
         <!-- Graphs -->
