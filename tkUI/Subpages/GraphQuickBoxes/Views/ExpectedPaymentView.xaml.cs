@@ -26,19 +26,13 @@ namespace tkUI.Subpages.GraphQuickBoxes.Views
     /// </summary>
     public partial class ExpectedPaymentView : UserControl
     {
-
-        #region Fields
         static CartesianChart _paymentsChart;
         static Grid _gContainer; // Allows to remove the chart from the old Grid's
 
         static bool _wasInit;
 
         static ExpectedPaymentViewModel _viewModel;
-
-        #endregion // Fields
-
-        #region Contructors
-
+        
         public ExpectedPaymentView()
         {
             InitializeComponent();
@@ -58,20 +52,6 @@ namespace tkUI.Subpages.GraphQuickBoxes.Views
                 GridContainer.Children.Add(_paymentsChart);
             }
         }
-
-        #endregion // Constructors
-
-        #region Properties
-
-        public string DateRangeItem
-        {
-            get { return _viewModel.CurrentItemCombobox; }
-            set { _viewModel.CurrentItemCombobox = value; }
-        }
-
-        #endregion // Properties
-
-        #region Methods
 
         /// <summary>
         /// Creates a chart and adds it to the Grid.
@@ -128,7 +108,5 @@ namespace tkUI.Subpages.GraphQuickBoxes.Views
             GridContainer.Children.Add(_paymentsChart);
             _gContainer = GridContainer; // Save the Grid's reference to remove the chart later
         }
-
-        #endregion // Methods
     }
 }

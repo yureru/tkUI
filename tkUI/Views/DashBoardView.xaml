@@ -64,22 +64,13 @@
     <Grid>
         <Grid.RowDefinitions>
 
-            <RowDefinition MinHeight="80"/>
+            <RowDefinition MinHeight="100"/>
             <RowDefinition Height="2*"/>
 
         </Grid.RowDefinitions>
 
-        <!-- Range Date Selector -->
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-            <TextBlock Text="Vista general"/>
-            <!--<ComboBox Name="GraphRange" SelectedIndex="0"/>-->
-            <ComboBox Name="GraphRange" 
-                      ItemsSource="{Binding CurrentSelectorDateRange.ItemsSource}"
-                      />
-                      <!-- SelectedIndex="{Binding CurrentSelectorDateRange.SelectedIndex}"-->
-        </StackPanel>
         <!-- Graph QuickBoxes -->
-        <ScrollViewer Grid.Row="1" Name="SV" ScrollViewer.HorizontalScrollBarVisibility="Auto"  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer Name="SV" ScrollViewer.HorizontalScrollBarVisibility="Auto"  ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <StackPanel Orientation="Horizontal">
                 <ItemsControl ItemsSource="{Binding PageViewModels}" Name="ICQB">
                     <ItemsControl.ItemsPanel>
@@ -105,6 +96,6 @@
             </StackPanel>
         </ScrollViewer>
         <!-- Graphs -->
-        <ContentControl Grid.Row="2" Content="{Binding CurrentPageViewModel}" />
+        <ContentControl Grid.Row="1" Content="{Binding CurrentPageViewModel}" />
     </Grid>
 </UserControl>

@@ -4,9 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Controls;
-using System.Windows.Data;
-
 using tkUI.Helper_Classes;
 using tkUI.Subpages.GraphQuickBoxes.Utils;
 using tkUI.Subpages.GraphQuickBoxes.ViewModels;
@@ -26,11 +23,7 @@ namespace tkUI.ViewModels
         private IBoxes _currentPageViewModel;
         private List<IBoxes> _pageViewModels;
 
-        static ComboBox [] _selectorDateRange;
-        static ComboBox _currentSelectorDateRange;
-        static bool _initSelector;
-
-
+        
         //TODO: Track down this behaviour.
         /* Note: Since we need to make the first QuickBox IsChecked = true to show the border in the selected state,
          * we set the property Checked of the first ViewModel to true. But this causes to call the ChangePageCommand
@@ -42,7 +35,7 @@ namespace tkUI.ViewModels
 
         #endregion // Fields
 
-        #region Constructors
+        #region Commands
 
         public DashboardViewModel()
         {
@@ -52,27 +45,11 @@ namespace tkUI.ViewModels
             PageViewModels.Add(new EmployeesHiredViewModel());
             PageViewModels.Add(new EmployeesDismissedViewModel());
 
-            if (!_initSelector)
-            {
-                // Create and fill the Comboboxes
-                _selectorDateRange = new ComboBox[PageViewModels.Count];
-                for (int i = 0; i < _selectorDateRange.Length; ++i)
-                {
-                    _selectorDateRange[i] = new ComboBox();
-                    _selectorDateRange[i].ItemsSource = ComboboxesGraph.Items;
-                    _selectorDateRange[i].SelectedIndex = 0;
-                }
-                // Default Selector
-                _currentSelectorDateRange = _selectorDateRange[0];
-                SetBindingComboboxRangeDate(0);
-                _initSelector = true;
-            }
-                // Set default graph
-                CurrentPageViewModel = PageViewModels[0];
-            
+            // Set default graph
+            CurrentPageViewModel = PageViewModels[0];
         }
 
-        #endregion // Constructors
+        #endregion // Commands
 
         #region Interface Implementations
         public override string Name
@@ -163,14 +140,6 @@ namespace tkUI.ViewModels
                 }
             }
         }
-
-        public static ComboBox CurrentSelectorDateRange
-        {
-            get { return _currentSelectorDateRange; }
-            set { _currentSelectorDateRange = value; }
-        }
-
-
         #endregion
 
         #region Methods
@@ -182,48 +151,7 @@ namespace tkUI.ViewModels
 
             CurrentPageViewModel = PageViewModels
                 .FirstOrDefault(vm => vm == viewModel);
-            // old
-            //ChangeComboboxRangeDate(ViewsMapper(viewModel));
-            // new
-            DeleteBindingComboboxRangeDate();
-            int id = ViewsMapper(viewModel);
-            _currentSelectorDateRange = _selectorDateRange[id];
-            SetBindingComboboxRangeDate(id);
-
         }
-
-        private int ViewsMapper(IBoxes page)
-        {
-            int index = 0;
-            for (int i = 0; i < PageViewModels.Count; ++i)
-            {
-                if (PageViewModels[i].BoxName.Equals(page.BoxName))
-                {
-                    index = i;
-                    break;
-                }
-            }
-            return index;
-        }
-
-        private void ChangeComboboxRangeDate(int i)
-        {
-            _currentSelectorDateRange.SelectedIndex = _selectorDateRange[i].SelectedIndex;
-        }
-
-        private void SetBindingComboboxRangeDate(int i)
-        {
-            Binding bind = new Binding();
-            bind.Source = _selectorDateRange[i];
-            bind.Path = new PropertyPath("SelectedIndex");
-            _currentSelectorDateRange.SetBinding(ComboBox.SelectedIndexProperty, bind);
-        }
-
-        private void DeleteBindingComboboxRangeDate()
-        {
-            BindingOperations.ClearBinding(_currentSelectorDateRange, ComboBox.SelectedIndexProperty);
-        }
-
     }
         #endregion
 
