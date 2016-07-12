@@ -26,64 +26,87 @@ namespace tkUI.Subpages.GraphQuickBoxes.Views
     /// </summary>
     public partial class ExpectedPaymentView : UserControl
     {
+        static CartesianChart _paymentsChart;
+        static Grid _gContainer; // Allows to remove the chart from the old Grid's
 
-        ExpectedPaymentViewModel vm = new ExpectedPaymentViewModel();
+        static bool _wasInit;
+
+        static ExpectedPaymentViewModel _viewModel;
         
         public ExpectedPaymentView()
         {
-
             InitializeComponent();
 
-            CreateGraph();
+            if (!_wasInit)
+            {
+                _viewModel = new ExpectedPaymentViewModel();
+                CreateGraph();
+                _wasInit = true;
+            }
+            else
+            {
+                _gContainer.Children.Remove(_paymentsChart);
+                _gContainer = GridContainer; // Set to this newly instance created
+                Grid.SetRow(_paymentsChart, 1);
+                Grid.SetColumn(_paymentsChart, 0);
+                GridContainer.Children.Add(_paymentsChart);
+            }
         }
 
-        // Creating the Chart in code behind to avoid this chart being created everytime we change the view.
-        // wouldn't be a problem, but since the chart listens to new values, creating a new one makes the
-        // old to be collected.
+        /// <summary>
+        /// Creates a chart and adds it to the Grid.
+        /// </summary>
         void CreateGraph()
         {
             //!ELEMENT CartesianChart
-            CartesianChart gr = new CartesianChart();
-            gr.Name = "Chart";
-            gr.DisableAnimations = true;
-            gr.Series = vm.SeriesCollection;
+            _paymentsChart = new CartesianChart();
+            _paymentsChart.Name = "Chart";
+            //gr.DisableAnimations = true;
+            _paymentsChart.Series = _viewModel.SeriesCollection;
             // Series Binding 
             /*Binding bndg = new Binding();
             // Next line don't know if neccessary 
-            bndg.Source = vm;
+            bndg.Source = _viewModel;
             bndg.Path = new PropertyPath("SeriesCollection");
             gr.SetBinding(CartesianChart.SeriesProperty, bndg);*/
-            gr.LegendLocation = LiveCharts.LegendLocation.Right;
+            _paymentsChart.LegendLocation = LiveCharts.LegendLocation.Right;
 
 
             //!subELEMENT CartesianChart.AxisY
             // Works but commented
             Axis AxisY = new Axis();
             AxisY.Title = "Pagos";
-            AxisY.LabelFormatter = vm.YFormatter;
-           /* Binding bndgForm = new Binding();
-            bndgForm.Source = vm;
-            bndgForm.Path = new PropertyPath("YFormatter");
-            AxisY.SetBinding(Axis.LabelFormatterProperty, bndgForm);*/
+            AxisY.LabelFormatter = _viewModel.YFormatter;
+            /* Binding bndgForm = new Binding();
+             bndgForm.Source = _viewModel;
+             bndgForm.Path = new PropertyPath("YFormatter");
+             AxisY.SetBinding(Axis.LabelFormatterProperty, bndgForm);*/
             //gr.AddToView(AxisY);
-            gr.AxisY.Add(AxisY);
+            _paymentsChart.AxisY.Add(AxisY);
 
 
             //!subELEMENT CartesianChart.AxisX
             Axis AxisX = new Axis();
             AxisX.Title = "Mes";
             // This works
-            AxisX.Labels = vm.Labels;
+            AxisX.Labels = _viewModel.Labels;
             /*Binding bndgLab = new Binding();
-            bndgLab.Source = vm;
+            bndgLab.Source = _viewModel;
             bndgLab.Path = new PropertyPath("Labels");
             AxisX.SetBinding(Axis.LabelsProperty, bndgLab);*/
             /*gr.AddToView(AxisX);*/
-            gr.AxisX.Add(AxisX);
+            // Separator 
+            LiveCharts.Wpf.Separator sep = new LiveCharts.Wpf.Separator();
+            sep.IsEnabled = false;
+            sep.Step = 1;
+            AxisX.Separator = sep; // Add separator
+
+            _paymentsChart.AxisX.Add(AxisX);
             //gr.SetValue(Grid.RowProperty, 1);
-            Grid.SetRow(gr, 1);
-            Grid.SetColumn(gr, 0);
-            GridContainer.Children.Add(gr);
+            Grid.SetRow(_paymentsChart, 1);
+            Grid.SetColumn(_paymentsChart, 0);
+            GridContainer.Children.Add(_paymentsChart);
+            _gContainer = GridContainer; // Save the Grid's reference to remove the chart later
         }
     }
 }
