@@ -28,6 +28,8 @@ namespace tkUI.Subpages.GraphQuickBoxes.ViewModels
         public string[] Labels { get; set; }
         public Func<double, string> YFormatter { get; set; }
 
+        string _currentItemCombobox;
+
         #endregion
 
 
@@ -80,6 +82,16 @@ namespace tkUI.Subpages.GraphQuickBoxes.ViewModels
             graph = SeriesCollection;
         }
 
+        #region Properties
+
+        public string CurrentItemCombobox
+        {
+            get { return _currentItemCombobox; }
+            set { _currentItemCombobox = value; }
+        }
+
+        #endregion // Properties
+
         #region Interface Implementations
 
         public override string BoxName
@@ -104,5 +116,7 @@ namespace tkUI.Subpages.GraphQuickBoxes.ViewModels
         }
 
         #endregion // Interface Implementations
+
+
     }
 }
