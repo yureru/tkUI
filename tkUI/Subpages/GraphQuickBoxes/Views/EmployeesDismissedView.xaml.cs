@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace tkUI.Subpages.GraphQuickBoxes.Views
 {
     /// <summary>
-    /// Lógica de interacción para EmployeesDismissedViewModel.xaml
+    /// Lógica de interacción para EmployeesDismissedView.xaml
     /// </summary>
-    public partial class EmployeesDismissedViewModel : UserControl
+    public partial class EmployeesDismissedView : UserControl
     {
-        public EmployeesDismissedViewModel()
+        public EmployeesDismissedView()
         {
             InitializeComponent();
         }

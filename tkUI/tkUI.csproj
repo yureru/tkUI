@@ -121,8 +121,8 @@
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\EmployeesInCompanyViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\ExpectedPaymentViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Views\DashboardGraphsView.cs" />
-    <Compile Include="Subpages\GraphQuickBoxes\Views\EmployeesDismissedViewModel.xaml.cs">
-      <DependentUpon>EmployeesDismissedViewModel.xaml</DependentUpon>
+    <Compile Include="Subpages\GraphQuickBoxes\Views\EmployeesDismissedView.xaml.cs">
+      <DependentUpon>EmployeesDismissedView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Subpages\GraphQuickBoxes\Views\EmployeesHiredView.xaml.cs">
       <DependentUpon>EmployeesHiredView.xaml</DependentUpon>
@@ -169,7 +169,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Subpages\GraphQuickBoxes\Views\EmployeesDismissedViewModel.xaml">
+    <Page Include="Subpages\GraphQuickBoxes\Views\EmployeesDismissedView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

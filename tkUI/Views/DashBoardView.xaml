@@ -25,7 +25,7 @@
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type ViewModels:EmployeesDismissedViewModel}">
-            <Views:EmployeesDismissedViewModel/>
+            <Views:EmployeesDismissedView/>
         </DataTemplate>
         
         <!-- Original Styles-->
