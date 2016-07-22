@@ -25,7 +25,7 @@ namespace tkUI.Subpages.EmployeesCRUD.Utils
             set { _isChecked = value; }
         }
 
-        public abstract string Name { get; set; }
+        public abstract string Name { get; }
 
         #endregion // Interfaces
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using tkUI.Subpages.EmployeesCRUD.Utils;
 
-namespace tkUI.Subpages.EmployeesCRUD.ViewModel
+namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 {
     class AddEmployeeViewModel : PageFromCRUD
     {

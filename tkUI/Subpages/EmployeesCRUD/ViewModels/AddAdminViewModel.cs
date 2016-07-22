@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace tkUI.Subpages.EmployeesCRUD.ViewModel
+namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 {
     class AddAdminViewModel
     {

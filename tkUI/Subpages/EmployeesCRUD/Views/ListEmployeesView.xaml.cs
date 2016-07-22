@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace tkUI.Subpages.EmployeesCRUD.View
+namespace tkUI.Subpages.EmployeesCRUD.Views
 {
     /// <summary>
     /// Lógica de interacción para ListEmployeesView.xaml
