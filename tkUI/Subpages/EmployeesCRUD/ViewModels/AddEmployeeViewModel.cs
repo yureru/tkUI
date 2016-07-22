@@ -17,7 +17,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             get
             {
-                return "Añadir empleado";
+                return "+ Añadir empleado";
             }
         }
 

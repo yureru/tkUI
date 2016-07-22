@@ -39,6 +39,9 @@ namespace tkUI.ViewModels
         {
             // Add available Pages
             PageViewModels.Add(new AddEmployeeViewModel() { Checked = true });
+            PageViewModels.Add(new ListEmployeesViewModel());
+            PageViewModels.Add(new AddAdminViewModel());
+            PageViewModels.Add(new ListAdminViewModel());
 
             // Set default graph
             CurrentPageViewModel = PageViewModels[0];

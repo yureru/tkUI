@@ -9,18 +9,36 @@
              mc:Ignorable="d" 
              >
     <UserControl.Resources>
-        <!-- Employee's buttons -->
+        <!-- Selector Buttons -->
         <DataTemplate DataType="{x:Type ViewModels:AddEmployeeViewModel}">
             <Views:AddEmployeeView/>
         </DataTemplate>
-        
+
+        <DataTemplate DataType="{x:Type ViewModels:ListEmployeesViewModel}">
+            <Views:ListEmployeesView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type ViewModels:AddAdminViewModel}">
+            <Views:AddAdminView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type ViewModels:ListAdminViewModel}">
+            <Views:ListAdminView/>
+        </DataTemplate>
+
+
+        <!-- Allows to use Return key in the Navigation-->
+        <Style x:Key="CanUseEnter">
+            <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True"/>
+        </Style>
+
         <Style x:Key="HeaderQuickBox">
             <Setter Property="TextBlock.FontSize" Value="16"/>
             <Setter Property="TextBlock.Foreground" Value="#002c3d"/>
         </Style>
         <ControlTemplate x:Key="navigationRadioButtons" TargetType="RadioButton">
             <Border Name="navigationBorder" Width="Auto" HorizontalAlignment="Center" BorderBrush="#dddee5" BorderThickness="1" Padding="5,10" Margin="6,0,0,5" CornerRadius="3" Background="#fbfbfc" VerticalAlignment="Center">
-                <ContentPresenter Name="RadioButtonText"  TextBlock.FontSize="16" TextBlock.Foreground="#002c3d" Margin="0,2,0,0"/>
+                <ContentPresenter Name="RadioButtonText"  TextBlock.FontSize="16" TextBlock.Foreground="#002c3d"/>
             </Border>
             <!-- Styles for feedback -->
             <ControlTemplate.Triggers>
@@ -38,9 +56,12 @@
         </ControlTemplate>
     </UserControl.Resources>
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <ItemsControl ItemsSource="{Binding PageViewModels}">
+            <ItemsControl ItemsSource="{Binding PageViewModels}" IsTabStop="False">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"/>
@@ -53,7 +74,7 @@
                                      CommandParameter="{Binding }"
                                      IsChecked="{Binding Checked}"
                                      >
-                            <ItemsControl>
+                            <ItemsControl IsTabStop="False">
                                 <TextBlock Style="{StaticResource HeaderQuickBox}" HorizontalAlignment="Center" Text="{Binding Name}"/>
                             </ItemsControl>
                         </RadioButton>
@@ -61,6 +82,8 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </StackPanel>
-
+        
+        
+        <ContentControl Grid.Row="1" Content="{Binding CurrentPageViewModel}" />
     </Grid>
 </UserControl>
