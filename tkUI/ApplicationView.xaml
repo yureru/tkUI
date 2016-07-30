@@ -8,7 +8,7 @@
         xmlns:Views="clr-namespace:tkUI.Views"
         xmlns:ViewModels="clr-namespace:tkUI.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" UseLayoutRounding="True" WindowStyle="None" ResizeMode="CanResizeWithGrip" BorderBrush="AliceBlue"
+        Title="MainWindow" Height="500" Width="800" UseLayoutRounding="True" WindowStyle="None" ResizeMode="CanResizeWithGrip" BorderBrush="AliceBlue"
          >
     <!--AllowsTransparency="True-->
 
