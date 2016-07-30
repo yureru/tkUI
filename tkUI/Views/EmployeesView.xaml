@@ -4,11 +4,86 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:tkUI.Views"
+             xmlns:Views="clr-namespace:tkUI.Subpages.EmployeesCRUD.Views"
+             xmlns:ViewModels="clr-namespace:tkUI.Subpages.EmployeesCRUD.ViewModels"
              mc:Ignorable="d" 
              >
+    <UserControl.Resources>
+        <!-- Selector Buttons -->
+        <DataTemplate DataType="{x:Type ViewModels:AddEmployeeViewModel}">
+            <Views:AddEmployeeView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type ViewModels:ListEmployeesViewModel}">
+            <Views:ListEmployeesView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type ViewModels:AddAdminViewModel}">
+            <Views:AddAdminView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type ViewModels:ListAdminViewModel}">
+            <Views:ListAdminView/>
+        </DataTemplate>
+
+
+        <!-- Allows to use Return key in the Navigation-->
+        <Style x:Key="CanUseEnter">
+            <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True"/>
+        </Style>
+
+        <Style x:Key="HeaderQuickBox">
+            <Setter Property="TextBlock.FontSize" Value="16"/>
+            <Setter Property="TextBlock.Foreground" Value="#002c3d"/>
+        </Style>
+        <ControlTemplate x:Key="navigationRadioButtons" TargetType="RadioButton">
+            <Border Name="navigationBorder" Width="Auto" HorizontalAlignment="Center" BorderBrush="#dddee5" BorderThickness="1" Padding="5,10" Margin="6,0,0,5" CornerRadius="3" Background="#fbfbfc" VerticalAlignment="Center">
+                <ContentPresenter Name="RadioButtonText"  TextBlock.FontSize="16" TextBlock.Foreground="#002c3d"/>
+            </Border>
+            <!-- Styles for feedback -->
+            <ControlTemplate.Triggers>
+                <!-- When Clicked -->
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="navigationBorder" Property="BorderBrush" Value="#5aa4e2"/>
+                    <Setter TargetName="RadioButtonText" Property="TextBlock.Foreground" Value="#54a3e2"/>
+                </Trigger>
+                <!-- When Hover -->
+                <Trigger Property="Border.IsMouseOver" Value="True">
+                    <Setter TargetName="navigationBorder" Property="Background" Value="#cae0f0"/>
+                    <Setter TargetName="navigationBorder" Property="BorderBrush" Value="#5aa4e2"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
     <Grid>
-        <TextBlock Text="This is the Employees Page" 
-                   FontWeight="Bold" FontSize="18"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <ItemsControl ItemsSource="{Binding PageViewModels}" IsTabStop="False">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton GroupName="QuickBoxesButtons" Style="{StaticResource CanUseEnter}" Template="{StaticResource navigationRadioButtons}"
+                                     Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                     CommandParameter="{Binding }"
+                                     IsChecked="{Binding Checked}"
+                                     >
+                            <ItemsControl IsTabStop="False">
+                                <TextBlock Style="{StaticResource HeaderQuickBox}" HorizontalAlignment="Center" Text="{Binding Name}"/>
+                            </ItemsControl>
+                        </RadioButton>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+        
+        
+        <ContentControl Grid.Row="1" Content="{Binding CurrentPageViewModel}" />
     </Grid>
 </UserControl>

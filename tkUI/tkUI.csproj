@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="ApplicationViewModel.cs" />
     <Compile Include="Helper Classes\GraphQuickBoxes.cs" />
+    <Compile Include="Helper Classes\IButton.cs" />
     <Compile Include="Helper Classes\IPageViewModel.cs" />
     <Compile Include="Helper Classes\IRadioButtonChecked.cs" />
     <Compile Include="Helper Classes\ISourceIcons.cs" />
@@ -108,6 +109,27 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Helper Classes\WChrome.cs" />
+    <Compile Include="Subpages\EmployeesCRUD\Model\AddAdminModel.cs" />
+    <Compile Include="Subpages\EmployeesCRUD\Model\AddEmployeeModel.cs" />
+    <Compile Include="Subpages\EmployeesCRUD\Model\ListAdminModel.cs" />
+    <Compile Include="Subpages\EmployeesCRUD\Model\ListEmployeesModel.cs" />
+    <Compile Include="Subpages\EmployeesCRUD\Utils\PageFromCRUD.cs" />
+    <Compile Include="Subpages\EmployeesCRUD\ViewModels\AddAdminViewModel.cs" />
+    <Compile Include="Subpages\EmployeesCRUD\ViewModels\AddEmployeeViewModel.cs" />
+    <Compile Include="Subpages\EmployeesCRUD\ViewModels\ListAdminViewModel.cs" />
+    <Compile Include="Subpages\EmployeesCRUD\ViewModels\ListEmployeesViewModel.cs" />
+    <Compile Include="Subpages\EmployeesCRUD\Views\AddAdminView.xaml.cs">
+      <DependentUpon>AddAdminView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Subpages\EmployeesCRUD\Views\AddEmployeeView.xaml.cs">
+      <DependentUpon>AddEmployeeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Subpages\EmployeesCRUD\Views\ListAdminView.xaml.cs">
+      <DependentUpon>ListAdminView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Subpages\EmployeesCRUD\Views\ListEmployeesView.xaml.cs">
+      <DependentUpon>ListEmployeesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Subpages\GraphQuickBoxes\Models\DashboardGraphsModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Models\EmployeesDismissedModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Models\EmployeesHiredModel.cs" />
@@ -121,8 +143,8 @@
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\EmployeesInCompanyViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\ExpectedPaymentViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Views\DashboardGraphsView.cs" />
-    <Compile Include="Subpages\GraphQuickBoxes\Views\EmployeesDismissedViewModel.xaml.cs">
-      <DependentUpon>EmployeesDismissedViewModel.xaml</DependentUpon>
+    <Compile Include="Subpages\GraphQuickBoxes\Views\EmployeesDismissedView.xaml.cs">
+      <DependentUpon>EmployeesDismissedView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Subpages\GraphQuickBoxes\Views\EmployeesHiredView.xaml.cs">
       <DependentUpon>EmployeesHiredView.xaml</DependentUpon>
@@ -169,7 +191,23 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Subpages\GraphQuickBoxes\Views\EmployeesDismissedViewModel.xaml">
+    <Page Include="Subpages\EmployeesCRUD\Views\AddAdminView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Subpages\EmployeesCRUD\Views\AddEmployeeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Subpages\EmployeesCRUD\Views\ListAdminView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Subpages\EmployeesCRUD\Views\ListEmployeesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Subpages\GraphQuickBoxes\Views\EmployeesDismissedView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

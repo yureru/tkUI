@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace tkUI.Subpages.GraphQuickBoxes.Views
+namespace tkUI.Subpages.EmployeesCRUD.Views
 {
     /// <summary>
-    /// Lógica de interacción para EmployeesDismissedViewModel.xaml
+    /// Lógica de interacción para AddEmployeeView.xaml
     /// </summary>
-    public partial class EmployeesDismissedViewModel : UserControl
+    public partial class AddEmployeeView : UserControl
     {
-        public EmployeesDismissedViewModel()
+        public AddEmployeeView()
         {
             InitializeComponent();
         }

@@ -35,7 +35,7 @@ namespace tkUI.ViewModels
 
         #endregion // Fields
 
-        #region Commands
+        #region Constructors
 
         public DashboardViewModel()
         {
