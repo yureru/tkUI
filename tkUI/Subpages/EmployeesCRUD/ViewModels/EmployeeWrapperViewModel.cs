@@ -11,6 +11,7 @@ using tkUI.Models;
 using tkUI.DataAccess;
 using tkUI.Helper_Classes;
 
+using tkUI.Subpages.EmployeesCRUD.Utils;
 
 namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 {
@@ -18,7 +19,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     /// A UI-friendly wrapper for a Employee object. This can be consumed
     /// by AddEmployee and ListEmployees ViewModels.
     /// </summary>
-    class EmployeeWrapperViewModel : ObservableObject, IDataErrorInfo
+    class EmployeeWrapperViewModel : ObservablePageFromCRUD, IDataErrorInfo
     {
 
         #region Fields
@@ -219,6 +220,14 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
 
         #region Interface Implementations
+
+        public override string Name
+        {
+            get
+            {
+                return "+ Añadir empleado";
+            }
+        }
 
         string IDataErrorInfo.Error
         {
