@@ -7,19 +7,73 @@
              mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="6"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
+        <!-- Name -->
+        <Label 
+            Grid.Row="0" Grid.Column="0"
+            Content="_Nombre:"
+            HorizontalAlignment="Right"
+            Target="{Binding ElementName=firstNameTxt}"
+            />
+        <TextBox
+            Name="firstNameTxt"
+            Grid.Row="0" Grid.Column="2"
+            Text="{Binding Path=FirstName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+            Validation.ErrorTemplate="{x:Null}"
+            />
+        <ContentPresenter
+            Grid.Row="1" Grid.Column="2"
+            Content="{Binding ElementName=firstNameTxt, Path=(Validation.Errors).CurrentItem}"
+            />
+        
+        <!-- Last Name -->
+        <Label
+            Grid.Row="2" Grid.Column="0"
+            Content="_Apellido:"
+            HorizontalAlignment="Right"
+            Target="{Binding ElementName=lastNameTxt}"
+            />
+        <TextBox
+            Name="lastNameTxt"
+            Grid.Row="2" Grid.Column="2"
+            Text="{Binding Path=LastName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+            Validation.ErrorTemplate="{x:Null}"
+            />
+        <ContentPresenter
+            Grid.Row="3" Grid.Column="2"
+            Content="{Binding ElementName=lastNameTxt, Path=(Validation.Errors).CurrentItem}"
+            />
+        
+        <!-- Gender -->
+        <Label Grid.Row="4" Grid.Column="0"
+               Content="_Sexo:"
+               HorizontalAlignment="Right"
+               Target="{Binding ElementName=genderCombo}"
+               />
+        <ComboBox
+            Name="genderCombo"
+            Grid.Row="4" Grid.Column="2"
+            
+            />
+        <!-- Add ItemsSource, SelectedItem, and ValidationErrorTemplate-->
+        <ContentPresenter
+            Grid.Row="5" Grid.Column="2"
+            Content="{Binding ElementName=genderCombo, Path=(Validation.Errors).CurrentItem}"
+            />
+
     </Grid>
 </UserControl>

@@ -99,6 +99,7 @@
     <Compile Include="Models\ConfigurationModel.cs" />
     <Compile Include="Models\DashboardModel.cs" />
     <Compile Include="Models\DocumentsModel.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeesModel.cs" />
     <Compile Include="Models\NavigationMenuModel.cs" />
     <Compile Include="Models\PaymentsModel.cs" />
