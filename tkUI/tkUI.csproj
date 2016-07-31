@@ -117,6 +117,7 @@
     <Compile Include="Subpages\EmployeesCRUD\Utils\PageFromCRUD.cs" />
     <Compile Include="Subpages\EmployeesCRUD\ViewModels\AddAdminViewModel.cs" />
     <Compile Include="Subpages\EmployeesCRUD\ViewModels\AddEmployeeViewModel.cs" />
+    <Compile Include="Subpages\EmployeesCRUD\ViewModels\EmployeeWrapperViewModel.cs" />
     <Compile Include="Subpages\EmployeesCRUD\ViewModels\ListAdminViewModel.cs" />
     <Compile Include="Subpages\EmployeesCRUD\ViewModels\ListEmployeesViewModel.cs" />
     <Compile Include="Subpages\EmployeesCRUD\Views\AddAdminView.xaml.cs">
