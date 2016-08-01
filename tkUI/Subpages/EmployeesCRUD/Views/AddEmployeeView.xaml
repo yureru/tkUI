@@ -79,7 +79,9 @@
         <ComboBox
             Name="genderCombo"
             Grid.Row="4" Grid.Column="2"
-            
+            ItemsSource="{Binding Path=GenderTypeOptions, Mode=OneTime}"
+            SelectedItem="{Binding Path=GenderType, ValidatesOnDataErrors=True}"
+            Validation.ErrorTemplate="{x:Null}"
             />
         <!-- Add ItemsSource, SelectedItem, and ValidationErrorTemplate-->
         <ContentPresenter
