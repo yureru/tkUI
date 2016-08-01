@@ -5,6 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:tkUI.Subpages.EmployeesCRUD.Views"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <!-- Data template for error messages -->
+        <DataTemplate DataType="{x:Type ValidationError}">
+            <TextBlock
+                FontStyle="Italic"
+                Foreground="Red"
+                HorizontalAlignment="Right"
+                Margin="0,1"
+                Text="{Binding Path=ErrorContent}"
+                />
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
