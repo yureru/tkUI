@@ -9,8 +9,9 @@
              mc:Ignorable="d" 
              >
     <UserControl.Resources>
-        <!-- Selector Buttons -->
-        <DataTemplate DataType="{x:Type ViewModels:AddEmployeeViewModel}">
+        <!-- View Appliers  & Selector Buttons -->
+        <!-- <DataTemplate DataType="{x:Type ViewModels:AddEmployeeViewModel}"> -->
+        <DataTemplate DataType="{x:Type ViewModels:EmployeeWrapperViewModel}">
             <Views:AddEmployeeView/>
         </DataTemplate>
 

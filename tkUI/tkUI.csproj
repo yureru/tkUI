@@ -85,6 +85,8 @@
       <DependentUpon>ApplicationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ApplicationViewModel.cs" />
+    <Compile Include="DataAccess\EmployeeAddedEventArgs.cs" />
+    <Compile Include="DataAccess\EmployeeRepository.cs" />
     <Compile Include="Helper Classes\GraphQuickBoxes.cs" />
     <Compile Include="Helper Classes\IButton.cs" />
     <Compile Include="Helper Classes\IPageViewModel.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="Subpages\EmployeesCRUD\Model\AddEmployeeModel.cs" />
     <Compile Include="Subpages\EmployeesCRUD\Model\ListAdminModel.cs" />
     <Compile Include="Subpages\EmployeesCRUD\Model\ListEmployeesModel.cs" />
+    <Compile Include="Subpages\EmployeesCRUD\Utils\ObservablePageFromCRUD.cs" />
     <Compile Include="Subpages\EmployeesCRUD\Utils\PageFromCRUD.cs" />
     <Compile Include="Subpages\EmployeesCRUD\ViewModels\AddAdminViewModel.cs" />
     <Compile Include="Subpages\EmployeesCRUD\ViewModels\AddEmployeeViewModel.cs" />
@@ -354,7 +357,9 @@
   <ItemGroup>
     <Resource Include="Resources\Header\avatar25.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Data\employees.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

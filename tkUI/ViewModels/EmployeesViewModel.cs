@@ -8,6 +8,8 @@ using System.Windows.Input;
 using tkUI.Helper_Classes;
 using tkUI.Subpages.GraphQuickBoxes.Utils;
 using tkUI.Subpages.EmployeesCRUD.ViewModels;
+using tkUI.Models;
+using tkUI.DataAccess;
 
 namespace tkUI.ViewModels
 {
@@ -35,11 +37,12 @@ namespace tkUI.ViewModels
 
         #region Constructors
 
-        public EmployeesViewModel()
+        public EmployeesViewModel(EmployeeRepository employeeRepository)
         {
             // Add available Pages
             PageViewModels.Add(new ListEmployeesViewModel() { Checked = true});
-            PageViewModels.Add(new AddEmployeeViewModel());
+            //PageViewModels.Add(new AddEmployeeViewModel());
+            PageViewModels.Add(new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), employeeRepository));
             PageViewModels.Add(new ListAdminViewModel());
             PageViewModels.Add(new AddAdminViewModel());
 

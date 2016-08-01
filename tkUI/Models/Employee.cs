@@ -18,11 +18,11 @@ namespace tkUI.Models
 
         #region Fields
 
-        string FirstName { get; set; }
+        public string FirstName { get; set; }
 
-        string LastName { get; set; }
+        public string LastName { get; set; }
 
-        bool Gender { get; set; }
+        public bool Gender { get; set; }
 
 
         #endregion // Fields
