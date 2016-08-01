@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Resources;
 
 using tkUI.Models;
+using System.Diagnostics;
 
 namespace tkUI.DataAccess
 {
@@ -33,8 +34,7 @@ namespace tkUI.DataAccess
         /// <param name="employeeDataFile"></param>
         public EmployeeRepository(string employeeDataFile)
         {
-            // commented for now, to allow adding to EmployeesViewModel
-            //_employees = LoadEmployees(employeeDataFile);
+            _employees = LoadEmployees(employeeDataFile);
         }
 
         #endregion // Constructors
@@ -106,15 +106,15 @@ namespace tkUI.DataAccess
             using (XmlReader xmlRdr = new XmlTextReader(stream))
                 return (from employeeElem in XDocument.Load(xmlRdr).Element("employees").Elements("employee")
                         select Employee.CreateEmployee(
-                            (string)employeeElem.Attribute("FirstName"),
-                            (string)employeeElem.Attribute("LastName"),
-                            (bool)employeeElem.Attribute("Gender"))).ToList();
+                            (string)employeeElem.Attribute("firstName"),
+                            (string)employeeElem.Attribute("lastName"),
+                            (bool)employeeElem.Attribute("gender"))).ToList();
         }
 
         static Stream GetResourceStream(string resourceFile)
         {
             Uri uri = new Uri(resourceFile, UriKind.RelativeOrAbsolute);
-
+            
             StreamResourceInfo info = Application.GetResourceStream(uri);
             if (info == null || info.Stream == null)
             {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using tkUI.Helper_Classes;
 using tkUI.ViewModels;
-
+using tkUI.DataAccess;
 
 namespace tkUI
 {
@@ -15,18 +15,24 @@ namespace tkUI
     {
         #region Fields
 
-        private ICommand _changePageCommand;
+        readonly EmployeeRepository _employeeRepository;
 
+        private ICommand _changePageCommand;
         private IPageViewModel _currentPageViewModel;
         private List<IPageViewModel> _pageViewModels;
 
         #endregion
 
-        public ApplicationViewModel()
+        #region Constructors
+
+        public ApplicationViewModel(string customerDataFile)
         {
+            // Load XML file
+            _employeeRepository = new EmployeeRepository(customerDataFile);
+
             // Add available pages
             PageViewModels.Add(new DashboardViewModel() { Checked = true }); // Checked is true since it's the default button selected
-            PageViewModels.Add(new EmployeesViewModel());
+            PageViewModels.Add(new EmployeesViewModel(_employeeRepository));
             PageViewModels.Add(new PaymentsViewModel());
             PageViewModels.Add(new DocumentsViewModel());
             PageViewModels.Add(new SearchViewModel());
@@ -38,6 +44,8 @@ namespace tkUI
             // Set starting page
             CurrentPageViewModel = PageViewModels[0];
         }
+
+        #endregion // Constructors
 
         #region Properties / Commands
 

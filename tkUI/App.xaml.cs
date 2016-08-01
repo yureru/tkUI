@@ -18,7 +18,8 @@ namespace tkUI
             base.OnStartup(e);
 
             ApplicationView app = new ApplicationView();
-            ApplicationViewModel context = new ApplicationViewModel();
+            string path = "Data/employees.xml";
+            ApplicationViewModel context = new ApplicationViewModel(path);
             app.DataContext = context;
             app.Show();
         }
