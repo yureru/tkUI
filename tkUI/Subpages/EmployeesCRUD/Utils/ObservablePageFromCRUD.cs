@@ -11,7 +11,7 @@ namespace tkUI.Subpages.EmployeesCRUD.Utils
     /// <summary>
     /// Copies the functionality from PageFromCRUD class. Going to decide which to use later.
     /// </summary>
-    abstract class ObservablePageFromCRUD : IButton, IRadioButtonChecked
+    abstract class ObservablePageFromCRUD : ObservableObject, IButton, IRadioButtonChecked
     {
 
         #region Fields

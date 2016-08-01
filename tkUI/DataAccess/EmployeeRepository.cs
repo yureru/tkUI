@@ -33,7 +33,8 @@ namespace tkUI.DataAccess
         /// <param name="employeeDataFile"></param>
         public EmployeeRepository(string employeeDataFile)
         {
-            _employees = LoadEmployees(employeeDataFile);
+            // commented for now, to allow adding to EmployeesViewModel
+            //_employees = LoadEmployees(employeeDataFile);
         }
 
         #endregion // Constructors
