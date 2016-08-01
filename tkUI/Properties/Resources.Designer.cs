@@ -151,6 +151,60 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Añadir Empleado.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_AddEmployee {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_AddEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El género del empleado debe seleccionarse.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Error_MissingGenderType {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Error_MissingGenderType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se puede guardar un empleado inválido..
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Exception_CannotSave {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Exception_CannotSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mujer.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_GenderTypeOptions_Female {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_GenderTypeOptions_Female", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hombre.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_GenderTypeOptions_Male {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_GenderTypeOptions_Male", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Sin Especificar).
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Header_bg_bar {
