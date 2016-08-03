@@ -238,7 +238,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         }
 
         // Used to validate an unselected Combobox.
-        ///TODO: Validate Gender combobox here
         string IDataErrorInfo.this[string propertyName]
         {
             get

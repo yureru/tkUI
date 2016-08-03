@@ -13,7 +13,11 @@
     <!--AllowsTransparency="True-->
 
     <Window.Resources>
-
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ApplicationResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        
         <!-- Navigation's Views -->
         <!-- Dashboard -->
         <DataTemplate DataType="{x:Type ViewModels:DashboardViewModel}">
@@ -102,6 +106,7 @@
             <Image Name="Icon" Source="{Binding Path=(helper:Icons.Image), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" Width="17" Height="17"
                             RenderOptions.BitmapScalingMode="Fant" Margin="0,3,0,0"/>
         </ControlTemplate>
+        </ResourceDictionary>
     </Window.Resources>
     <!--="True" ResizeMode="CanResizeWithGrip"-->
     <!-- WindowChrome that Heights 28 px-->
