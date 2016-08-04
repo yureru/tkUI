@@ -34,7 +34,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         public ListEmployeesViewModel(EmployeeRepository employeeRepository)
         {
-            if (_employeeRepository == null)
+            if (employeeRepository == null)
             {
                 throw new ArgumentNullException("employeeRepository");
             }
