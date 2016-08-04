@@ -5,9 +5,70 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:tkUI.Subpages.EmployeesCRUD.Views"
              mc:Ignorable="d">
-    <Grid>
-        <TextBlock Text="ListEmployeesView" 
-                   FontWeight="Bold" FontSize="18"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" />
-    </Grid>
+    <UserControl.Resources>
+        <CollectionViewSource
+            x:Key="EmployeeGroups"
+            Source="{Binding Path=AllEmployees}"
+            >
+            
+        </CollectionViewSource>
+
+        <!-- resources/names to find
+            Brush_HeaderBackground
+            ListViewItem
+            EmployeeItemStyle FOUND!
+        -->
+        
+        <GroupStyle x:Key="EmployeeGroupStyle">
+            <GroupStyle.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock
+                        Name="txt"
+                        Background="{StaticResource Brush_HeaderBackground}"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Margin="1"
+                        Padding="4,2,0,2"
+                        Text="People"
+                        />
+                </DataTemplate>
+            </GroupStyle.HeaderTemplate>
+        </GroupStyle>
+        
+        <Style x:Key="EmployeeItemStyle" TargetType="{x:Type ListViewItem}">
+            <!--
+            Stretch the content of each cell so that we can 
+            right.aling the text in the Total Sales column.
+            -->
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <!-- No need for the IsSelected Binding -->
+        </Style>
+    </UserControl.Resources>
+    
+    <DockPanel>
+        <!-- No need for te docked element to show total sales -->
+        <ListView
+            AlternationCount="2"
+            DataContext="{StaticResource EmployeeGroups}"
+            ItemContainerStyle="{StaticResource EmployeeItemStyle}"
+            ItemsSource="{Binding}"
+            >
+            <ListView.GroupStyle>
+                <StaticResourceExtension ResourceKey="EmployeeGroupStyle"/>
+            </ListView.GroupStyle>
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn
+                        Header="Name"
+                        DisplayMemberBinding="{Binding Path=DisplayName}"
+                        />
+                    <GridViewColumn
+                        Header="Gender"
+                        DisplayMemberBinding="{Binding Path=Gender}"
+                        />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
 </UserControl>

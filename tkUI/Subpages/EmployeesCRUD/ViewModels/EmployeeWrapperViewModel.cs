@@ -90,9 +90,17 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        public bool Gender
+        public string Gender
         {
-            get { return _employee.Gender; }
+            //get { return _employee.Gender; }
+            get
+            {
+                if (_employee.Gender)
+                {
+                    return Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
+                }
+                return Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
+            }
         }
 
         #endregion // Employee Properties
