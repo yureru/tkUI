@@ -156,7 +156,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 if (this.IsNewEmployee)
                 {
-                    // To strings resource
                     return Resources.EmployeeWrapperViewModel_AddEmployee;
                 }
                 else
