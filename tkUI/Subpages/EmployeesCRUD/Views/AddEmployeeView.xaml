@@ -32,6 +32,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
@@ -104,6 +105,15 @@
             HorizontalAlignment="Right"
             Margin="4,2"
             MinWidth="60"
+            />
+
+        <!-- Success message after saving -->
+        <TextBlock
+            Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"
+            Text="{Binding Path=LastUserSaved}"
+            FontStyle="Italic"
+            HorizontalAlignment="Right"
+            Foreground="Green"
             />
     </Grid>
 </UserControl>

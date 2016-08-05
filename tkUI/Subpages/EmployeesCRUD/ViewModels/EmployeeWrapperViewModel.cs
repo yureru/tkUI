@@ -165,6 +165,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        public string LastUserSaved
+        {
+            get;
+            set;
+        }
+
         // Not used:
         // public bool IsSelected
 
@@ -205,6 +211,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 var newEmployee = Employee.CreateEmployee(_employee);
                 //_employeeRepository.AddEmployee(_employee);
                 _employeeRepository.AddEmployee(newEmployee);
+                SetLastUserSaved();
                 CleanForm();
             }
 
@@ -237,8 +244,21 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             FirstName = null;
             LastName = null;
-            _genderType = null;
+            _genderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified;
             base.OnPropertyChanged("GenderType");
+        }
+
+        void SetLastUserSaved()
+        {
+            if (Gender == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female)
+            {
+                LastUserSaved = String.Format("La empleada {0}, {1} fue guardada exitosamente", LastName, FirstName);
+            }
+            else
+            {
+                LastUserSaved = String.Format("El empleado {0}, {1} fue guardado exitosamente", LastName, FirstName);
+            }
+            OnPropertyChanged("LastUserSaved");
         }
 
         #endregion // Private Helpers
