@@ -184,4 +184,28 @@
   <data name="WrenchSelectedIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\IconsNavigation\WrenchSelectedIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="EmployeeWrapperViewModel_GenderTypeOptions_Female" xml:space="preserve">
+    <value>Mujer</value>
+    <comment>Option when an employee is female.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_GenderTypeOptions_Male" xml:space="preserve">
+    <value>Hombre</value>
+    <comment>Option when an employee is male.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_AddEmployee" xml:space="preserve">
+    <value>Añadir Empleado</value>
+    <comment>Message when...?</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_Error_MissingGenderType" xml:space="preserve">
+    <value>El género del empleado debe seleccionarse</value>
+    <comment>The validation error message returned if the GenderType property has an invalid value.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_Exception_CannotSave" xml:space="preserve">
+    <value>No se puede guardar un empleado inválido.</value>
+    <comment>The exception message shown if you call Save on an invalid EmployeeWrapperViewModel object.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified" xml:space="preserve">
+    <value>(Sin Especificar)</value>
+    <comment>Message when an employee's gender is not specified.</comment>
+  </data>
 </root>

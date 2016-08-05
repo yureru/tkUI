@@ -40,7 +40,7 @@ namespace tkUI.ViewModels
         public EmployeesViewModel(EmployeeRepository employeeRepository)
         {
             // Add available Pages
-            PageViewModels.Add(new ListEmployeesViewModel() { Checked = true});
+            PageViewModels.Add(new ListEmployeesViewModel(employeeRepository) { Checked = true});
             //PageViewModels.Add(new AddEmployeeViewModel());
             PageViewModels.Add(new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), employeeRepository));
             PageViewModels.Add(new ListAdminViewModel());

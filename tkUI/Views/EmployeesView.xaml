@@ -9,6 +9,10 @@
              mc:Ignorable="d" 
              >
     <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\ApplicationResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
         <!-- View Appliers  & Selector Buttons -->
         <!-- <DataTemplate DataType="{x:Type ViewModels:AddEmployeeViewModel}"> -->
         <DataTemplate DataType="{x:Type ViewModels:EmployeeWrapperViewModel}">
@@ -23,13 +27,13 @@
             <Views:AddAdminView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type ViewModels:ListAdminViewModel}">
-            <Views:ListAdminView/>
-        </DataTemplate>
+            <DataTemplate DataType="{x:Type ViewModels:ListAdminViewModel}">
+                <Views:ListAdminView/>
+            </DataTemplate>
 
 
-        <!-- Allows to use Return key in the Navigation-->
-        <Style x:Key="CanUseEnter">
+            <!-- Allows to use Return key in the Navigation-->
+        <!--<Style x:Key="CanUseEnter">
             <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True"/>
         </Style>
 
@@ -40,21 +44,22 @@
         <ControlTemplate x:Key="navigationRadioButtons" TargetType="RadioButton">
             <Border Name="navigationBorder" Width="Auto" HorizontalAlignment="Center" BorderBrush="#dddee5" BorderThickness="1" Padding="5,10" Margin="6,0,0,5" CornerRadius="3" Background="#fbfbfc" VerticalAlignment="Center">
                 <ContentPresenter Name="RadioButtonText"  TextBlock.FontSize="16" TextBlock.Foreground="#002c3d"/>
-            </Border>
+            </Border>-->
             <!-- Styles for feedback -->
-            <ControlTemplate.Triggers>
-                <!-- When Clicked -->
+            <!--<ControlTemplate.Triggers>
+                
                 <Trigger Property="IsChecked" Value="True">
                     <Setter TargetName="navigationBorder" Property="BorderBrush" Value="#5aa4e2"/>
                     <Setter TargetName="RadioButtonText" Property="TextBlock.Foreground" Value="#54a3e2"/>
                 </Trigger>
-                <!-- When Hover -->
+                
                 <Trigger Property="Border.IsMouseOver" Value="True">
                     <Setter TargetName="navigationBorder" Property="Background" Value="#cae0f0"/>
                     <Setter TargetName="navigationBorder" Property="BorderBrush" Value="#5aa4e2"/>
                 </Trigger>
             </ControlTemplate.Triggers>
-        </ControlTemplate>
+        </ControlTemplate>-->
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>

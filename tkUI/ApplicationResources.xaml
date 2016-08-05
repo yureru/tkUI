@@ -1,0 +1,63 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    >
+    <!-- 
+    Resource Dictionary for the main styles used in the application.
+    Every View that needs this resource should include it.
+    -->
+    
+    <!-- Allows to use Return key in the Navigation-->
+    <Style x:Key="CanUseEnter">
+        <Setter Property="KeyboardNavigation.AcceptsReturn" Value="True"/>
+    </Style>
+
+    <!-- Selectable RadioButton -->
+    <Style x:Key="HeaderQuickBox">
+        <Setter Property="TextBlock.FontSize" Value="16"/>
+        <Setter Property="TextBlock.Foreground" Value="#002c3d"/>
+    </Style>
+    <ControlTemplate x:Key="navigationRadioButtons" TargetType="RadioButton">
+        <Border Name="navigationBorder" Width="Auto" HorizontalAlignment="Center" BorderBrush="#dddee5" BorderThickness="1" Padding="5,10" Margin="6,0,0,5" CornerRadius="3" Background="#fbfbfc" VerticalAlignment="Center">
+            <ContentPresenter Name="RadioButtonText"  TextBlock.FontSize="16" TextBlock.Foreground="#002c3d"/>
+        </Border>
+        <!-- Styles for feedback -->
+        <ControlTemplate.Triggers>
+            <!-- When Clicked -->
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="navigationBorder" Property="BorderBrush" Value="#5aa4e2"/>
+                <Setter TargetName="RadioButtonText" Property="TextBlock.Foreground" Value="#54a3e2"/>
+            </Trigger>
+            <!-- When Hover -->
+            <Trigger Property="Border.IsMouseOver" Value="True">
+                <Setter TargetName="navigationBorder" Property="Background" Value="#cae0f0"/>
+                <Setter TargetName="navigationBorder" Property="BorderBrush" Value="#5aa4e2"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+    <!-- Normal Large Button -->
+    <ControlTemplate x:Key="buttonLarge" TargetType="Button">
+        <Border Name="buttonBorder" Width="Auto" HorizontalAlignment="Center" BorderBrush="#dddee5" BorderThickness="1" Padding="5,10" Margin="6,0,0,5" CornerRadius="3" Background="#fbfbfc" VerticalAlignment="Center">
+            <ContentPresenter Name="buttonText" TextBlock.FontSize="16" TextBlock.Foreground="#002c3d"/>
+        </Border>
+        <!-- Styles for feedback -->
+        <ControlTemplate.Triggers>
+            <!-- When Clicked -->
+            <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="buttonBorder" Property="BorderBrush" Value="#5aa4e2"/>
+                <Setter TargetName="buttonText" Property="TextBlock.Foreground" Value="#54a3e2"/>
+            </Trigger>
+            <!-- When Hover -->
+            <Trigger Property="Border.IsMouseOver" Value="True">
+                <Setter TargetName="buttonBorder" Property="Background" Value="#cae0f0"/>
+            </Trigger>
+            <!-- When Disabled -->
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="buttonText" Property="TextBlock.Foreground" Value="#66002c3d"/>
+                <Setter TargetName="buttonBorder" Property="BorderBrush" Value="#80dddee5"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+           
+    
+</ResourceDictionary>

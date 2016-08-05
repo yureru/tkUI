@@ -5,7 +5,25 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:tkUI.Subpages.EmployeesCRUD.Views"
              mc:Ignorable="d">
-    <Grid>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\..\ApplicationResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        
+        <!-- Data template for error messages -->
+        <DataTemplate DataType="{x:Type ValidationError}">
+            <TextBlock
+                FontStyle="Italic"
+                Foreground="Red"
+                HorizontalAlignment="Right"
+                Margin="0,1"
+                Text="{Binding Path=ErrorContent}"
+                />
+        </DataTemplate>
+                </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Margin="0,0,50,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="30"/>
@@ -13,6 +31,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
@@ -33,6 +52,7 @@
             Name="firstNameTxt"
             Grid.Row="0" Grid.Column="2"
             Text="{Binding Path=FirstName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+            VerticalContentAlignment="Center"
             Validation.ErrorTemplate="{x:Null}"
             />
         <ContentPresenter
@@ -50,6 +70,7 @@
         <TextBox
             Name="lastNameTxt"
             Grid.Row="2" Grid.Column="2"
+            VerticalContentAlignment="Center"
             Text="{Binding Path=LastName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
             Validation.ErrorTemplate="{x:Null}"
             />
@@ -67,7 +88,9 @@
         <ComboBox
             Name="genderCombo"
             Grid.Row="4" Grid.Column="2"
-            
+            ItemsSource="{Binding Path=GenderTypeOptions, Mode=OneTime}"
+            SelectedItem="{Binding Path=GenderType, ValidatesOnDataErrors=True}"
+            Validation.ErrorTemplate="{x:Null}"
             />
         <!-- Add ItemsSource, SelectedItem, and ValidationErrorTemplate-->
         <ContentPresenter
@@ -75,5 +98,24 @@
             Content="{Binding ElementName=genderCombo, Path=(Validation.Errors).CurrentItem}"
             />
 
+        <!-- Save Button -->
+        <Button
+            Grid.Row="6" Grid.Column="2"
+            Command="{Binding Path=SaveCommand}"
+            Template="{StaticResource buttonLarge}"
+            Content="Guardar"
+            HorizontalAlignment="Right"
+            Margin="4,2"
+            MinWidth="60"
+            />
+
+        <!-- Success message after saving -->
+        <TextBlock
+            Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"
+            Text="{Binding Path=LastUserSaved}"
+            FontStyle="Italic"
+            HorizontalAlignment="Right"
+            Foreground="Green"
+            />
     </Grid>
 </UserControl>

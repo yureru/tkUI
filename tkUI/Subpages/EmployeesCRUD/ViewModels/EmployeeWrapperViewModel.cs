@@ -12,6 +12,7 @@ using tkUI.DataAccess;
 using tkUI.Helper_Classes;
 
 using tkUI.Subpages.EmployeesCRUD.Utils;
+using tkUI.Properties;
 
 namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 {
@@ -49,7 +50,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
             _employee = employee;
             _employeeRepository = employeeRepository;
-            _genderType = "(Sin Especificar)";
+            _genderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified;
 
         }
 
@@ -89,9 +90,17 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        public bool Gender
+        public string Gender
         {
-            get { return _employee.Gender; }
+            //get { return _employee.Gender; }
+            get
+            {
+                if (_employee.Gender)
+                {
+                    return Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
+                }
+                return Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
+            }
         }
 
         #endregion // Employee Properties
@@ -109,12 +118,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 }
 
                 _genderType = value;
-                ///TODO: Use a ResourceDictionary to save the strings
-                if (_genderType == "Hombre")
+
+                if (_genderType == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male)
                 {
                     _employee.Gender = false;
                 }
-                else if (_genderType == "Mujer")
+                else if (_genderType == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female)
                 {
                     _employee.Gender = true;
                 }
@@ -131,8 +140,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 {
                     _genderTypeOptions = new string[]
                     {
-                        // To strings resource
-                        "(Sin Especificar)", "Hombre", "Mujer"
+                        //"(Sin Especificar)", "Hombre", "Mujer"
+                        Resources.EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified,
+                        Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male,
+                        Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female
                     };
                 }
                 return _genderTypeOptions;
@@ -145,14 +156,19 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 if (this.IsNewEmployee)
                 {
-                    // To strings resource
-                    return "Añadir Empleado";
+                    return Resources.EmployeeWrapperViewModel_AddEmployee;
                 }
                 else
                 {
                     return String.Format("{0}, {1}", _employee.LastName, _employee.FirstName);
                 }
             }
+        }
+
+        public string LastUserSaved
+        {
+            get;
+            set;
         }
 
         // Not used:
@@ -187,12 +203,16 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             if (!_employee.IsValid)
             {
-                // To strings resource
-                throw new InvalidOperationException("No se puede guardar un empleado inválido.");
+                throw new InvalidOperationException(Resources.EmployeeWrapperViewModel_Exception_CannotSave);
             }
+
             if (this.IsNewEmployee)
             {
-                _employeeRepository.AddEmployee(_employee);
+                var newEmployee = Employee.CreateEmployee(_employee);
+                //_employeeRepository.AddEmployee(_employee);
+                _employeeRepository.AddEmployee(newEmployee);
+                SetLastUserSaved();
+                CleanForm();
             }
 
             base.OnPropertyChanged("DisplayName");
@@ -216,6 +236,31 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             get { return String.IsNullOrEmpty(this.ValidateGenderType()) && _employee.IsValid; }
         }
 
+        /// <summary>
+        /// Cleans the UI forms. That way the user can enter new data without cleaning himself the
+        /// controls.
+        /// </summary>
+        void CleanForm()
+        {
+            FirstName = null;
+            LastName = null;
+            _genderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified;
+            base.OnPropertyChanged("GenderType");
+        }
+
+        void SetLastUserSaved()
+        {
+            if (Gender == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female)
+            {
+                LastUserSaved = String.Format("La empleada {0}, {1} fue guardada exitosamente", LastName, FirstName);
+            }
+            else
+            {
+                LastUserSaved = String.Format("El empleado {0}, {1} fue guardado exitosamente", LastName, FirstName);
+            }
+            OnPropertyChanged("LastUserSaved");
+        }
+
         #endregion // Private Helpers
 
 
@@ -235,7 +280,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         }
 
         // Used to validate an unselected Combobox.
-        ///TODO: Validate Gender combobox here
         string IDataErrorInfo.this[string propertyName]
         {
             get
@@ -259,13 +303,13 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         string ValidateGenderType()
         {
-            // To strings resource
-            if (this.GenderType == "Mujer" || this.GenderType == "Hombre")
+            if (this.GenderType == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female
+                || this.GenderType == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male)
             {
                 return null;
             }
-            // To strings resource
-            return "El género del empleado debe seleccionarse";
+            
+            return Resources.EmployeeWrapperViewModel_Error_MissingGenderType;
         }
 
         #endregion // Interface Implementations
