@@ -52,6 +52,7 @@
             Name="firstNameTxt"
             Grid.Row="0" Grid.Column="2"
             Text="{Binding Path=FirstName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+            VerticalContentAlignment="Center"
             Validation.ErrorTemplate="{x:Null}"
             />
         <ContentPresenter
@@ -69,6 +70,7 @@
         <TextBox
             Name="lastNameTxt"
             Grid.Row="2" Grid.Column="2"
+            VerticalContentAlignment="Center"
             Text="{Binding Path=LastName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
             Validation.ErrorTemplate="{x:Null}"
             />
