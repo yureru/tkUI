@@ -202,7 +202,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
             if (this.IsNewEmployee)
             {
-                _employeeRepository.AddEmployee(_employee);
+                var newEmployee = Employee.CreateEmployee(_employee);
+                //_employeeRepository.AddEmployee(_employee);
+                _employeeRepository.AddEmployee(newEmployee);
+                CleanForm();
             }
 
             base.OnPropertyChanged("DisplayName");
@@ -224,6 +227,18 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         bool CanSave
         {
             get { return String.IsNullOrEmpty(this.ValidateGenderType()) && _employee.IsValid; }
+        }
+
+        /// <summary>
+        /// Cleans the UI forms. That way the user can enter new data without cleaning himself the
+        /// controls.
+        /// </summary>
+        void CleanForm()
+        {
+            FirstName = null;
+            LastName = null;
+            _genderType = null;
+            base.OnPropertyChanged("GenderType");
         }
 
         #endregion // Private Helpers

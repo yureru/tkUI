@@ -48,6 +48,16 @@ namespace tkUI.Models
         {
         }
 
+        /// <summary>
+        /// Return a new employee based on an existing object.
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns></returns>
+        public static Employee CreateEmployee(Employee employee)
+        {
+            return CreateEmployee(employee.FirstName, employee.LastName, employee.Gender);
+        }
+
         #endregion // Creation
 
 
