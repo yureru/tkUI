@@ -62,7 +62,7 @@
 
         <!--New RadioButtons Styles-->
         <ControlTemplate x:Key="navigationRadioButtons" TargetType="RadioButton">
-            <Border Name="navigationBorder" Width="171" Height="25" Padding="10,0,0,0" Margin="6,0,0,5" CornerRadius="3">
+            <Border Name="navigationBorder" Width="171" Height="25" Padding="10,0,0,0" Margin="6,0,0,5" CornerRadius="3" Background="Transparent">
                 <StackPanel Orientation="Horizontal">
                     <Image Name="Icon" Source="{Binding Path=(helper:Icons.Image), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RadioButton}}}" Width="16" Height="16"
                             RenderOptions.BitmapScalingMode="Fant" Margin="0,0,11,0"/>
