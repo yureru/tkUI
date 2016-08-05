@@ -60,11 +60,11 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn
-                        Header="Name"
+                        Header="Nombre"
                         DisplayMemberBinding="{Binding Path=DisplayName}"
                         />
                     <GridViewColumn
-                        Header="Gender"
+                        Header="Género"
                         DisplayMemberBinding="{Binding Path=Gender}"
                         />
                 </GridView>
