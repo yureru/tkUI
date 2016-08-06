@@ -106,6 +106,7 @@ namespace tkUI.DataAccess
             using (XmlReader xmlRdr = new XmlTextReader(stream))
                 return (from employeeElem in XDocument.Load(xmlRdr).Element("employees").Elements("employee")
                         select Employee.CreateEmployee(
+                            (int)employeeElem.Attribute("id"),
                             (string)employeeElem.Attribute("firstName"),
                             (string)employeeElem.Attribute("lastName"),
                             (bool)employeeElem.Attribute("gender"))).ToList();

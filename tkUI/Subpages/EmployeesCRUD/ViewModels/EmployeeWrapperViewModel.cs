@@ -11,6 +11,8 @@ using tkUI.Models;
 using tkUI.DataAccess;
 using tkUI.Helper_Classes;
 
+using System.Diagnostics;
+
 using tkUI.Subpages.EmployeesCRUD.Utils;
 using tkUI.Properties;
 
@@ -31,6 +33,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         string[] _genderTypeOptions;
         bool _isSelected;
         RelayCommand _saveCommand;
+        RelayCommand _deleteCommand;
 
         #endregion // Fields
 
@@ -57,6 +60,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         #endregion // Constructors
 
         #region Employee Properties
+
+        public int ID
+        {
+            get { return _employee.ID; }
+            set { }
+        }
 
         public string FirstName
         {
@@ -192,6 +201,22 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (_deleteCommand == null)
+                {
+                    _deleteCommand = new RelayCommand(
+                        param => this.Delete(param),
+                        param => this.CanDelete()
+                        );
+                }
+                return _deleteCommand;
+            }
+
+        }
+
         #endregion // Presentations Properties
 
         #region Private Methods
@@ -218,6 +243,16 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             base.OnPropertyChanged("DisplayName");
         }
 
+        public void Delete(object id)
+        {
+            if (!(id is int))
+            {
+                throw new ArgumentException("Param passed to DeleteCommand should be integer.");
+            }
+            string msg = "Delete method was called, ID is " + (int)id;
+            Debug.Print(msg);
+        }
+
         #endregion // Private Methods
 
         #region Private Helpers
@@ -234,6 +269,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         bool CanSave
         {
             get { return String.IsNullOrEmpty(this.ValidateGenderType()) && _employee.IsValid; }
+        }
+
+        bool CanDelete()
+        {
+            return true;
         }
 
         /// <summary>
