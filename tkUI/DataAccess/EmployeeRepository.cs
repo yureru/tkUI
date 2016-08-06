@@ -95,6 +95,19 @@ namespace tkUI.DataAccess
             return new List<Employee>(_employees);
         }
 
+        public bool ExistsByID(int id)
+        {
+            var elem = (from item in _employees where String.Equals(item.ID, id) select item).ToList();
+
+            if (elem.Count > 0)
+            {
+                Debug.Print("ExistsById is " + elem[0].ID);
+                return true;
+            }
+
+            return false;
+        }
+
         #endregion // Public Interface
 
         #region Private Helpers
