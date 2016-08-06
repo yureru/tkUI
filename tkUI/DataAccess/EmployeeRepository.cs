@@ -95,6 +95,22 @@ namespace tkUI.DataAccess
             return new List<Employee>(_employees);
         }
 
+        public void DeleteByID(int id)
+        {
+            if (ExistsByID(id))
+            {
+                for (int i = 0; i < _employees.Count; ++i)
+                {
+                    if (_employees[i].ID == id)
+                    {
+                        Debug.Print("DeleteById at " + id);
+                        _employees.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+        }
+
         public bool ExistsByID(int id)
         {
             var elem = (from item in _employees where String.Equals(item.ID, id) select item).ToList();

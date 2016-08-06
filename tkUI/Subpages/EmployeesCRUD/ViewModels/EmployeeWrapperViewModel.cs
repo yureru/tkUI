@@ -251,7 +251,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
             string msg = "Delete method was called, ID is " + (int)id;
             Debug.Print(msg);
-            _employeeRepository.ExistsByID((int) id);
+            //_employeeRepository.ExistsByID((int) id);
+            _employeeRepository.DeleteByID((int) id);
         }
 
         #endregion // Private Methods
