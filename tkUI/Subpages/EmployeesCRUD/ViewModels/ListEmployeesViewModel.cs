@@ -128,7 +128,19 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         void OnEmployeeDeletedInRepository(object sender, EmployeeDeletedEventArgs e)
         {
             Debug.Print("Event Delete, id is: " + e.ID);
+
+            for (int i = 0; i < this.AllEmployees.Count; ++i)
+            {
+                if (this.AllEmployees[i].ID == e.ID)
+                {
+                    this.AllEmployees.RemoveAt(i);
+                    break;
+                }
+            }
+
         }
+
+
 
         #endregion // Event Handling Methods
 
