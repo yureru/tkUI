@@ -11,6 +11,9 @@ using System.Windows.Resources;
 
 using tkUI.Models;
 using System.Diagnostics;
+using System.Collections.Specialized;
+using System.Collections.ObjectModel;
+
 
 namespace tkUI.DataAccess
 {
@@ -45,6 +48,9 @@ namespace tkUI.DataAccess
         /// Raised when a employee is placed into the repository.
         /// </summary>
         public event EventHandler<EmployeeAddedEventArgs> EmployeeAdded;
+
+        //public event EventHandler<NotifyCollectionChangedEventArgs> EmployeeDeleted;
+        public event EventHandler<EmployeeDeletedEventArgs> EmployeeDeleted;
 
         /// <summary>
         /// Places the specified customer into the repository.
@@ -105,6 +111,10 @@ namespace tkUI.DataAccess
                     {
                         Debug.Print("DeleteById at " + id);
                         _employees.RemoveAt(i);
+                        if (this.EmployeeDeleted != null)
+                        {
+                            this.EmployeeDeleted(this, new EmployeeDeletedEventArgs(id));
+                        }
                         break;
                     }
                 }

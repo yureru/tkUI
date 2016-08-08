@@ -47,6 +47,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             // Subscribe for notifications of when a new employee is saved.
             _employeeRepository.EmployeeAdded += this.OnEmployeeAddedToRepository;
 
+            // Subscribe for notifications when an Employee is deleted.
+            _employeeRepository.EmployeeDeleted += this.OnEmployeeDeletedInRepository;
+
             // Populate AllEmployees collection with EmployeeWrapperViewModels.
             this.CreateAllEmployees();
         }
@@ -120,6 +123,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             var viewModel = new EmployeeWrapperViewModel(e.NewEmployee, _employeeRepository);
             this.AllEmployees.Add(viewModel);
+        }
+
+        void OnEmployeeDeletedInRepository(object sender, EmployeeDeletedEventArgs e)
+        {
+            Debug.Print("Event Delete, id is: " + e.ID);
         }
 
         #endregion // Event Handling Methods
