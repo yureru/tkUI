@@ -125,10 +125,13 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             this.AllEmployees.Add(viewModel);
         }
 
+        /// <summary>
+        /// Search for the Employee with the given ID and deletes it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void OnEmployeeDeletedInRepository(object sender, EmployeeDeletedEventArgs e)
         {
-            Debug.Print("Event Delete, id is: " + e.ID);
-
             for (int i = 0; i < this.AllEmployees.Count; ++i)
             {
                 if (this.AllEmployees[i].ID == e.ID)
@@ -140,9 +143,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         }
 
-
-
         #endregion // Event Handling Methods
-
     }
 }

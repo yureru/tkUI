@@ -101,7 +101,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         public string Gender
         {
-            //get { return _employee.Gender; }
             get
             {
                 if (_employee.Gender)
@@ -149,7 +148,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 {
                     _genderTypeOptions = new string[]
                     {
-                        //"(Sin Especificar)", "Hombre", "Mujer"
                         Resources.EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified,
                         Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male,
                         Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female
@@ -174,6 +172,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        /// <summary>
+        /// Used to show which user is currently/last saved.
+        /// </summary>
         public string LastUserSaved
         {
             get;
@@ -222,7 +223,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         #region Private Methods
 
         /// <summary>
-        /// Saves the customer to the repository. This method
+        /// Saves the customer to the repository. Creates a new Employee to add it.
         /// </summary>
         public void Save()
         {
@@ -234,7 +235,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             if (this.IsNewEmployee)
             {
                 var newEmployee = Employee.CreateEmployee(_employee);
-                //_employeeRepository.AddEmployee(_employee);
                 _employeeRepository.AddEmployee(newEmployee);
                 SetLastUserSaved();
                 CleanForm();
@@ -249,9 +249,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 throw new ArgumentException("Param passed to DeleteCommand should be integer.");
             }
-            string msg = "Delete method was called, ID is " + (int)id;
-            Debug.Print(msg);
-            //_employeeRepository.ExistsByID((int) id);
+
             _employeeRepository.DeleteByID((int) id);
         }
 
@@ -279,8 +277,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         }
 
         /// <summary>
-        /// Cleans the UI forms. That way the user can enter new data without cleaning himself the
-        /// controls.
+        /// Cleans the UI forms. That way the user can enter new data without cleaning
+        /// himself the controls.
         /// </summary>
         void CleanForm()
         {
@@ -290,6 +288,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             base.OnPropertyChanged("GenderType");
         }
 
+        /// <summary>
+        /// Sets the message when an user is being saved.
+        /// </summary>
         void SetLastUserSaved()
         {
             if (Gender == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female)

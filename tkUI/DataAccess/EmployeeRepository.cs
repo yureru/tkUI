@@ -52,7 +52,9 @@ namespace tkUI.DataAccess
         /// </summary>
         public event EventHandler<EmployeeAddedEventArgs> EmployeeAdded;
 
-        //public event EventHandler<NotifyCollectionChangedEventArgs> EmployeeDeleted;
+        /// <summary>
+        /// Raised when a employee is asked to be deleted.
+        /// </summary>
         public event EventHandler<EmployeeDeletedEventArgs> EmployeeDeleted;
 
         /// <summary>
@@ -106,6 +108,11 @@ namespace tkUI.DataAccess
             return new List<Employee>(_employees);
         }
 
+        /// <summary>
+        /// Search for a given ID, if it's found removes the employeee
+        /// containing that ID. It raises the EmployeeDeletedEventArgs.
+        /// </summary>
+        /// <param name="id"></param>
         public void DeleteByID(int id)
         {
             if (ExistsByID(id))
@@ -114,7 +121,6 @@ namespace tkUI.DataAccess
                 {
                     if (_employees[i].ID == id)
                     {
-                        Debug.Print("DeleteById at " + id);
                         _employees.RemoveAt(i);
                         if (this.EmployeeDeleted != null)
                         {
@@ -126,6 +132,11 @@ namespace tkUI.DataAccess
             }
         }
 
+        /// <summary>
+        /// Checks if an employee exists in with the given ID.
+        /// </summary>
+        /// <param name="id">Employee's ID. A non-zero, positive integer.</param>
+        /// <returns></returns>
         public bool ExistsByID(int id)
         {
             var elem = (from item in _employees where String.Equals(item.ID, id) select item).ToList();
@@ -168,12 +179,16 @@ namespace tkUI.DataAccess
 
             return info.Stream;
         }
-
+        
         int GetID
         {
             get { return ++_currentID; }
         }
 
+        /// <summary>
+        /// Returns the greater ID of the list of employees.
+        /// </summary>
+        /// <returns></returns>
         int GetLastID()
         {
             return _employees.Max(emp => emp.ID);
