@@ -27,6 +27,8 @@ namespace tkUI.DataAccess
 
         readonly List<Employee> _employees;
 
+        int _currentID;
+
         #endregion // Fields
 
         #region Constructors
@@ -38,6 +40,7 @@ namespace tkUI.DataAccess
         public EmployeeRepository(string employeeDataFile)
         {
             _employees = LoadEmployees(employeeDataFile);
+            _currentID = GetLastID();
         }
 
         #endregion // Constructors
@@ -67,6 +70,8 @@ namespace tkUI.DataAccess
 
             if (!_employees.Contains(employee))
             {
+                // Set locally to last ID
+                employee.ID = GetID;
                 _employees.Add(employee);
 
                 if (this.EmployeeAdded != null)
@@ -162,6 +167,16 @@ namespace tkUI.DataAccess
             }
 
             return info.Stream;
+        }
+
+        int GetID
+        {
+            get { return ++_currentID; }
+        }
+
+        int GetLastID()
+        {
+            return _employees.Max(emp => emp.ID);
         }
 
         #endregion // Private Helpers
