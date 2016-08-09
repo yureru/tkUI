@@ -143,7 +143,6 @@ namespace tkUI.DataAccess
 
             if (elem.Count > 0)
             {
-                Debug.Print("ExistsById is " + elem[0].ID);
                 return true;
             }
 
