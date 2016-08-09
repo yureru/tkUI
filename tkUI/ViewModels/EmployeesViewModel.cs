@@ -46,7 +46,7 @@ namespace tkUI.ViewModels
             PageViewModels.Add(new ListAdminViewModel());
             PageViewModels.Add(new AddAdminViewModel());
 
-            // Set default graph
+            // Set default view
             CurrentPageViewModel = PageViewModels[0];
         }
 

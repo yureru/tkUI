@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="ApplicationViewModel.cs" />
     <Compile Include="DataAccess\EmployeeAddedEventArgs.cs" />
+    <Compile Include="DataAccess\EmployeeDeletedEventArgs.cs" />
     <Compile Include="DataAccess\EmployeeRepository.cs" />
     <Compile Include="Helper Classes\GraphQuickBoxes.cs" />
     <Compile Include="Helper Classes\IButton.cs" />

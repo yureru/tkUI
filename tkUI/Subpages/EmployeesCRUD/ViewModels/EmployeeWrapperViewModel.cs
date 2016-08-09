@@ -11,6 +11,8 @@ using tkUI.Models;
 using tkUI.DataAccess;
 using tkUI.Helper_Classes;
 
+using System.Diagnostics;
+
 using tkUI.Subpages.EmployeesCRUD.Utils;
 using tkUI.Properties;
 
@@ -31,6 +33,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         string[] _genderTypeOptions;
         bool _isSelected;
         RelayCommand _saveCommand;
+        RelayCommand _deleteCommand;
 
         #endregion // Fields
 
@@ -57,6 +60,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         #endregion // Constructors
 
         #region Employee Properties
+
+        public int ID
+        {
+            get { return _employee.ID; }
+            set { }
+        }
 
         public string FirstName
         {
@@ -92,7 +101,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         public string Gender
         {
-            //get { return _employee.Gender; }
             get
             {
                 if (_employee.Gender)
@@ -140,7 +148,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 {
                     _genderTypeOptions = new string[]
                     {
-                        //"(Sin Especificar)", "Hombre", "Mujer"
                         Resources.EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified,
                         Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male,
                         Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female
@@ -165,6 +172,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        /// <summary>
+        /// Used to show which user is currently/last saved.
+        /// </summary>
         public string LastUserSaved
         {
             get;
@@ -192,12 +202,28 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (_deleteCommand == null)
+                {
+                    _deleteCommand = new RelayCommand(
+                        param => this.Delete(param),
+                        param => this.CanDelete()
+                        );
+                }
+                return _deleteCommand;
+            }
+
+        }
+
         #endregion // Presentations Properties
 
         #region Private Methods
 
         /// <summary>
-        /// Saves the customer to the repository. This method
+        /// Saves the customer to the repository. Creates a new Employee to add it.
         /// </summary>
         public void Save()
         {
@@ -209,13 +235,22 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             if (this.IsNewEmployee)
             {
                 var newEmployee = Employee.CreateEmployee(_employee);
-                //_employeeRepository.AddEmployee(_employee);
                 _employeeRepository.AddEmployee(newEmployee);
                 SetLastUserSaved();
                 CleanForm();
             }
 
             base.OnPropertyChanged("DisplayName");
+        }
+
+        public void Delete(object id)
+        {
+            if (!(id is int))
+            {
+                throw new ArgumentException("Param passed to DeleteCommand should be integer.");
+            }
+
+            _employeeRepository.DeleteByID((int) id);
         }
 
         #endregion // Private Methods
@@ -236,9 +271,14 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             get { return String.IsNullOrEmpty(this.ValidateGenderType()) && _employee.IsValid; }
         }
 
+        bool CanDelete()
+        {
+            return true;
+        }
+
         /// <summary>
-        /// Cleans the UI forms. That way the user can enter new data without cleaning himself the
-        /// controls.
+        /// Cleans the UI forms. That way the user can enter new data without cleaning
+        /// himself the controls.
         /// </summary>
         void CleanForm()
         {
@@ -248,6 +288,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             base.OnPropertyChanged("GenderType");
         }
 
+        /// <summary>
+        /// Sets the message when an user is being saved.
+        /// </summary>
         void SetLastUserSaved()
         {
             if (Gender == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female)

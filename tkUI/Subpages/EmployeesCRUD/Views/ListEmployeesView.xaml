@@ -67,6 +67,17 @@
                         Header="Género"
                         DisplayMemberBinding="{Binding Path=Gender}"
                         />
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button>Edit</Button>
+                                    <Button Command="{Binding Path=DeleteCommand}"
+                                            CommandParameter="{Binding Path=ID}">Delete</Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

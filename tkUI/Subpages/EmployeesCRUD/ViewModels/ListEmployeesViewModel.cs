@@ -8,10 +8,12 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
+
 using tkUI.DataAccess;
 using tkUI.Subpages.EmployeesCRUD.Utils;
+using tkUI.Helper_Classes;
 
-
+using System.Diagnostics;
 
 namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 {
@@ -27,6 +29,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         #region Fields
 
         readonly EmployeeRepository _employeeRepository;
+        RelayCommand _deleteCommand;
 
         #endregion // Fields
 
@@ -43,6 +46,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
             // Subscribe for notifications of when a new employee is saved.
             _employeeRepository.EmployeeAdded += this.OnEmployeeAddedToRepository;
+
+            // Subscribe for notifications when an Employee is deleted.
+            _employeeRepository.EmployeeDeleted += this.OnEmployeeDeletedInRepository;
 
             // Populate AllEmployees collection with EmployeeWrapperViewModels.
             this.CreateAllEmployees();
@@ -64,6 +70,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         }
 
         #endregion // Constructors
+
+        #region Commands
+
+        
+
+        #endregion // Commands
 
         #region Interface Implementations
 
@@ -111,6 +123,24 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             var viewModel = new EmployeeWrapperViewModel(e.NewEmployee, _employeeRepository);
             this.AllEmployees.Add(viewModel);
+        }
+
+        /// <summary>
+        /// Search for the Employee with the given ID and deletes it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void OnEmployeeDeletedInRepository(object sender, EmployeeDeletedEventArgs e)
+        {
+            for (int i = 0; i < this.AllEmployees.Count; ++i)
+            {
+                if (this.AllEmployees[i].ID == e.ID)
+                {
+                    this.AllEmployees.RemoveAt(i);
+                    break;
+                }
+            }
+
         }
 
         #endregion // Event Handling Methods

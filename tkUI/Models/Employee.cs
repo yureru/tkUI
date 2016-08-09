@@ -18,6 +18,8 @@ namespace tkUI.Models
 
         #region Fields
 
+        public int ID { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -34,10 +36,11 @@ namespace tkUI.Models
             return new Employee();
         }
 
-        public static Employee CreateEmployee(string firstName, string lastName, bool gender)
+        public static Employee CreateEmployee(int id, string firstName, string lastName, bool gender)
         {
             return new Employee
             {
+                ID = id,
                 FirstName = firstName,
                 LastName = lastName,
                 Gender = gender
@@ -55,7 +58,7 @@ namespace tkUI.Models
         /// <returns></returns>
         public static Employee CreateEmployee(Employee employee)
         {
-            return CreateEmployee(employee.FirstName, employee.LastName, employee.Gender);
+            return CreateEmployee(employee.ID, employee.FirstName, employee.LastName, employee.Gender);
         }
 
         #endregion // Creation

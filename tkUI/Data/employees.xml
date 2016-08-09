@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <employees>
-  <employee firstName="Nachi" lastName="Sakaue" gender="true"/>
-  <employee firstName="Mei" lastName="Ayakura" gender="true"/>
-  <employee firstName="Dennis" lastName="Ritchie" gender="false"/>
-  <employee firstName="Yukihiro" lastName="Matsumoto" gender="false"/>
-  <employee firstName="Simon" lastName="Le Bon" gender="false"/>
+  <employee id="1" firstName="Nachi" lastName="Sakaue" gender="true"/>
+  <employee id="2" firstName="Mei" lastName="Ayakura" gender="true"/>
+  <employee id="3" firstName="Dennis" lastName="Ritchie" gender="false"/>
+  <employee id="4" firstName="Yukihiro" lastName="Matsumoto" gender="false"/>
+  <employee id="5" firstName="Simon" lastName="Le Bon" gender="false"/>
 </employees>
