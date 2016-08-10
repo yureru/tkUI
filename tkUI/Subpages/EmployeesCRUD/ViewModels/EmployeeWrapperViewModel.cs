@@ -34,6 +34,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         readonly EmployeeRepository _employeeRepository;
         string _genderType;
         string[] _genderTypeOptions;
+        string _lastUserSaved;
         bool _isSelected;
         RelayCommand _saveCommand;
         RelayCommand _deleteCommand;
@@ -181,8 +182,15 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// </summary>
         public string LastUserSaved
         {
-            get;
-            set;
+            get { return _lastUserSaved; }
+            set
+            {
+                if (_lastUserSaved != value)
+                {
+                    _lastUserSaved = value;
+                    base.OnPropertyChanged("LastUserSaved");
+                }
+            }
         }
 
         // Not used:
@@ -246,6 +254,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// </summary>
         public void Save()
         {
+            bool flag = false;
             if (!_employee.IsValid)
             {
                 throw new InvalidOperationException(Resources.EmployeeWrapperViewModel_Exception_CannotSave);
@@ -257,8 +266,14 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 _employeeRepository.AddEmployee(newEmployee);
                 SetLastUserSaved();
                 CleanForm();
+                flag = true;
             }
 
+            // The user was saved in the ListEmployeeView/Edit button.
+            if (!flag)
+            {
+                SetLastUserSaved();
+            }
             base.OnPropertyChanged("DisplayName");
         }
 
@@ -320,7 +335,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 LastUserSaved = String.Format("El empleado {0}, {1} fue guardado exitosamente", LastName, FirstName);
             }
-            OnPropertyChanged("LastUserSaved");
+//            OnPropertyChanged("LastUserSaved");
         }
         /*
             This functions works in the way that it allow us to edit the user, but it has several problems:
@@ -330,6 +345,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                changed.
             2. The form doesn't provides the current value the the Employee has.
             3. The form doesn't show the success message when saving.
+
+            Note: I've found out that the name it actually updates when a change is made in the edit window.
+            And, if we use the call of: SetLastUserSaved(); outside the IsNewEmployee condition, the message
+            is updated in the Edit window, but nit in the Add employee Window. But this can be fixed easily by setting a flag.
+            And also, after editing an user, and try to edit again, the Combobox for this Employe is selected at the current gender.
+            Pro tip: Use an the user was "editado" instead of "guardado".
              */
         void ShowEditDialog(object id)
         {
