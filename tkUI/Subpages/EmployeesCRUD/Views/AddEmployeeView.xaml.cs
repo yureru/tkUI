@@ -23,6 +23,14 @@ namespace tkUI.Subpages.EmployeesCRUD.Views
         public AddEmployeeView()
         {
             InitializeComponent();
+            
         }
+
+        #region Exposed Properties
+
+        
+
+        #endregion
+
     }
 }
