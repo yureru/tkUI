@@ -264,7 +264,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 var newEmployee = Employee.CreateEmployee(_employee);
                 _employeeRepository.AddEmployee(newEmployee);
-                SetLastUserSaved();
+                SetLastUserSaved(false);
                 CleanForm();
                 flag = true;
             }
@@ -272,7 +272,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             // The user was saved in the ListEmployeeView/Edit button.
             if (!flag)
             {
-                SetLastUserSaved();
+                SetLastUserSaved(true);
             }
             base.OnPropertyChanged("DisplayName");
         }
@@ -325,16 +325,30 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// <summary>
         /// Sets the message when an user is being saved.
         /// </summary>
-        void SetLastUserSaved()
+        void SetLastUserSaved(bool IsEditingEmployee)
         {
-            if (Gender == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female)
-            {
-                LastUserSaved = String.Format("La empleada {0}, {1} fue guardada exitosamente", LastName, FirstName);
+            if (IsEditingEmployee) {
+                if (Gender == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female)
+                {
+                    LastUserSaved = String.Format("La empleada {0}, {1} fue editada exitosamente", LastName, FirstName);
+                }
+                else
+                {
+                    LastUserSaved = String.Format("El empleado {0}, {1} fue editado exitosamente", LastName, FirstName);
+                }
             }
             else
             {
-                LastUserSaved = String.Format("El empleado {0}, {1} fue guardado exitosamente", LastName, FirstName);
+                if (Gender == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female)
+                {
+                    LastUserSaved = String.Format("La empleada {0}, {1} fue guardada exitosamente", LastName, FirstName);
+                }
+                else
+                {
+                    LastUserSaved = String.Format("El empleado {0}, {1} fue guardado exitosamente", LastName, FirstName);
+                }
             }
+            
 //            OnPropertyChanged("LastUserSaved");
         }
         /*
