@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Windows;
 
 using tkUI.Models;
 using tkUI.DataAccess;
@@ -13,8 +14,10 @@ using tkUI.Helper_Classes;
 
 using System.Diagnostics;
 
+
 using tkUI.Subpages.EmployeesCRUD.Utils;
 using tkUI.Properties;
+using tkUI.Subpages.EmployeesCRUD.Views;
 
 namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 {
@@ -34,6 +37,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         bool _isSelected;
         RelayCommand _saveCommand;
         RelayCommand _deleteCommand;
+        RelayCommand _editCommand;
 
         #endregion // Fields
 
@@ -218,6 +222,21 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         }
 
+        public ICommand EditCommand
+        {
+            get
+            {
+                if (_editCommand == null)
+                {
+                    _editCommand = new RelayCommand(
+                        param => this.ShowEditDialog(param),
+                        param => this.CanEdit()
+                        );
+                }
+                return _editCommand;
+            }
+        }
+
         #endregion // Presentations Properties
 
         #region Private Methods
@@ -302,6 +321,79 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 LastUserSaved = String.Format("El empleado {0}, {1} fue guardado exitosamente", LastName, FirstName);
             }
             OnPropertyChanged("LastUserSaved");
+        }
+        /*
+            This functions works in the way that it allow us to edit the user, but it has several problems:
+            1. After clicking the save button, the change isn't propragated up to the Listemployee, therefore
+               the changes aren't visible until we change to other view and come back. This wasn't fixed even on calling
+               the proper OnPropertyChanged, and obvs will not really matter since they're called when the property is
+               changed.
+            2. The form doesn't provides the current value the the Employee has.
+            3. The form doesn't show the success message when saving.
+             */
+        void ShowEditDialog(object id)
+        {
+            if (!(id is int))
+            {
+                throw new ArgumentException("Param passed to EditCommand should be integer.");
+            }
+
+            // Show dialog
+            Window modal = new Window();
+            //modal.DataContext = 
+            //modal.Content = "Hello World\nUser ID is: " + id as string;
+            //modal.Content = new EmployeeWrapperViewModel(_employee, _employeeRepository);
+            //modal.DataContext = new EmployeeWrapperViewModel(_employee, _employeeRepository);
+            var view = new AddEmployeeView();
+            modal.Width = 400;
+            modal.Height = 300;
+            modal.DataContext = this;
+            modal.Content = view;
+            modal.Title = "Edit Employee";
+            //modal.Closed += Update();
+            //modal.Closing += up();
+            //modal.ShowDialog();
+            modal.Show();
+
+
+            //modal.Closing += up();
+            // Populate Comboboxes
+
+            // Validate, duh.
+
+            // Check if the fields are different to the original Employee element, if so:
+            // 1. The Save button can performs.
+            // 2. If the users close the window without saving ask him if he wanna save
+
+            // Save in EmployeeRepository
+            //this.Update();
+            // We'll probably need an event to notify when the user is edited.
+            Debug.Print("End of ShowEditDialog");
+        }
+
+        CancelEventHandler up()
+        {
+            OnPropertyChanged("FirstName");
+            OnPropertyChanged("LastName");
+            OnPropertyChanged("GenderType");
+            OnPropertyChanged("LastUserSaved");
+            Debug.Print("up Called");
+            return null;
+        }
+
+        EventHandler Update()
+        {
+            OnPropertyChanged("FirstName");
+            OnPropertyChanged("LastName");
+            OnPropertyChanged("GenderType");
+            OnPropertyChanged("LastUserSaved");
+            Debug.Print("Update Called");
+            return null;
+        }
+
+        bool CanEdit()
+        {
+            return true;
         }
 
         #endregion // Private Helpers
