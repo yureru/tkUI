@@ -351,13 +351,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        /*
-            This functions works in the way that it allow us to edit the user, but it has the following problem:
-            1. When the button edit is clicked the Combobox doesn't shows the current selected Gender of the employee,
-            therefore the user need always to select a gender to save the modifications.
-             
-            Note: Sfter editing an user, and try to edit again, the Combobox for this Employe is selected at the current gender.
-             */
+        /// <summary>
+        /// Method that shows a modal dialog that allow us to edit an employee.
+        /// Currently it's using the Show() so it doesn't blocks.
+        /// </summary>
+        /// <param name="id"></param>
         void ShowEditDialog(object id)
         {
             if (!(id is int))
@@ -365,16 +363,13 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 throw new ArgumentException("Param passed to EditCommand should be integer.");
             }
 
-            // Show dialog
             Window modal = new Window();
-            //modal.DataContext = 
-            //modal.Content = "Hello World\nUser ID is: " + id as string;
-            //modal.Content = new EmployeeWrapperViewModel(_employee, _employeeRepository);
-            //modal.DataContext = new EmployeeWrapperViewModel(_employee, _employeeRepository);
+            // Create the forms to edit
             var view = new AddEmployeeView();
             modal.Width = 450;
             modal.Height = 350;
 
+            // Search for the employee by id
             var listEmp = _employeeRepository.GetEmployees();
             var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
 
@@ -392,45 +387,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             
             modal.Content = view;
             modal.Title = "Edit Employee";
-            //modal.Closed += Update();
-            //modal.Closing += up();
             //modal.ShowDialog();
             modal.Show();
-
-
-            //modal.Closing += up();
-            // Populate Comboboxes
-
-            // Validate, duh.
 
             // Check if the fields are different to the original Employee element, if so:
             // 1. The Save button can performs.
             // 2. If the users close the window without saving ask him if he wanna save
-
-            // Save in EmployeeRepository
-            //this.Update();
-            // We'll probably need an event to notify when the user is edited.
-            Debug.Print("End of ShowEditDialog");
-        }
-
-        CancelEventHandler up()
-        {
-            OnPropertyChanged("FirstName");
-            OnPropertyChanged("LastName");
-            OnPropertyChanged("GenderType");
-            OnPropertyChanged("LastUserSaved");
-            Debug.Print("up Called");
-            return null;
-        }
-
-        EventHandler Update()
-        {
-            OnPropertyChanged("FirstName");
-            OnPropertyChanged("LastName");
-            OnPropertyChanged("GenderType");
-            OnPropertyChanged("LastUserSaved");
-            Debug.Print("Update Called");
-            return null;
         }
 
         bool CanEdit()
