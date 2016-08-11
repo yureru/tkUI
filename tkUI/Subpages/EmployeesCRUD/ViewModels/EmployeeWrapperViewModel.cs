@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Windows;
 
 using tkUI.Models;
 using tkUI.DataAccess;
@@ -13,8 +14,10 @@ using tkUI.Helper_Classes;
 
 using System.Diagnostics;
 
+
 using tkUI.Subpages.EmployeesCRUD.Utils;
 using tkUI.Properties;
+using tkUI.Subpages.EmployeesCRUD.Views;
 
 namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 {
@@ -31,9 +34,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         readonly EmployeeRepository _employeeRepository;
         string _genderType;
         string[] _genderTypeOptions;
+        string _lastUserSaved;
         bool _isSelected;
         RelayCommand _saveCommand;
         RelayCommand _deleteCommand;
+        RelayCommand _editCommand;
 
         #endregion // Fields
 
@@ -177,8 +182,15 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// </summary>
         public string LastUserSaved
         {
-            get;
-            set;
+            get { return _lastUserSaved; }
+            set
+            {
+                if (_lastUserSaved != value)
+                {
+                    _lastUserSaved = value;
+                    base.OnPropertyChanged("LastUserSaved");
+                }
+            }
         }
 
         // Not used:
@@ -218,6 +230,21 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         }
 
+        public ICommand EditCommand
+        {
+            get
+            {
+                if (_editCommand == null)
+                {
+                    _editCommand = new RelayCommand(
+                        param => this.ShowEditDialog(param),
+                        param => this.CanEdit()
+                        );
+                }
+                return _editCommand;
+            }
+        }
+
         #endregion // Presentations Properties
 
         #region Private Methods
@@ -227,6 +254,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// </summary>
         public void Save()
         {
+            bool flag = false;
             if (!_employee.IsValid)
             {
                 throw new InvalidOperationException(Resources.EmployeeWrapperViewModel_Exception_CannotSave);
@@ -236,10 +264,17 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 var newEmployee = Employee.CreateEmployee(_employee);
                 _employeeRepository.AddEmployee(newEmployee);
-                SetLastUserSaved();
+                SetLastUserSaved(false);
                 CleanForm();
+                flag = true;
             }
 
+            // The user was saved in the ListEmployeeView/Edit button.
+            if (!flag)
+            {
+                SetLastUserSaved(true);
+                base.OnPropertyChanged("Gender");
+            }
             base.OnPropertyChanged("DisplayName");
         }
 
@@ -291,17 +326,78 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// <summary>
         /// Sets the message when an user is being saved.
         /// </summary>
-        void SetLastUserSaved()
+        void SetLastUserSaved(bool IsEditingEmployee)
         {
-            if (Gender == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female)
-            {
-                LastUserSaved = String.Format("La empleada {0}, {1} fue guardada exitosamente", LastName, FirstName);
+            if (IsEditingEmployee) {
+                if (Gender == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female)
+                {
+                    LastUserSaved = String.Format("La empleada {0}, {1} fue editada exitosamente", LastName, FirstName);
+                }
+                else
+                {
+                    LastUserSaved = String.Format("El empleado {0}, {1} fue editado exitosamente", LastName, FirstName);
+                }
             }
             else
             {
-                LastUserSaved = String.Format("El empleado {0}, {1} fue guardado exitosamente", LastName, FirstName);
+                if (Gender == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female)
+                {
+                    LastUserSaved = String.Format("La empleada {0}, {1} fue guardada exitosamente", LastName, FirstName);
+                }
+                else
+                {
+                    LastUserSaved = String.Format("El empleado {0}, {1} fue guardado exitosamente", LastName, FirstName);
+                }
             }
-            OnPropertyChanged("LastUserSaved");
+        }
+
+        /// <summary>
+        /// Method that shows a modal dialog that allow us to edit an employee.
+        /// Currently it's using the Show() so it doesn't blocks.
+        /// </summary>
+        /// <param name="id"></param>
+        void ShowEditDialog(object id)
+        {
+            if (!(id is int))
+            {
+                throw new ArgumentException("Param passed to EditCommand should be integer.");
+            }
+
+            Window modal = new Window();
+            // Create the forms to edit
+            var view = new AddEmployeeView();
+            modal.Width = 450;
+            modal.Height = 350;
+
+            // Search for the employee by id
+            var listEmp = _employeeRepository.GetEmployees();
+            var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
+
+            // Gender == true means Female
+            if (employeeEdited.Count > 0 && employeeEdited[0].Gender)
+            {
+                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
+            }
+            else
+            {
+                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
+            }
+            
+            modal.DataContext = this;
+            
+            modal.Content = view;
+            modal.Title = "Edit Employee";
+            //modal.ShowDialog();
+            modal.Show();
+
+            // Check if the fields are different to the original Employee element, if so:
+            // 1. The Save button can performs.
+            // 2. If the users close the window without saving ask him if he wanna save
+        }
+
+        bool CanEdit()
+        {
+            return true;
         }
 
         #endregion // Private Helpers

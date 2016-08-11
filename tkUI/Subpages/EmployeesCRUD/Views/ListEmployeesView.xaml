@@ -71,7 +71,8 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button>Edit</Button>
+                                    <Button Command="{Binding Path=EditCommand}"
+                                            CommandParameter="{Binding Path=ID}">Edit</Button>
                                     <Button Command="{Binding Path=DeleteCommand}"
                                             CommandParameter="{Binding Path=ID}">Delete</Button>
                                 </StackPanel>
