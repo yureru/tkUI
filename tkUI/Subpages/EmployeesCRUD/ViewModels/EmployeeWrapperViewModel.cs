@@ -372,9 +372,24 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             //modal.Content = new EmployeeWrapperViewModel(_employee, _employeeRepository);
             //modal.DataContext = new EmployeeWrapperViewModel(_employee, _employeeRepository);
             var view = new AddEmployeeView();
-            modal.Width = 400;
-            modal.Height = 300;
+            modal.Width = 450;
+            modal.Height = 350;
+
+            var listEmp = _employeeRepository.GetEmployees();
+            var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
+
+            // Gender == true means Female
+            if (employeeEdited.Count > 0 && employeeEdited[0].Gender)
+            {
+                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
+            }
+            else
+            {
+                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
+            }
+            
             modal.DataContext = this;
+            
             modal.Content = view;
             modal.Title = "Edit Employee";
             //modal.Closed += Update();
