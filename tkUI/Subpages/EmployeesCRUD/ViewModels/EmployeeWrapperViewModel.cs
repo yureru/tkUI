@@ -273,6 +273,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             if (!flag)
             {
                 SetLastUserSaved(true);
+                base.OnPropertyChanged("Gender");
             }
             base.OnPropertyChanged("DisplayName");
         }
@@ -348,23 +349,14 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     LastUserSaved = String.Format("El empleado {0}, {1} fue guardado exitosamente", LastName, FirstName);
                 }
             }
-            
-//            OnPropertyChanged("LastUserSaved");
         }
-        /*
-            This functions works in the way that it allow us to edit the user, but it has several problems:
-            1. After clicking the save button, the change isn't propragated up to the Listemployee, therefore
-               the changes aren't visible until we change to other view and come back. This wasn't fixed even on calling
-               the proper OnPropertyChanged, and obvs will not really matter since they're called when the property is
-               changed.
-            2. The form doesn't provides the current value the the Employee has.
-            3. The form doesn't show the success message when saving.
 
-            Note: I've found out that the name it actually updates when a change is made in the edit window.
-            And, if we use the call of: SetLastUserSaved(); outside the IsNewEmployee condition, the message
-            is updated in the Edit window, but nit in the Add employee Window. But this can be fixed easily by setting a flag.
-            And also, after editing an user, and try to edit again, the Combobox for this Employe is selected at the current gender.
-            Pro tip: Use an the user was "editado" instead of "guardado".
+        /*
+            This functions works in the way that it allow us to edit the user, but it has the following problem:
+            1. When the button edit is clicked the Combobox doesn't shows the current selected Gender of the employee,
+            therefore the user need always to select a gender to save the modifications.
+             
+            Note: Sfter editing an user, and try to edit again, the Combobox for this Employe is selected at the current gender.
              */
         void ShowEditDialog(object id)
         {
