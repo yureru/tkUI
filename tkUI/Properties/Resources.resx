@@ -208,4 +208,16 @@
     <value>(Sin Especificar)</value>
     <comment>Message when an employee's gender is not specified.</comment>
   </data>
+  <data name="PencilThickIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GeneralGlyphs\PencilThickIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PencilThickSelectedIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GeneralGlyphs\PencilThickSelectedIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TrashIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GeneralGlyphs\TrashIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TrashSelectedIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GeneralGlyphs\TrashSelectedIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

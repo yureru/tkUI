@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:helper="clr-namespace:tkUI.Helper_Classes"
                     >
     <!-- 
     Resource Dictionary for the main styles used in the application.
@@ -58,6 +59,16 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-           
     
+    <!-- Image Button -->
+    <ControlTemplate x:Key="glyphImageButton" TargetType="Button">
+        <Image Name="Icon" Source="{Binding Path=(helper:Icons.Image), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" Width="16" Height="16"
+                            RenderOptions.BitmapScalingMode="Fant"/>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="Icon" Property="Source" Value="{Binding Path=(helper:IconsClicked.ImageClicked), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
 </ResourceDictionary>

@@ -297,6 +297,26 @@ namespace tkUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PencilThickIcon {
+            get {
+                object obj = ResourceManager.GetObject("PencilThickIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PencilThickSelectedIcon {
+            get {
+                object obj = ResourceManager.GetObject("PencilThickSelectedIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PersonalIDIcon {
             get {
                 object obj = ResourceManager.GetObject("PersonalIDIcon", resourceCulture);
@@ -310,6 +330,26 @@ namespace tkUI.Properties {
         internal static System.Drawing.Bitmap PersonalIDSelectedIcon {
             get {
                 object obj = ResourceManager.GetObject("PersonalIDSelectedIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TrashIcon {
+            get {
+                object obj = ResourceManager.GetObject("TrashIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TrashSelectedIcon {
+            get {
+                object obj = ResourceManager.GetObject("TrashSelectedIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

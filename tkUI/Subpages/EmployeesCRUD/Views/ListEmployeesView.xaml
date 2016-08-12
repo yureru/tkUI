@@ -4,25 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:tkUI.Subpages.EmployeesCRUD.Views"
+             xmlns:helper="clr-namespace:tkUI.Helper_Classes"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\..\ApplicationResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <CollectionViewSource
             x:Key="EmployeeGroups"
             Source="{Binding Path=AllEmployees}"
             >
-            
-        </CollectionViewSource>
+            </CollectionViewSource>
 
-        <!-- resources/names to find
+            <!-- resources/names to find
             Brush_HeaderBackground
             ListViewItem
             EmployeeItemStyle FOUND!
         -->
-        
-        <GroupStyle x:Key="EmployeeGroupStyle">
-            <GroupStyle.HeaderTemplate>
-                <DataTemplate>
-                    <TextBlock
+
+            <GroupStyle x:Key="EmployeeGroupStyle">
+                <GroupStyle.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock
                         Name="txt"
                         Background="{StaticResource Brush_HeaderBackground}"
                         FontWeight="Bold"
@@ -31,18 +36,19 @@
                         Padding="4,2,0,2"
                         Text="People"
                         />
-                </DataTemplate>
-            </GroupStyle.HeaderTemplate>
-        </GroupStyle>
-        
-        <Style x:Key="EmployeeItemStyle" TargetType="{x:Type ListViewItem}">
-            <!--
+                    </DataTemplate>
+                </GroupStyle.HeaderTemplate>
+            </GroupStyle>
+
+            <Style x:Key="EmployeeItemStyle" TargetType="{x:Type ListViewItem}">
+                <!--
             Stretch the content of each cell so that we can 
             right.aling the text in the Total Sales column.
             -->
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <!-- No need for the IsSelected Binding -->
-        </Style>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <!-- No need for the IsSelected Binding -->
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
     
     <DockPanel>
@@ -71,10 +77,17 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Command="{Binding Path=EditCommand}"
-                                            CommandParameter="{Binding Path=ID}">Edit</Button>
-                                    <Button Command="{Binding Path=DeleteCommand}"
-                                            CommandParameter="{Binding Path=ID}">Delete</Button>
+                                    <Button Template="{StaticResource glyphImageButton}" 
+                                            Command="{Binding Path=EditCommand}"
+                                            CommandParameter="{Binding Path=ID}"
+                                            helper:Icons.Image="..\..\..\Resources\GeneralGlyphs\PencilThickIcon.png"
+                                            helper:IconsClicked.ImageClicked="..\..\..\Resources\GeneralGlyphs\PencilThickSelectedIcon.png" Margin="0,0,5,0" ToolTip="Editar"/>
+
+                                    <Button Template="{StaticResource glyphImageButton}"
+                                            Command="{Binding Path=DeleteCommand}"
+                                            CommandParameter="{Binding Path=ID}"
+                                            helper:Icons.Image="..\..\..\Resources\GeneralGlyphs\TrashIcon.png"
+                                            helper:IconsClicked.ImageClicked="..\..\..\Resources\GeneralGlyphs\TrashSelectedIcon.png" Margin="0,0,5,0" ToolTip="Eliminar"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
