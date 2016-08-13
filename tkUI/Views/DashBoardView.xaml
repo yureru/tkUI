@@ -19,6 +19,10 @@
         <DataTemplate DataType="{x:Type ViewModels:EmployeesInCompanyViewModel}">
             <Views:EmployeesInCompanyView/>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type ViewModels:EmployeesHiredAndDismissedViewModel}">
+            <Views:EmployeesHiredAndDismissedView/>
+        </DataTemplate>
         
         <DataTemplate DataType="{x:Type ViewModels:EmployeesHiredViewModel}">
             <Views:EmployeesHiredView/>
