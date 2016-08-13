@@ -19,22 +19,26 @@ using LiveCharts;
 using LiveCharts.Wpf;
 
 using tkUI.Subpages.GraphQuickBoxes.ViewModels;
+using tkUI.Subpages.GraphQuickBoxes.Utils;
 
 namespace tkUI.Subpages.GraphQuickBoxes.Views
 {
     /// <summary>
     /// Lógica de interacción para EmployeesInCompanyView.xaml
     /// </summary>
-    public partial class EmployeesInCompanyView : UserControl
+    public partial class EmployeesInCompanyView : UserControl, PersistentChart
     {
+
+        #region Fields
+
         static CartesianChart _employeesInCompanyChart;
         static Grid _gContainer;
-
         static bool _wasInit;
-
         static EmployeesInCompanyViewModel _viewModel;
-        
 
+        #endregion // Fields
+
+        #region Constructors
 
         public EmployeesInCompanyView()
         {
@@ -44,20 +48,20 @@ namespace tkUI.Subpages.GraphQuickBoxes.Views
             if (!_wasInit)
             {
                 _viewModel = new EmployeesInCompanyViewModel();
-                CreateGraph();
+                ((PersistentChart)this).CreateGraph();
                 _wasInit = true;
             }
             else
             {
-                _gContainer.Children.Remove(_employeesInCompanyChart);
-                _gContainer = GridContainer; // Set to this newly instance created
-                /*Grid.SetRow(_employeesInCompanyChart, 1);
-                Grid.SetColumn(_employeesInCompanyChart, 0);*/
-                GridContainer.Children.Add(_employeesInCompanyChart);
+                ((PersistentChart)this).AttachGraph();
             }
         }
 
-        void CreateGraph()
+        #endregion // Constructors
+
+        #region Interface Implementations
+
+        void PersistentChart.CreateGraph()
         {
             _employeesInCompanyChart = new CartesianChart();
             _employeesInCompanyChart.Name = "Chart";
@@ -83,5 +87,14 @@ namespace tkUI.Subpages.GraphQuickBoxes.Views
             GridContainer.Children.Add(_employeesInCompanyChart);
             _gContainer = GridContainer;
         }
+
+        void PersistentChart.AttachGraph()
+        {
+            _gContainer.Children.Remove(_employeesInCompanyChart);
+            _gContainer = GridContainer; // Set to this newly instance created
+            GridContainer.Children.Add(_employeesInCompanyChart);
+        }
+
+        #endregion // Interface Implementations
     }
 }

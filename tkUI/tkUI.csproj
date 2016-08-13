@@ -143,6 +143,7 @@
     <Compile Include="Subpages\GraphQuickBoxes\Models\ExpectedPaymentModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Utils\IBoxes.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Utils\PageFromQuickBoxes.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\Utils\PersistentChart.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\DashboardGraphsViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\EmployeesDismissedViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\EmployeesHiredViewModel.cs" />

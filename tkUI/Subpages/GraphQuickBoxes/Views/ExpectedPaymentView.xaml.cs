@@ -18,21 +18,27 @@ using System.Windows.Media.Animation;
 using System.Windows.Markup;
 
 using tkUI.Subpages.GraphQuickBoxes.ViewModels;
+using tkUI.Subpages.GraphQuickBoxes.Utils;
 
 namespace tkUI.Subpages.GraphQuickBoxes.Views
 {
     /// <summary>
     /// Lógica de interacción para ExpectedPaymentView.xaml
     /// </summary>
-    public partial class ExpectedPaymentView : UserControl
+    public partial class ExpectedPaymentView : UserControl, PersistentChart
     {
+
+        #region Fields
+
         static CartesianChart _paymentsChart;
         static Grid _gContainer; // Allows to remove the chart from the old Grid's
-
         static bool _wasInit;
-
         static ExpectedPaymentViewModel _viewModel;
-        
+
+        #endregion // Fields
+
+        #region Constructors
+
         public ExpectedPaymentView()
         {
             InitializeComponent();
@@ -40,23 +46,20 @@ namespace tkUI.Subpages.GraphQuickBoxes.Views
             if (!_wasInit)
             {
                 _viewModel = new ExpectedPaymentViewModel();
-                CreateGraph();
+                ((PersistentChart)this).CreateGraph();
                 _wasInit = true;
             }
             else
             {
-                _gContainer.Children.Remove(_paymentsChart);
-                _gContainer = GridContainer; // Set to this newly instance created
-                Grid.SetRow(_paymentsChart, 1);
-                Grid.SetColumn(_paymentsChart, 0);
-                GridContainer.Children.Add(_paymentsChart);
+                ((PersistentChart)this).AttachGraph();
             }
         }
 
-        /// <summary>
-        /// Creates a chart and adds it to the Grid.
-        /// </summary>
-        void CreateGraph()
+        #endregion // Constructors
+
+        #region Interface Implementations
+
+        void PersistentChart.CreateGraph()
         {
             //!ELEMENT CartesianChart
             _paymentsChart = new CartesianChart();
@@ -108,5 +111,16 @@ namespace tkUI.Subpages.GraphQuickBoxes.Views
             GridContainer.Children.Add(_paymentsChart);
             _gContainer = GridContainer; // Save the Grid's reference to remove the chart later
         }
+
+        void PersistentChart.AttachGraph()
+        {
+            _gContainer.Children.Remove(_paymentsChart);
+            _gContainer = GridContainer; // Set to this newly instance created
+            Grid.SetRow(_paymentsChart, 1);
+            Grid.SetColumn(_paymentsChart, 0);
+            GridContainer.Children.Add(_paymentsChart);
+        }
+
+        #endregion // Interface Implementations
     }
 }
