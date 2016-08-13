@@ -13,6 +13,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.Diagnostics;
+
+using LiveCharts;
+using LiveCharts.Wpf;
+
+using tkUI.Subpages.GraphQuickBoxes.ViewModels;
+
 namespace tkUI.Subpages.GraphQuickBoxes.Views
 {
     /// <summary>
@@ -20,9 +27,61 @@ namespace tkUI.Subpages.GraphQuickBoxes.Views
     /// </summary>
     public partial class EmployeesInCompanyView : UserControl
     {
+        static CartesianChart _employeesInCompanyChart;
+        static Grid _gContainer;
+
+        static bool _wasInit;
+
+        static EmployeesInCompanyViewModel _viewModel;
+        
+
+
         public EmployeesInCompanyView()
         {
             InitializeComponent();
+            
+            // Chart variables
+            if (!_wasInit)
+            {
+                _viewModel = new EmployeesInCompanyViewModel();
+                CreateGraph();
+                _wasInit = true;
+            }
+            else
+            {
+                _gContainer.Children.Remove(_employeesInCompanyChart);
+                _gContainer = GridContainer; // Set to this newly instance created
+                /*Grid.SetRow(_employeesInCompanyChart, 1);
+                Grid.SetColumn(_employeesInCompanyChart, 0);*/
+                GridContainer.Children.Add(_employeesInCompanyChart);
+            }
+        }
+
+        void CreateGraph()
+        {
+            _employeesInCompanyChart = new CartesianChart();
+            _employeesInCompanyChart.Name = "Chart";
+            _employeesInCompanyChart.Series = _viewModel.SeriesCollection;
+            _employeesInCompanyChart.LegendLocation = LegendLocation.Left;
+
+            Axis AxisX = new Axis();
+            AxisX.Title = "Mes";
+            AxisX.Labels = _viewModel.Labels;
+            _employeesInCompanyChart.AxisX.Add(AxisX);
+
+            Axis AxisY = new Axis();
+            AxisY.Title = "Empleados";
+            //AxisY.LabelFormatter = _viewModel.Formatter;
+
+            LiveCharts.Wpf.Separator sep = new LiveCharts.Wpf.Separator();
+            sep.IsEnabled = false;
+            sep.Step = 1;
+            AxisX.Separator = sep;
+
+            _employeesInCompanyChart.AxisY.Add(AxisY);
+
+            GridContainer.Children.Add(_employeesInCompanyChart);
+            _gContainer = GridContainer;
         }
     }
 }
