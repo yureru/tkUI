@@ -143,6 +143,7 @@
     <Compile Include="Subpages\GraphQuickBoxes\Models\ExpectedPaymentModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Utils\IBoxes.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Utils\PageFromQuickBoxes.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\Utils\PersistentChart.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\DashboardGraphsViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\EmployeesDismissedViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\EmployeesHiredViewModel.cs" />
@@ -364,6 +365,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Data\employees.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GeneralGlyphs\PencilThickIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GeneralGlyphs\PencilThickSelectedIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GeneralGlyphs\TrashIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GeneralGlyphs\TrashSelectedIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -66,7 +66,7 @@ namespace tkUI.Helper_Classes
         static IconsClicked()
         {
             var metadata = new FrameworkPropertyMetadata((ImageSource)null);
-            ImageClickedProperty = DependencyProperty.RegisterAttached("ImageClicked", typeof(ImageSource), typeof(IconsSelected), metadata);
+            ImageClickedProperty = DependencyProperty.RegisterAttached("ImageClicked", typeof(ImageSource), typeof(IconsClicked), metadata);
         }
 
         public static ImageSource GetImageClicked(DependencyObject obj)
