@@ -46,13 +46,36 @@
             right.aling the text in the Total Sales column.
             -->
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                <!-- No need for the IsSelected Binding -->
+                <!-- 
+            Bind the IsSelected property of a ListViewItem to the 
+            IsSelected property of a CustomerViewModel object.
+            -->
+                <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+                <Style.Triggers>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="ItemsControl.AlternationIndex" Value="1" />
+                            <Condition Property="IsSelected" Value="False" />
+                            <Condition Property="IsMouseOver" Value="False" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="#EEEEEEEE" />
+                    </MultiTrigger>
+                </Style.Triggers>
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     
     <DockPanel>
         <!-- No need for te docked element to show total sales -->
+        <Grid DockPanel.Dock="Bottom" Margin="0,2,4,2">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Total selected employees: "/>
+                <ContentPresenter
+                    Content="{Binding Path=TotalSelectedEmployees}"
+                    />
+            </StackPanel>
+                        
+        </Grid>
         <ListView
             AlternationCount="2"
             DataContext="{StaticResource EmployeeGroups}"

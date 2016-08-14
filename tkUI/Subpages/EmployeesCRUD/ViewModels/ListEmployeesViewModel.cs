@@ -31,6 +31,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         readonly EmployeeRepository _employeeRepository;
         RelayCommand _deleteCommand;
 
+
         #endregion // Fields
 
         #region Constructors
@@ -92,7 +93,13 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// </summary>
         public ObservableCollection<EmployeeWrapperViewModel> AllEmployees { get; private set; }
 
-        // TotalSelectedSales not used.
+        public int TotalSelectedEmployees
+        {
+            get
+            {
+                return this.AllEmployees.Sum(empVM => empVM.IsSelected ? 1 : 0);
+            }
+        }
 
         #endregion // Interface Implementations
 
@@ -115,8 +122,16 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         void OnEmployeeViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            ///TODO: This could serve as a select several users and delete them.
-            
+            string IsSelected = "IsSelected";
+            // Make sure that the property name we're referencing is valid.
+            // This is a debugging technique, and does not execute in a Release build.
+            (sender as EmployeeWrapperViewModel).VerifyPropertyName(IsSelected);
+
+            // When a customer is selected or unselected, we must let the
+            // world know that the TotalSelectedSales property has changed,
+            // so that it will be queried again for a new value.
+            if (e.PropertyName == IsSelected)
+                this.OnPropertyChanged("TotalSelectedEmployees");
         }
 
         void OnEmployeeAddedToRepository(object sender, EmployeeAddedEventArgs e)
@@ -137,6 +152,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 if (this.AllEmployees[i].ID == e.ID)
                 {
                     this.AllEmployees.RemoveAt(i);
+                    /* Update this property here because we could select some employees, then delete one,
+                     * and therefore the selected quantity will still be the same value. This prevents that. */
+                    this.OnPropertyChanged("TotalSelectedEmployees");
                     break;
                 }
             }

@@ -177,6 +177,22 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (value == _isSelected)
+                {
+                    return;
+                }
+
+                _isSelected = value;
+
+                base.OnPropertyChanged("IsSelected");
+            }
+        }
+
         /// <summary>
         /// Used to show which user is currently/last saved.
         /// </summary>
@@ -192,9 +208,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 }
             }
         }
-
-        // Not used:
-        // public bool IsSelected
 
         /// <summary>
         /// Returns a command that saves the customer.
