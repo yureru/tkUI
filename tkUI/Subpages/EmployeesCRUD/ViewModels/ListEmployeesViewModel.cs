@@ -29,8 +29,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         #region Fields
 
         readonly EmployeeRepository _employeeRepository;
-        RelayCommand _deleteCommand;
-
+        bool _enableRangeDelete;
 
         #endregion // Fields
 
@@ -88,6 +87,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        #endregion // Interface Implementations
+
+        #region Public Interface
+
         /// <summary>
         /// Returns a collection of all the EmployeeWrapperViewModel objects.
         /// </summary>
@@ -101,7 +104,50 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        #endregion // Interface Implementations
+        /*public string RangeDeleteTooltip
+        {
+            get
+            {
+                return _rangeDeleteTooltip;
+            }
+
+            set
+            {
+                if (_rangeDeleteTooltip == value)
+                {
+                    return;
+                }
+
+                _rangeDeleteTooltip = value;
+                OnPropertyChanged("RangeDeleteTooltip");
+            }
+        }*/
+
+        /*public string RangeDeleteTooltip
+        {
+            get
+            {
+                return UpdateTooltip();
+            }
+            set
+            {
+                _rangeDeleteTooltip = value;
+            }
+        }*/
+
+        public string RangeDeleteTooltip
+        {
+            get
+            {
+                if (TotalSelectedEmployees < 2)
+                {
+                    return "";
+                }
+                return "Eliminar " + TotalSelectedEmployees + " empleados";
+            }
+        }
+
+        #endregion // Public Interface
 
         #region Event Handling Methods
 
@@ -131,7 +177,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             // world know that the TotalSelectedSales property has changed,
             // so that it will be queried again for a new value.
             if (e.PropertyName == IsSelected)
+            {
                 this.OnPropertyChanged("TotalSelectedEmployees");
+                this.OnPropertyChanged("RangeDeleteTooltip");
+            }
         }
 
         void OnEmployeeAddedToRepository(object sender, EmployeeAddedEventArgs e)
@@ -155,6 +204,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     /* Update this property here because we could select some employees, then delete one,
                      * and therefore the selected quantity will still be the same value. This prevents that. */
                     this.OnPropertyChanged("TotalSelectedEmployees");
+                    
                     break;
                 }
             }

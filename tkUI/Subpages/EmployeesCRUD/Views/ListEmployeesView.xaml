@@ -68,11 +68,14 @@
     <DockPanel>
         <!-- No need for te docked element to show total sales -->
         <Grid DockPanel.Dock="Bottom" Margin="0,2,4,2">
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center">
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Text="Total selected employees: "/>
                 <ContentPresenter
                     Content="{Binding Path=TotalSelectedEmployees}"
                     />
+                <Button Template="{StaticResource glyphImageButton}"
+                    helper:Icons.Image="..\..\..\Resources\GeneralGlyphs\TrashIcon.png"
+                    helper:IconsClicked.ImageClicked="..\..\..\Resources\GeneralGlyphs\TrashSelectedIcon.png" Margin="0,0,5,0" ToolTip="{Binding Path=RangeDeleteTooltip, Mode=OneWay}"/>
             </StackPanel>
                         
         </Grid>
