@@ -98,6 +98,7 @@
     <Compile Include="Helper Classes\ObservableObject.cs" />
     <Compile Include="Helper Classes\PageFromNavigation.cs" />
     <Compile Include="Helper Classes\RelayCommand.cs" />
+    <Compile Include="Helper Classes\SelectableEmployee.cs" />
     <Compile Include="Models\AdministrationModel.cs" />
     <Compile Include="Models\ConfigurationModel.cs" />
     <Compile Include="Models\DashboardModel.cs" />

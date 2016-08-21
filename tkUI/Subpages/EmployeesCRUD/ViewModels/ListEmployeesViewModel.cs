@@ -81,7 +81,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 if (_deleteRangeUsers == null)
                 {
                     _deleteRangeUsers = new RelayCommand(
-                        param => this.DeleteFromRange(),
+                        param => this.AskToDeleteFromRange(),
                         param => this.CanDeleteFromRange()
                         );
                 }
@@ -229,9 +229,23 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         #region Methods
 
-        public void DeleteFromRange()
+        public void AskToDeleteFromRange()
         {
-            
+            /*List<int> idSelected = new List<int>();
+
+            foreach (var emp in this.AllEmployees)
+            {
+                if (emp.IsSelected)
+                {
+                    idSelected.Add(emp.ID);
+                }
+            }*/
+            var selectedEmps = (from emp in this.AllEmployees where emp.IsSelected select emp.ID).ToList();
+
+            foreach (var emp in selectedEmps)
+            {
+                this._employeeRepository.DeleteByID(emp);
+            }
         }
 
         public bool CanDeleteFromRange()

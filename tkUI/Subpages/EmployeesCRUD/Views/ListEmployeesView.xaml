@@ -74,6 +74,7 @@
                     Content="{Binding Path=TotalSelectedEmployees}"
                     />
                 <Button Template="{StaticResource glyphImageButton}"
+                    Command="{Binding Path=DeleteRangeUsers}"
                     helper:Icons.Image="..\..\..\Resources\GeneralGlyphs\TrashIcon.png"
                     helper:IconsClicked.ImageClicked="..\..\..\Resources\GeneralGlyphs\TrashSelectedIcon.png" Margin="0,0,5,0" ToolTip="{Binding Path=RangeDeleteTooltip, Mode=OneWay}"/>
             </StackPanel>
