@@ -7,6 +7,7 @@ using System.ComponentModel;
 
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Windows;
 using System.Windows.Input;
 
 using tkUI.DataAccess;
@@ -202,9 +203,21 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         /// <summary>
         /// Deletes a selected range of employees.
+        /// It shows a confirmation dialog to do this action.
         /// </summary>
         public void DeleteFromRange()
         {
+
+            var result = MessageBox.Show(String.Format("¿Desea eliminar los {0} empleados seleccionados?", TotalSelectedEmployees), "Confirmación",
+                 MessageBoxButton.YesNo, MessageBoxImage.None);
+
+            if (result == MessageBoxResult.No || result == MessageBoxResult.None)
+            {
+                //TODO: Unselect the previously selected items.
+                //TODO: Buttons will show "Si" and "No" instead of "Yes" or "No", this seems like a lot of work for little profit.
+                return;
+            }
+
             var selectedEmps = (from emp in this.AllEmployees where emp.IsSelected select emp.ID).ToList();
 
             foreach (var emp in selectedEmps)
