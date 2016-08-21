@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-
+using System.Windows.Input;
 
 using tkUI.DataAccess;
 using tkUI.Subpages.EmployeesCRUD.Utils;
@@ -29,6 +29,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         #region Fields
 
         readonly EmployeeRepository _employeeRepository;
+        RelayCommand _deleteRangeUsers;
         bool _enableRangeDelete;
 
         #endregion // Fields
@@ -73,7 +74,20 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         #region Commands
 
-        
+        public ICommand DeleteRangeUsers
+        {
+            get
+            {
+                if (_deleteRangeUsers == null)
+                {
+                    _deleteRangeUsers = new RelayCommand(
+                        param => this.DeleteFromRange(),
+                        param => this.CanDeleteFromRange()
+                        );
+                }
+                return _deleteRangeUsers;
+            }
+        }
 
         #endregion // Commands
 
@@ -212,5 +226,20 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         }
 
         #endregion // Event Handling Methods
+
+        #region Methods
+
+        public void DeleteFromRange()
+        {
+            
+        }
+
+        public bool CanDeleteFromRange()
+        {
+            // this could be used to create a modal, and then the confirmation to delete the range.
+            return true;
+        }
+
+        #endregion // Methods
     }
 }
