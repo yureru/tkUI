@@ -30,7 +30,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         readonly EmployeeRepository _employeeRepository;
         RelayCommand _deleteRangeUsers;
-        bool _enableRangeDelete;
 
         #endregion // Fields
 
@@ -81,7 +80,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 if (_deleteRangeUsers == null)
                 {
                     _deleteRangeUsers = new RelayCommand(
-                        param => this.AskToDeleteFromRange(),
+                        param => this.DeleteFromRange(),
                         param => this.CanDeleteFromRange()
                         );
                 }
@@ -118,37 +117,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        /*public string RangeDeleteTooltip
-        {
-            get
-            {
-                return _rangeDeleteTooltip;
-            }
-
-            set
-            {
-                if (_rangeDeleteTooltip == value)
-                {
-                    return;
-                }
-
-                _rangeDeleteTooltip = value;
-                OnPropertyChanged("RangeDeleteTooltip");
-            }
-        }*/
-
-        /*public string RangeDeleteTooltip
-        {
-            get
-            {
-                return UpdateTooltip();
-            }
-            set
-            {
-                _rangeDeleteTooltip = value;
-            }
-        }*/
-
+        /// <summary>
+        /// Tooltip to determine how many employees we're going to delete.
+        /// </summary>
         public string RangeDeleteTooltip
         {
             get
@@ -229,25 +200,24 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         #region Methods
 
-        public void AskToDeleteFromRange()
+        /// <summary>
+        /// Deletes a selected range of employees.
+        /// </summary>
+        public void DeleteFromRange()
         {
-            /*List<int> idSelected = new List<int>();
-
-            foreach (var emp in this.AllEmployees)
-            {
-                if (emp.IsSelected)
-                {
-                    idSelected.Add(emp.ID);
-                }
-            }*/
             var selectedEmps = (from emp in this.AllEmployees where emp.IsSelected select emp.ID).ToList();
 
             foreach (var emp in selectedEmps)
             {
-                this._employeeRepository.DeleteByID(emp);
+                _employeeRepository.DeleteByID(emp);
             }
         }
 
+        /// <summary>
+        /// Checks if the command is available.
+        /// TODO: Create a modal confirmation window.
+        /// </summary>
+        /// <returns></returns>
         public bool CanDeleteFromRange()
         {
             // this could be used to create a modal, and then the confirmation to delete the range.
