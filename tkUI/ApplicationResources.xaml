@@ -71,4 +71,13 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <!-- Image Feedback -->
+    <Style x:Key="enableStates">
+        <Style.Triggers>
+            <Trigger Property="Button.IsEnabled" Value="False">
+                <Setter Property="Button.Opacity" Value="0.5"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
 </ResourceDictionary>

@@ -251,7 +251,15 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         public bool CanDeleteFromRange()
         {
             // this could be used to create a modal, and then the confirmation to delete the range.
-            return true;
+            //return true;
+            if (TotalSelectedEmployees > 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         #endregion // Methods
