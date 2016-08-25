@@ -381,6 +381,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             var view = new AddEmployeeView();
             modal.Width = 450;
             modal.Height = 350;
+            modal.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             // Search for the employee by id
             var listEmp = _employeeRepository.GetEmployees();
