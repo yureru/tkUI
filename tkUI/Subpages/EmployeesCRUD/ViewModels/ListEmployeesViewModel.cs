@@ -7,7 +7,8 @@ using System.ComponentModel;
 
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-
+using System.Windows;
+using System.Windows.Input;
 
 using tkUI.DataAccess;
 using tkUI.Subpages.EmployeesCRUD.Utils;
@@ -29,7 +30,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         #region Fields
 
         readonly EmployeeRepository _employeeRepository;
-        RelayCommand _deleteCommand;
+        RelayCommand _deleteRangeUsers;
 
         #endregion // Fields
 
@@ -73,7 +74,20 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         #region Commands
 
-        
+        public ICommand DeleteRangeUsers
+        {
+            get
+            {
+                if (_deleteRangeUsers == null)
+                {
+                    _deleteRangeUsers = new RelayCommand(
+                        param => this.DeleteFromRange(),
+                        param => this.CanDeleteFromRange()
+                        );
+                }
+                return _deleteRangeUsers;
+            }
+        }
 
         #endregion // Commands
 
@@ -87,14 +101,39 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        #endregion // Interface Implementations
+
+        #region Public Interface
+
         /// <summary>
         /// Returns a collection of all the EmployeeWrapperViewModel objects.
         /// </summary>
         public ObservableCollection<EmployeeWrapperViewModel> AllEmployees { get; private set; }
 
-        // TotalSelectedSales not used.
+        public int TotalSelectedEmployees
+        {
+            get
+            {
+                return this.AllEmployees.Sum(empVM => empVM.IsSelected ? 1 : 0);
+            }
+        }
 
-        #endregion // Interface Implementations
+        /// <summary>
+        /// Tooltip to determine how many employees we're going to delete.
+        /// </summary>
+        public string RangeDeleteTooltip
+        {
+            get
+            {
+                if (TotalSelectedEmployees < 2)
+                {
+                    return "";
+                }
+                return "Eliminar " + TotalSelectedEmployees + " empleados";
+            }
+        }
+
+        #endregion // Public Interface
 
         #region Event Handling Methods
 
@@ -115,8 +154,19 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         void OnEmployeeViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            ///TODO: This could serve as a select several users and delete them.
-            
+            string IsSelected = "IsSelected";
+            // Make sure that the property name we're referencing is valid.
+            // This is a debugging technique, and does not execute in a Release build.
+            (sender as EmployeeWrapperViewModel).VerifyPropertyName(IsSelected);
+
+            // When a customer is selected or unselected, we must let the
+            // world know that the TotalSelectedSales property has changed,
+            // so that it will be queried again for a new value.
+            if (e.PropertyName == IsSelected)
+            {
+                this.OnPropertyChanged("TotalSelectedEmployees");
+                this.OnPropertyChanged("RangeDeleteTooltip");
+            }
         }
 
         void OnEmployeeAddedToRepository(object sender, EmployeeAddedEventArgs e)
@@ -137,6 +187,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 if (this.AllEmployees[i].ID == e.ID)
                 {
                     this.AllEmployees.RemoveAt(i);
+                    /* Update this property here because we could select some employees, then delete one,
+                     * and therefore the selected quantity will still be the same value. This prevents that. */
+                    this.OnPropertyChanged("TotalSelectedEmployees");
+                    
                     break;
                 }
             }
@@ -144,5 +198,50 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         }
 
         #endregion // Event Handling Methods
+
+        #region Methods
+
+        /// <summary>
+        /// Deletes a selected range of employees.
+        /// It shows a confirmation dialog to do this action.
+        /// </summary>
+        public void DeleteFromRange()
+        {
+
+            var result = MessageBox.Show(String.Format("¿Desea eliminar los {0} empleados seleccionados?", TotalSelectedEmployees), "Confirmación",
+                 MessageBoxButton.YesNo, MessageBoxImage.None);
+
+            if (result == MessageBoxResult.No || result == MessageBoxResult.None)
+            {
+                //TODO: Unselect the previously selected items.
+                //TODO: Buttons will show "Si" and "No" instead of "Yes" or "No", this seems like a lot of work for little profit.
+                return;
+            }
+
+            var selectedEmps = (from emp in this.AllEmployees where emp.IsSelected select emp.ID).ToList();
+
+            foreach (var emp in selectedEmps)
+            {
+                _employeeRepository.DeleteByID(emp);
+            }
+        }
+
+        /// <summary>
+        /// Checks if the command is available.
+        /// </summary>
+        /// <returns></returns>
+        public bool CanDeleteFromRange()
+        {
+            if (TotalSelectedEmployees > 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion // Methods
     }
 }

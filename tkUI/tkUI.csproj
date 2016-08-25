@@ -98,6 +98,7 @@
     <Compile Include="Helper Classes\ObservableObject.cs" />
     <Compile Include="Helper Classes\PageFromNavigation.cs" />
     <Compile Include="Helper Classes\RelayCommand.cs" />
+    <Compile Include="Helper Classes\SelectableEmployee.cs" />
     <Compile Include="Models\AdministrationModel.cs" />
     <Compile Include="Models\ConfigurationModel.cs" />
     <Compile Include="Models\DashboardModel.cs" />
@@ -138,6 +139,7 @@
     </Compile>
     <Compile Include="Subpages\GraphQuickBoxes\Models\DashboardGraphsModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Models\EmployeesDismissedModel.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\Models\EmployeesHiredAndDismissedModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Models\EmployeesHiredModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Models\EmployeesInCompanyModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Models\ExpectedPaymentModel.cs" />
@@ -146,12 +148,16 @@
     <Compile Include="Subpages\GraphQuickBoxes\Utils\PersistentChart.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\DashboardGraphsViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\EmployeesDismissedViewModel.cs" />
+    <Compile Include="Subpages\GraphQuickBoxes\ViewModels\EmployeesHiredAndDismissedViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\EmployeesHiredViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\EmployeesInCompanyViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\ViewModels\ExpectedPaymentViewModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Views\DashboardGraphsView.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Views\EmployeesDismissedView.xaml.cs">
       <DependentUpon>EmployeesDismissedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Subpages\GraphQuickBoxes\Views\EmployeesHiredAndDismissedView.xaml.cs">
+      <DependentUpon>EmployeesHiredAndDismissedView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Subpages\GraphQuickBoxes\Views\EmployeesHiredView.xaml.cs">
       <DependentUpon>EmployeesHiredView.xaml</DependentUpon>
@@ -219,6 +225,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Subpages\GraphQuickBoxes\Views\EmployeesDismissedView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Subpages\GraphQuickBoxes\Views\EmployeesHiredAndDismissedView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -149,6 +149,20 @@ namespace tkUI.DataAccess
             return false;
         }
 
+        public void DeleteByRange()
+        {
+            /*
+             I think the current general steps would be:
+             Click trash icon, Command gets the elements to delete, this data is passed to the EmployeeRepository
+             which deletes the items.
+
+            It would be *great* to pass only the data or the items that are selected to deletion, the easy way to solve this
+            is use the IsSelected property, then loop through the all the elements (an O(n) operation smh), check for the IsSelected
+            property, and pass a structure to the EmployeeRepository which will delete the items based on this data.
+             */
+            //var range = from emp in _employees where emp.IsSelected
+        }
+
         #endregion // Public Interface
 
         #region Private Helpers
