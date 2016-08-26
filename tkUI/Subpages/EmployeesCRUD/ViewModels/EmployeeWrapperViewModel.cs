@@ -116,6 +116,108 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        public string Birthdate
+        {
+            get { return _employee.Birthdate; }
+            set
+            {
+                if (_employee.Birthdate == value)
+                {
+                    return;
+                }
+
+                _employee.Birthdate = value;
+
+                base.OnPropertyChanged("Birtdate");
+            }
+        }
+
+        public string Email
+        {
+            get { return _employee.Email; }
+            set
+            {
+                if (_employee.Email == value)
+                {
+                    return;
+                }
+
+                _employee.Email = value;
+
+                base.OnPropertyChanged("Email");
+            }
+        }
+
+        public string Phone
+        {
+            get { return _employee.Phone; }
+            set
+            {
+                if (_employee.Phone == value)
+                {
+                    return;
+                }
+
+                _employee.Phone = value;
+
+                OnPropertyChanged("Phone");
+            }
+        }
+
+        public uint Pay
+        {
+            get { return _employee.Pay; }
+            set
+            {
+                if (_employee.Pay == value)
+                {
+                    return;
+                }
+
+                _employee.Pay = value;
+
+                OnPropertyChanged("Pay");
+            }
+        }
+
+        public string WorktTime
+        {
+            get { return _employee.WorkTime; }
+            set
+            {
+                if (_employee.WorkTime == value)
+                {
+                    return;
+                }
+
+                _employee.WorkTime = value;
+
+                OnPropertyChanged("WorkTime");
+            }
+        }
+
+        public string Address
+        {
+            get { return _employee.Address; }
+            set
+            {
+                if (_employee.Address == value)
+                {
+                    return;
+                }
+
+                _employee.Address = value;
+
+                OnPropertyChanged("Address");
+            }
+        }
+
+        public string Startedworking
+        {
+            get { return _employee.StartedWorking; }
+            set { }
+        }
+
         #endregion // Employee Properties
 
         #region Presentation Properties
