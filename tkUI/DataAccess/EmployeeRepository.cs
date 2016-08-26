@@ -177,7 +177,14 @@ namespace tkUI.DataAccess
                             (int)employeeElem.Attribute("id"),
                             (string)employeeElem.Attribute("firstName"),
                             (string)employeeElem.Attribute("lastName"),
-                            (bool)employeeElem.Attribute("gender"))).ToList();
+                            (bool)employeeElem.Attribute("gender"),
+                            (string)employeeElem.Attribute("birthdate"),
+                            (string)employeeElem.Attribute("email"),
+                            (string)employeeElem.Attribute("phone"),
+                            (uint)employeeElem.Attribute("pay"),
+                            (string)employeeElem.Attribute("workTime"),
+                            (string)employeeElem.Attribute("address"),
+                            (string)employeeElem.Attribute("startedWorking"))).ToList();
         }
 
         static Stream GetResourceStream(string resourceFile)

@@ -26,6 +26,19 @@ namespace tkUI.Models
 
         public bool Gender { get; set; }
 
+        public string Birthdate { get; set; }
+
+        public string Email { get; set; }
+
+        public string Phone { get; set; }
+
+        public uint Pay { get; set; }
+
+        public string WorkTime { get; set; }
+
+        public string Address { get; set; }
+
+        public string StartedWorking { get; set; }
 
         #endregion // Fields
 
@@ -36,14 +49,22 @@ namespace tkUI.Models
             return new Employee();
         }
 
-        public static Employee CreateEmployee(int id, string firstName, string lastName, bool gender)
+        public static Employee CreateEmployee(int id, string firstName, string lastName, bool gender, string birthdate,
+            string email, string phone, uint pay, string workTime, string address, string startedWorking)
         {
             return new Employee
             {
                 ID = id,
                 FirstName = firstName,
                 LastName = lastName,
-                Gender = gender
+                Gender = gender,
+                Birthdate = birthdate,
+                Email = email,
+                Phone = phone,
+                Pay = pay,
+                WorkTime = workTime,
+                Address = address,
+                StartedWorking = startedWorking
             };
         }
 
@@ -58,7 +79,8 @@ namespace tkUI.Models
         /// <returns></returns>
         public static Employee CreateEmployee(Employee employee)
         {
-            return CreateEmployee(employee.ID, employee.FirstName, employee.LastName, employee.Gender);
+            return CreateEmployee(employee.ID, employee.FirstName, employee.LastName, employee.Gender, employee.Birthdate,
+                employee.Email, employee.Phone, employee.Pay, employee.WorkTime, employee.Address, employee.StartedWorking);
         }
 
         #endregion // Creation
