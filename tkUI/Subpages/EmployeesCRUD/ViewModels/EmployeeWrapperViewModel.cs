@@ -34,6 +34,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         readonly EmployeeRepository _employeeRepository;
         string _genderType;
         string _workingType;
+        string _selectedDay, _selectedMonth, _selectedYear; // TODO: Delete this and create the corresponding fields on Employee class
         string[] _genderTypeOptions;
         string[] _workTimeOptions;
         string _lastUserSaved;
@@ -132,6 +133,54 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 _employee.Birthdate = value;
 
                 base.OnPropertyChanged("Birtdate");
+            }
+        }
+
+        public string Day
+        {
+            get { return _selectedDay; }
+            set
+            {
+                if (_selectedDay == value)
+                {
+                    return;
+                }
+
+                _selectedDay = value;
+
+                OnPropertyChanged("Day");
+            }
+        }
+
+        public string Month
+        {
+            get { return _selectedMonth; }
+            set
+            {
+                if (_selectedMonth == value)
+                {
+                    return;
+                }
+
+                _selectedMonth = value;
+
+                OnPropertyChanged("Month");
+            }
+        }
+
+        public string Year
+        {
+            get { return _selectedYear; }
+            set
+            {
+                if (_selectedYear == value)
+                {
+                    return;
+                }
+
+                _selectedYear = value;
+
+                OnPropertyChanged("Year");
             }
         }
 
@@ -345,6 +394,21 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     base.OnPropertyChanged("LastUserSaved");
                 }
             }
+        }
+
+        public static List<string> Days
+        {
+            get { return BirthDate.Days; }
+        }
+
+        public static string[] Months
+        {
+            get { return BirthDate.Months; }
+        }
+
+        public static List<string> Years
+        {
+            get { return BirthDate.Years; }
         }
 
         /// <summary>
