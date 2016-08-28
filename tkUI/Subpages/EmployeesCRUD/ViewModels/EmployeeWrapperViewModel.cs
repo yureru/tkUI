@@ -63,7 +63,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             _employeeRepository = employeeRepository;
             _genderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
             _employee.WorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
-
+            this.Day = "Día";
+            this.Month = "Mes";
+            this.Year = "Año";
         }
 
         #endregion // Constructors

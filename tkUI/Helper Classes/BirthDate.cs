@@ -50,7 +50,8 @@ namespace tkUI.Helper_Classes
                 if (_years == null)
                 {
                     const int minimumAge = 15;
-                    _years = PopulateDaysOrYears(1900, DateTime.Today.Year - minimumAge, false);
+                    _years = PopulateDaysOrYears(DateTime.Today.Year - minimumAge, 1900, false);
+                    
                 }
 
                 return _years;
@@ -68,15 +69,20 @@ namespace tkUI.Helper_Classes
             if (isPopulatingDays)
             {
                 items.Add("Día");
+
+                for (; from <= upTo; ++from)
+                {
+                    items.Add(from.ToString());
+                }
             }
             else
             {
                 items.Add("Año");
-            }
 
-            for (; from <= upTo; ++from)
-            {
-                items.Add(from.ToString());
+                for (; from >= upTo; --from)
+                {
+                    items.Add(from.ToString());
+                }
             }
 
             return items;

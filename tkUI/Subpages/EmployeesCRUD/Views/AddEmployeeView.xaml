@@ -138,18 +138,21 @@
                         ItemsSource="{Binding Path=Days, Mode=OneTime}"
                         SelectedItem="{Binding Path=Day, ValidatesOnDataErrors=True}"
                         Validation.ErrorTemplate="{x:Null}"
+                        Margin="0,0,5,0"
                         />
                     <!-- Month -->
                     <ComboBox Grid.Column="1"
                         ItemsSource="{Binding Path=Months, Mode=OneTime}"
                         SelectedItem="{Binding Path=Month, ValidatesOnDataErrors=True}"
                         Validation.ErrorTemplate="{x:Null}"
+                        Margin="0,0,5,0"
                         />
                     <!-- Year -->
                     <ComboBox Grid.Column="2"
                         ItemsSource="{Binding Path=Years, Mode=OneTime}"
                         SelectedItem="{Binding Path=Year, ValidatesOnDataErrors=True}"
                         Validation.ErrorTemplate="{x:Null}"
+                        Margin="0,0,5,0"
                         />
                 </Grid>
             </StackPanel>
