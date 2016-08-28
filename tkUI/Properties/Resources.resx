@@ -204,10 +204,6 @@
     <value>No se puede guardar un empleado inválido.</value>
     <comment>The exception message shown if you call Save on an invalid EmployeeWrapperViewModel object.</comment>
   </data>
-  <data name="EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified" xml:space="preserve">
-    <value>(Sin Especificar)</value>
-    <comment>Message when an employee's gender is not specified.</comment>
-  </data>
   <data name="PencilThickIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GeneralGlyphs\PencilThickIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -219,5 +215,17 @@
   </data>
   <data name="TrashSelectedIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GeneralGlyphs\TrashSelectedIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EmployeeWrapperViewModel_ComboboxValue_NotSpecified" xml:space="preserve">
+    <value>(Sin Especificar)</value>
+    <comment>Option when a Combobox value has not been selected.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_WorkingTimeOptions_FullTime" xml:space="preserve">
+    <value>Tiempo Completo</value>
+    <comment>Option when an employee is working full time.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_WorkingTimeOptions_PartTime" xml:space="preserve">
+    <value>Tiempo Parcial</value>
+    <comment>Option when an employee is working part time.</comment>
   </data>
 </root>

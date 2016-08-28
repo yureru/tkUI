@@ -160,6 +160,15 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (Sin Especificar).
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_ComboboxValue_NotSpecified {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_ComboboxValue_NotSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El género del empleado debe seleccionarse.
         /// </summary>
         internal static string EmployeeWrapperViewModel_Error_MissingGenderType {
@@ -196,11 +205,20 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (Sin Especificar).
+        ///   Looks up a localized string similar to Tiempo Completo.
         /// </summary>
-        internal static string EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified {
+        internal static string EmployeeWrapperViewModel_WorkingTimeOptions_FullTime {
             get {
-                return ResourceManager.GetString("EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified", resourceCulture);
+                return ResourceManager.GetString("EmployeeWrapperViewModel_WorkingTimeOptions_FullTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiempo Parcial.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_WorkingTimeOptions_PartTime {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_WorkingTimeOptions_PartTime", resourceCulture);
             }
         }
         

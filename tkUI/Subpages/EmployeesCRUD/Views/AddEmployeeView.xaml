@@ -132,31 +132,54 @@
                Content="_Email:"
                HorizontalAlignment="Right"
                />
-        
-        <!-- Phone -->
+        <TextBox
+            Name="emailTxt"
+            Grid.Row="8" Grid.Column="2"
+            VerticalContentAlignment="Center"
+            />
+            <!-- Phone -->
         <Label Grid.Row="10" Grid.Column="0"
                Content="_Phone:"
                HorizontalAlignment="Right"
                />
-        
-        <!-- Pay -->
+       <TextBox
+            Name="phoneTxt"
+            Grid.Row="10" Grid.Column="2"
+            VerticalContentAlignment="Center"
+            />
+            <!-- Pay -->
         <Label Grid.Row="12" Grid.Column="0"
                Content="_Sueldo por día:"
                HorizontalAlignment="Right"
                />
-        
-        <!-- Worktime -->
-        <Label Grid.Row="14" Grid.Column="0"
+        <TextBox
+            Name="payTxt"
+            Grid.Row="12" Grid.Column="2"
+            VerticalContentAlignment="Center"
+            />
+            <!-- Worktime -->
+            <Label Grid.Row="14" Grid.Column="0"
                Content="_Jornada laboral:"
                HorizontalAlignment="Right"
                />
-        
-        <!-- Address -->
+            <ComboBox Grid.Row="14" Grid.Column="2"
+                      ItemsSource="{Binding Path=WorkTimeOptions, Mode=OneTime}"
+                      SelectedItem="{Binding Path=WorkTime, ValidatesOnDataErrors=True}"
+                      Validation.ErrorTemplate="{x:Null}"
+                      />
+
+
+            <!-- Address -->
         <Label Grid.Row="16" Grid.Column="0"
                Content="_Dirección:"
                HorizontalAlignment="Right"
                />
-        <!-- Save Button -->
+        <TextBox
+            Name="addressTxt"
+            Grid.Row="16" Grid.Column="2"
+            VerticalContentAlignment="Center"
+            />
+            <!-- Save Button -->
         <Button
             Grid.Row="18" Grid.Column="2"
             Command="{Binding Path=SaveCommand}"

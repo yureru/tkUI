@@ -33,7 +33,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         readonly Employee _employee;
         readonly EmployeeRepository _employeeRepository;
         string _genderType;
+        string _workingType;
         string[] _genderTypeOptions;
+        string[] _workTimeOptions;
         string _lastUserSaved;
         bool _isSelected;
         RelayCommand _saveCommand;
@@ -58,7 +60,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
             _employee = employee;
             _employeeRepository = employeeRepository;
-            _genderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified;
+            _genderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            _employee.WorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
 
         }
 
@@ -255,12 +258,45 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 {
                     _genderTypeOptions = new string[]
                     {
-                        Resources.EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified,
+                        Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified,
                         Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male,
                         Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female
                     };
                 }
                 return _genderTypeOptions;
+            }
+        }
+
+        public string WorkTime
+        {
+            get { return _employee.WorkTime; }
+            set
+            {
+                if (_employee.WorkTime == null || String.IsNullOrEmpty(_employee.WorkTime))
+                {
+                    return;
+                }
+
+                _employee.WorkTime = value;
+
+                this.OnPropertyChanged("WorkTime");
+            }
+        }
+
+        public string[] WorkTimeOptions
+        {
+            get
+            {
+                if (_workTimeOptions == null)
+                {
+                    _workTimeOptions = new string[]
+                    {
+                        Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified,
+                        Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime,
+                        Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime
+                    };
+                }
+                return _workTimeOptions;
             }
         }
 
@@ -434,7 +470,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             FirstName = null;
             LastName = null;
-            _genderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified;
+            _genderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
             base.OnPropertyChanged("GenderType");
         }
 
