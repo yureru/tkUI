@@ -33,7 +33,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         readonly Employee _employee;
         readonly EmployeeRepository _employeeRepository;
         string _genderType;
-        string _workingType;
         string _selectedDay, _selectedMonth, _selectedYear; // TODO: Delete this and create the corresponding fields on Employee class
         string[] _genderTypeOptions;
         string[] _workTimeOptions;
@@ -398,6 +397,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        /* Days, Months, and Years are wrappers for the BirthDate Comboboxes */
         public static List<string> Days
         {
             get { return BirthDate.Days; }

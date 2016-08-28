@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace tkUI.Helper_Classes
 {
+    /// <summary>
+    /// Class to retrieve a range of Days, Months, and Years that could be used in
+    /// a Combobox tp select an specific date.
+    /// </summary>
     class BirthDate
     {
         #region Fields
@@ -62,10 +66,13 @@ namespace tkUI.Helper_Classes
 
         #region Private Methods
 
+        /// <summary>
+        /// Populates the Days or the Years.
+        /// </summary>
         static List<string> PopulateDaysOrYears(int from, int upTo, bool isPopulatingDays)
         {
             var items = new List<string>();
-
+            // TODO: "Día" and "Año" should be string resources to allow use them in EmployeeWrapperViewModel
             if (isPopulatingDays)
             {
                 items.Add("Día");
