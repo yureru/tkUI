@@ -81,6 +81,33 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Día.
+        /// </summary>
+        internal static string BirthDate_Combobox_Day {
+            get {
+                return ResourceManager.GetString("BirthDate_Combobox_Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mes.
+        /// </summary>
+        internal static string BirthDate_Combobox_Month {
+            get {
+                return ResourceManager.GetString("BirthDate_Combobox_Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Año.
+        /// </summary>
+        internal static string BirthDate_Combobox_Year {
+            get {
+                return ResourceManager.GetString("BirthDate_Combobox_Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap ClipBoardIcon {
@@ -151,6 +178,51 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to La dirección e-mail es inválida..
+        /// </summary>
+        internal static string Employee_Error_InvalidEmail {
+            get {
+                return ResourceManager.GetString("Employee_Error_InvalidEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingrese la dirección.
+        /// </summary>
+        internal static string Employee_Error_MissingAddress {
+            get {
+                return ResourceManager.GetString("Employee_Error_MissingAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingrese dirección e-mail.
+        /// </summary>
+        internal static string Employee_Error_MissingEmail {
+            get {
+                return ResourceManager.GetString("Employee_Error_MissingEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingrese el sueldo.
+        /// </summary>
+        internal static string Employee_Error_MissingPay {
+            get {
+                return ResourceManager.GetString("Employee_Error_MissingPay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingrese número de teléfono.
+        /// </summary>
+        internal static string Employee_Error_MissingPhone {
+            get {
+                return ResourceManager.GetString("Employee_Error_MissingPhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Añadir Empleado.
         /// </summary>
         internal static string EmployeeWrapperViewModel_AddEmployee {
@@ -160,11 +232,47 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (Sin Especificar).
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_ComboboxValue_NotSpecified {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_ComboboxValue_NotSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La fecha es inválida.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Error_InvalidBirthDate {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Error_InvalidBirthDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingrese la fecha de nacimiento.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Error_MissingBirthDate {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Error_MissingBirthDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El género del empleado debe seleccionarse.
         /// </summary>
         internal static string EmployeeWrapperViewModel_Error_MissingGenderType {
             get {
                 return ResourceManager.GetString("EmployeeWrapperViewModel_Error_MissingGenderType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El tipo de jornada debe seleccionarse.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Error_MissingWorkTime {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Error_MissingWorkTime", resourceCulture);
             }
         }
         
@@ -196,11 +304,20 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (Sin Especificar).
+        ///   Looks up a localized string similar to Tiempo Completo.
         /// </summary>
-        internal static string EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified {
+        internal static string EmployeeWrapperViewModel_WorkingTimeOptions_FullTime {
             get {
-                return ResourceManager.GetString("EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified", resourceCulture);
+                return ResourceManager.GetString("EmployeeWrapperViewModel_WorkingTimeOptions_FullTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiempo Parcial.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_WorkingTimeOptions_PartTime {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_WorkingTimeOptions_PartTime", resourceCulture);
             }
         }
         

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
+
+using tkUI.Properties;
 
 namespace tkUI.Models
 {
@@ -26,6 +29,19 @@ namespace tkUI.Models
 
         public bool Gender { get; set; }
 
+        public string Birthdate { get; set; }
+
+        public string Email { get; set; }
+
+        public string Phone { get; set; }
+
+        public string Pay { get; set; }
+
+        public string WorkTime { get; set; }
+
+        public string Address { get; set; }
+
+        public string StartedWorking { get; set; }
 
         #endregion // Fields
 
@@ -36,14 +52,22 @@ namespace tkUI.Models
             return new Employee();
         }
 
-        public static Employee CreateEmployee(int id, string firstName, string lastName, bool gender)
+        public static Employee CreateEmployee(int id, string firstName, string lastName, bool gender, string birthdate,
+            string email, string phone, string pay, string workTime, string address, string startedWorking)
         {
             return new Employee
             {
                 ID = id,
                 FirstName = firstName,
                 LastName = lastName,
-                Gender = gender
+                Gender = gender,
+                Birthdate = birthdate,
+                Email = email,
+                Phone = phone,
+                Pay = pay,
+                WorkTime = workTime,
+                Address = address,
+                StartedWorking = startedWorking
             };
         }
 
@@ -58,7 +82,8 @@ namespace tkUI.Models
         /// <returns></returns>
         public static Employee CreateEmployee(Employee employee)
         {
-            return CreateEmployee(employee.ID, employee.FirstName, employee.LastName, employee.Gender);
+            return CreateEmployee(employee.ID, employee.FirstName, employee.LastName, employee.Gender, employee.Birthdate,
+                employee.Email, employee.Phone, employee.Pay, employee.WorkTime, employee.Address, employee.StartedWorking);
         }
 
         #endregion // Creation
@@ -108,7 +133,11 @@ namespace tkUI.Models
         static readonly string[] ValidatedProperties =
         {
             "FirstName",
-            "LastName"
+            "LastName",
+            "Email",
+            "Phone",
+            "Pay",
+            "Address"
         };
 
         string GetValidationError(string propertyName)
@@ -127,6 +156,18 @@ namespace tkUI.Models
                     break;
                 case "LastName":
                     error = this.ValidateLastName();
+                    break;
+                case "Email":
+                    error = this.ValidateEmail();
+                    break;
+                case "Phone":
+                    error = this.ValidatePhone();
+                    break;
+                case "Pay":
+                    error = this.ValidatePay();
+                    break;
+                case "Address":
+                    error = this.ValidateAddress();
                     break;
                 default:
                     Debug.Fail("Unexpected property being validated on Customer: " + propertyName);
@@ -154,10 +195,63 @@ namespace tkUI.Models
             return null;
         }
 
+        string ValidateEmail()
+        {
+            if (IsStringMissing(this.Email))
+            {
+                return Resources.Employee_Error_MissingEmail;
+            }
+            else if (!IsValidEmailAddress(this.Email))
+            {
+                return Resources.Employee_Error_InvalidEmail;
+            }
+            return null;
+        }
+
+        // TODO: Validate properly: Format, digits only, length, etc.
+        string ValidatePhone()
+        {
+            if (IsStringMissing(this.Phone))
+            {
+                return Resources.Employee_Error_MissingPhone;
+            }
+            return null;
+        }
+
+        // TODO: Validate properly: Complying minimum wage, and not an exhorbitant salary.
+        string ValidatePay()
+        {
+            if (IsStringMissing(this.Pay))
+            {
+                return Resources.Employee_Error_MissingPay;
+            }
+            return null;
+        }
+
+        string ValidateAddress()
+        {
+            if (IsStringMissing(this.Address))
+            {
+                return Resources.Employee_Error_MissingAddress;
+            }
+            return null;
+        }
+
         static bool IsStringMissing(string value)
         {
             return String.IsNullOrEmpty(value) ||
                 value.Trim() == String.Empty;
+        }
+
+        static bool IsValidEmailAddress(string email)
+        {
+            if (IsStringMissing(email))
+                return false;
+
+            // This regex pattern came from: http://haacked.com/archive/2007/08/21/i-knew-how-to-validate-an-email-address-until-i.aspx
+            string pattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
+
+            return Regex.IsMatch(email, pattern, RegexOptions.IgnoreCase);
         }
 
         #endregion

@@ -33,7 +33,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         readonly Employee _employee;
         readonly EmployeeRepository _employeeRepository;
         string _genderType;
+        string _selectedDay, _selectedMonth, _selectedYear; // TODO: Delete this and create the corresponding fields on Employee class
         string[] _genderTypeOptions;
+        string[] _workTimeOptions;
         string _lastUserSaved;
         bool _isSelected;
         RelayCommand _saveCommand;
@@ -58,8 +60,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
             _employee = employee;
             _employeeRepository = employeeRepository;
-            _genderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified;
-
+            _genderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            _employee.WorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            this.Day = Resources.BirthDate_Combobox_Day;
+            this.Month = Resources.BirthDate_Combobox_Month;
+            this.Year = Resources.BirthDate_Combobox_Year;
         }
 
         #endregion // Constructors
@@ -116,6 +121,158 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        public string Birthdate
+        {
+            get { return _employee.Birthdate; }
+            set
+            {
+                if (_employee.Birthdate == value)
+                {
+                    return;
+                }
+
+                _employee.Birthdate = value;
+
+                base.OnPropertyChanged("Birthdate");
+            }
+        }
+
+        public string Day
+        {
+            get { return _selectedDay; }
+            set
+            {
+                if (_selectedDay == value)
+                {
+                    return;
+                }
+
+                _selectedDay = value;
+
+                OnPropertyChanged("Day");
+            }
+        }
+
+        public string Month
+        {
+            get { return _selectedMonth; }
+            set
+            {
+                if (_selectedMonth == value)
+                {
+                    return;
+                }
+
+                _selectedMonth = value;
+
+                OnPropertyChanged("Month");
+                OnPropertyChanged("Day"); // Day is updated here to allow validation whenever property Month changes.
+            }
+        }
+
+        public string Year
+        {
+            get { return _selectedYear; }
+            set
+            {
+                if (_selectedYear == value)
+                {
+                    return;
+                }
+
+                _selectedYear = value;
+
+                OnPropertyChanged("Year");
+                OnPropertyChanged("Day"); // Day is updated here to allow validation whenever property Year changes.
+            }
+        }
+
+        public string Email
+        {
+            get { return _employee.Email; }
+            set
+            {
+                if (_employee.Email == value)
+                {
+                    return;
+                }
+
+                _employee.Email = value;
+
+                base.OnPropertyChanged("Email");
+            }
+        }
+
+        public string Phone
+        {
+            get { return _employee.Phone; }
+            set
+            {
+                if (_employee.Phone == value)
+                {
+                    return;
+                }
+
+                _employee.Phone = value;
+
+                OnPropertyChanged("Phone");
+            }
+        }
+
+        public string Pay
+        {
+            get { return _employee.Pay; }
+            set
+            {
+                if (_employee.Pay == value)
+                {
+                    return;
+                }
+
+                _employee.Pay = value;
+
+                OnPropertyChanged("Pay");
+            }
+        }
+
+        public string WorkTime
+        {
+            get { return _employee.WorkTime; }
+            set
+            {
+                if (_employee.WorkTime == value)
+                {
+                    return;
+                }
+
+                _employee.WorkTime = value;
+
+                OnPropertyChanged("WorkTime");
+            }
+        }
+
+        public string Address
+        {
+            get { return _employee.Address; }
+            set
+            {
+                if (_employee.Address == value)
+                {
+                    return;
+                }
+
+                _employee.Address = value;
+
+                OnPropertyChanged("Address");
+            }
+        }
+
+        public string Startedworking
+        {
+            get { return _employee.StartedWorking; }
+            set { }
+        }
+
         #endregion // Employee Properties
 
         #region Presentation Properties
@@ -153,12 +310,29 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 {
                     _genderTypeOptions = new string[]
                     {
-                        Resources.EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified,
+                        Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified,
                         Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male,
                         Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female
                     };
                 }
                 return _genderTypeOptions;
+            }
+        }
+
+        public string[] WorkTimeOptions
+        {
+            get
+            {
+                if (_workTimeOptions == null)
+                {
+                    _workTimeOptions = new string[]
+                    {
+                        Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified,
+                        Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime,
+                        Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime
+                    };
+                }
+                return _workTimeOptions;
             }
         }
 
@@ -207,6 +381,22 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     base.OnPropertyChanged("LastUserSaved");
                 }
             }
+        }
+
+        /* Days, Months, and Years are wrappers for the BirthDate Comboboxes */
+        public static List<string> Days
+        {
+            get { return BirthDate.Days; }
+        }
+
+        public static string[] Months
+        {
+            get { return BirthDate.Months; }
+        }
+
+        public static List<string> Years
+        {
+            get { return BirthDate.Years; }
         }
 
         /// <summary>
@@ -332,7 +522,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             FirstName = null;
             LastName = null;
-            _genderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified;
+            _genderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
             base.OnPropertyChanged("GenderType");
         }
 
@@ -439,13 +629,20 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 string error = null;
 
-                if (propertyName == "GenderType")
+                switch (propertyName)
                 {
-                    error = this.ValidateGenderType();
-                }
-                else
-                {
-                    error = (_employee as IDataErrorInfo)[propertyName];
+                    case "GenderType":
+                        error = this.ValidateGenderType();
+                        break;
+                    case "WorkTime":
+                        error = this.ValidateWorkTime();
+                        break;
+                    case "Day":
+                        error = this.ValidateBirthdate();
+                        break;
+                    default:
+                        error = (_employee as IDataErrorInfo)[propertyName];
+                        break;
                 }
 
                 CommandManager.InvalidateRequerySuggested();
@@ -463,6 +660,42 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
             
             return Resources.EmployeeWrapperViewModel_Error_MissingGenderType;
+        }
+
+        string ValidateWorkTime()
+        {
+            if (this.WorkTime == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime
+                || this.WorkTime == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime)
+            {
+                return null;
+            }
+
+            return Resources.EmployeeWrapperViewModel_Error_MissingWorkTime;
+        }
+
+        /// <summary>
+        /// Validates a date with the values of Day, Month, and Year from the Comboboxes.
+        /// </summary>
+        /// <returns>An error message if the date is invalid or missing.</returns>
+        string ValidateBirthdate()
+        {
+            if (this.Day != Resources.BirthDate_Combobox_Day
+                && this.Month != Resources.BirthDate_Combobox_Month
+                && this.Year != Resources.BirthDate_Combobox_Year)
+            {
+                try
+                {
+                    var date = new DateTime(int.Parse(Year), BirthDate.ParseMonth(Month), int.Parse(Day));
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    return Resources.EmployeeWrapperViewModel_Error_InvalidBirthDate;
+                }
+
+                return null;
+            }
+
+            return Resources.EmployeeWrapperViewModel_Error_MissingBirthDate;
         }
 
         #endregion // Interface Implementations

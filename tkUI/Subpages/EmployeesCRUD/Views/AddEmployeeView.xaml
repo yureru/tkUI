@@ -23,24 +23,47 @@
         </DataTemplate>
                 </ResourceDictionary>
     </UserControl.Resources>
+    <ScrollViewer>
     <Grid Margin="0,0,50,0">
         <Grid.RowDefinitions>
+            <!-- Firstname -->
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="30"/>
+            <!-- Secondname -->
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="30"/>
+            <!-- Gender-->
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="30"/>
+            <!-- Birthdate -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <!-- Email -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <!-- Phone -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <!-- Pay -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <!-- Worktime -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <!-- Address -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <!-- Save button -->
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            
         </Grid.RowDefinitions>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="6"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
         <!-- Name -->
         <Label 
             Grid.Row="0" Grid.Column="0"
@@ -98,9 +121,133 @@
             Content="{Binding ElementName=genderCombo, Path=(Validation.Errors).CurrentItem}"
             />
 
-        <!-- Save Button -->
+        <!-- Birthdate -->
+        <Label Grid.Row="6" Grid.Column="0"
+            Content="_Fecha de nacimiento:"
+               HorizontalAlignment="Right"
+            />
+            <StackPanel Grid.Row="6" Grid.Column="2" Orientation="Horizontal">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <!-- Day -->
+                    <ComboBox
+                        Name="dayCombo"
+                        ItemsSource="{Binding Path=Days, Mode=OneTime}"
+                        SelectedItem="{Binding Path=Day, ValidatesOnDataErrors=True}"
+                        Validation.ErrorTemplate="{x:Null}"
+                        Margin="0,0,5,0"
+                        />
+                    <!-- Month -->
+                    <ComboBox 
+                        Name="monthCombo"
+                        Grid.Column="1"
+                        ItemsSource="{Binding Path=Months, Mode=OneTime}"
+                        SelectedItem="{Binding Path=Month, ValidatesOnDataErrors=True}"
+                        Validation.ErrorTemplate="{x:Null}"
+                        Margin="0,0,5,0"
+                        />
+                    <!-- Year -->
+                    <ComboBox
+                        Name="yearCombo"
+                        Grid.Column="2"
+                        ItemsSource="{Binding Path=Years, Mode=OneTime}"
+                        SelectedItem="{Binding Path=Year, ValidatesOnDataErrors=True}"
+                        Validation.ErrorTemplate="{x:Null}"
+                        Margin="0,0,5,0"
+                        />
+                </Grid>
+            </StackPanel>
+            <ContentPresenter
+                Grid.Row="7" Grid.Column="2"
+                Content="{Binding ElementName=dayCombo, Path=(Validation.Errors).CurrentItem}"
+                />
+            <!-- Email -->
+        <Label Grid.Row="8" Grid.Column="0"
+               Content="_Email:"
+               HorizontalAlignment="Right"
+               />
+        <TextBox
+            Name="emailTxt"
+            Grid.Row="8" Grid.Column="2"
+            VerticalContentAlignment="Center"
+            Text="{Binding Path=Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+            Validation.ErrorTemplate="{x:Null}"
+            />
+            <ContentPresenter
+            Grid.Row="9" Grid.Column="2"
+            Content="{Binding ElementName=emailTxt, Path=(Validation.Errors).CurrentItem}"
+            />
+            <!-- Phone -->
+        <Label Grid.Row="10" Grid.Column="0"
+               Content="_Teléfono:"
+               HorizontalAlignment="Right"
+               />
+       <TextBox
+            Name="phoneTxt"
+            Grid.Row="10" Grid.Column="2"
+            VerticalContentAlignment="Center"
+            Text="{Binding Path=Phone, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+            Validation.ErrorTemplate="{x:Null}"
+            />
+            <ContentPresenter
+                Grid.Row="11" Grid.Column="2"
+                Content="{Binding ElementName=phoneTxt, Path=(Validation.Errors).CurrentItem}"
+                />
+            <!-- Pay -->
+        <Label Grid.Row="12" Grid.Column="0"
+               Content="_Sueldo por día:"
+               HorizontalAlignment="Right"
+               />
+        <TextBox
+            Name="payTxt"
+            Grid.Row="12" Grid.Column="2"
+            VerticalContentAlignment="Center"
+            Text="{Binding Path=Pay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+            Validation.ErrorTemplate="{x:Null}"
+            />
+            <ContentPresenter
+                Grid.Row="13" Grid.Column="2"
+                Content="{Binding ElementName=payTxt, Path=(Validation.Errors).CurrentItem}"
+                />
+            <!-- Worktime -->
+            <Label Grid.Row="14" Grid.Column="0"
+               Content="_Jornada laboral:"
+               HorizontalAlignment="Right"
+               />
+            <ComboBox Grid.Row="14" Grid.Column="2"
+                      Name="workCombo"
+                      ItemsSource="{Binding Path=WorkTimeOptions, Mode=OneTime}"
+                      SelectedItem="{Binding Path=WorkTime, ValidatesOnDataErrors=True}"
+                      Validation.ErrorTemplate="{x:Null}"
+                      />
+            <ContentPresenter
+                Grid.Row="15" Grid.Column="2"
+                Content="{Binding ElementName=workCombo, Path=(Validation.Errors).CurrentItem}"
+                />
+
+            <!-- Address -->
+        <Label Grid.Row="16" Grid.Column="0"
+               Content="_Dirección:"
+               HorizontalAlignment="Right"
+               />
+        <TextBox
+            Name="addressTxt"
+            Grid.Row="16" Grid.Column="2"
+            VerticalContentAlignment="Center"
+            Text="{Binding Path=Address, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+            Validation.ErrorTemplate="{x:Null}"
+            />
+            <ContentPresenter
+                Grid.Row="17" Grid.Column="2"
+                Content="{Binding ElementName=addressTxt, Path=(Validation.Errors).CurrentItem}"
+                />
+            <!-- Save Button -->
         <Button
-            Grid.Row="6" Grid.Column="2"
+            Grid.Row="18" Grid.Column="2"
             Command="{Binding Path=SaveCommand}"
             Template="{StaticResource buttonLarge}"
             Content="Guardar"
@@ -111,11 +258,12 @@
 
         <!-- Success message after saving -->
         <TextBlock
-            Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"
+            Grid.Row="19" Grid.Column="1" Grid.ColumnSpan="2"
             Text="{Binding Path=LastUserSaved}"
             FontStyle="Italic"
             HorizontalAlignment="Right"
             Foreground="Green"
             />
     </Grid>
+    </ScrollViewer>
 </UserControl>

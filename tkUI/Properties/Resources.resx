@@ -204,10 +204,6 @@
     <value>No se puede guardar un empleado inválido.</value>
     <comment>The exception message shown if you call Save on an invalid EmployeeWrapperViewModel object.</comment>
   </data>
-  <data name="EmployeeWrapperViewModel_GenderTypeOptions_NotSpecified" xml:space="preserve">
-    <value>(Sin Especificar)</value>
-    <comment>Message when an employee's gender is not specified.</comment>
-  </data>
   <data name="PencilThickIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GeneralGlyphs\PencilThickIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -219,5 +215,61 @@
   </data>
   <data name="TrashSelectedIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GeneralGlyphs\TrashSelectedIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EmployeeWrapperViewModel_ComboboxValue_NotSpecified" xml:space="preserve">
+    <value>(Sin Especificar)</value>
+    <comment>Option when a Combobox value has not been selected.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_WorkingTimeOptions_FullTime" xml:space="preserve">
+    <value>Tiempo Completo</value>
+    <comment>Option when an employee is working full time.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_WorkingTimeOptions_PartTime" xml:space="preserve">
+    <value>Tiempo Parcial</value>
+    <comment>Option when an employee is working part time.</comment>
+  </data>
+  <data name="BirthDate_Combobox_Day" xml:space="preserve">
+    <value>Día</value>
+    <comment>Default value for Day Combobox.</comment>
+  </data>
+  <data name="BirthDate_Combobox_Month" xml:space="preserve">
+    <value>Mes</value>
+    <comment>Default value for Month Combobox.</comment>
+  </data>
+  <data name="BirthDate_Combobox_Year" xml:space="preserve">
+    <value>Año</value>
+    <comment>Default value for Year Combobox.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_Error_InvalidBirthDate" xml:space="preserve">
+    <value>La fecha es inválida</value>
+    <comment>Error when the BirthDate is invalid, because the day doesn't pertains the current selected month.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_Error_MissingBirthDate" xml:space="preserve">
+    <value>Ingrese la fecha de nacimiento</value>
+    <comment>Error when the BirthDate is missing.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_Error_MissingWorkTime" xml:space="preserve">
+    <value>El tipo de jornada debe seleccionarse</value>
+    <comment>The validation error message returned if the WorkTime property has an invalid value.</comment>
+  </data>
+  <data name="Employee_Error_InvalidEmail" xml:space="preserve">
+    <value>La dirección e-mail es inválida.</value>
+    <comment>Error when the Email is in a wrong, invalid format.</comment>
+  </data>
+  <data name="Employee_Error_MissingAddress" xml:space="preserve">
+    <value>Ingrese la dirección</value>
+    <comment>Error when the Address is missing.</comment>
+  </data>
+  <data name="Employee_Error_MissingEmail" xml:space="preserve">
+    <value>Ingrese dirección e-mail</value>
+    <comment>Error when the Email is missing.</comment>
+  </data>
+  <data name="Employee_Error_MissingPay" xml:space="preserve">
+    <value>Ingrese el sueldo</value>
+    <comment>Error when the Pay is missing.</comment>
+  </data>
+  <data name="Employee_Error_MissingPhone" xml:space="preserve">
+    <value>Ingrese número de teléfono</value>
+    <comment>Error when the Phone is missing.</comment>
   </data>
 </root>
