@@ -241,6 +241,24 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to La fecha es inválida.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Error_InvalidBirthDate {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Error_InvalidBirthDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingrese la fecha de nacimiento.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Error_MissingBirthDate {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Error_MissingBirthDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El género del empleado debe seleccionarse.
         /// </summary>
         internal static string EmployeeWrapperViewModel_Error_MissingGenderType {

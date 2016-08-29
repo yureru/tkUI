@@ -135,20 +135,25 @@
                     </Grid.ColumnDefinitions>
                     <!-- Day -->
                     <ComboBox
+                        Name="dayCombo"
                         ItemsSource="{Binding Path=Days, Mode=OneTime}"
                         SelectedItem="{Binding Path=Day, ValidatesOnDataErrors=True}"
                         Validation.ErrorTemplate="{x:Null}"
                         Margin="0,0,5,0"
                         />
                     <!-- Month -->
-                    <ComboBox Grid.Column="1"
+                    <ComboBox 
+                        Name="monthCombo"
+                        Grid.Column="1"
                         ItemsSource="{Binding Path=Months, Mode=OneTime}"
                         SelectedItem="{Binding Path=Month, ValidatesOnDataErrors=True}"
                         Validation.ErrorTemplate="{x:Null}"
                         Margin="0,0,5,0"
                         />
                     <!-- Year -->
-                    <ComboBox Grid.Column="2"
+                    <ComboBox
+                        Name="yearCombo"
+                        Grid.Column="2"
                         ItemsSource="{Binding Path=Years, Mode=OneTime}"
                         SelectedItem="{Binding Path=Year, ValidatesOnDataErrors=True}"
                         Validation.ErrorTemplate="{x:Null}"
@@ -156,7 +161,11 @@
                         />
                 </Grid>
             </StackPanel>
-        <!-- Email -->
+            <ContentPresenter
+                Grid.Row="7" Grid.Column="2"
+                Content="{Binding ElementName=dayCombo, Path=(Validation.Errors).CurrentItem}"
+                />
+            <!-- Email -->
         <Label Grid.Row="8" Grid.Column="0"
                Content="_Email:"
                HorizontalAlignment="Right"

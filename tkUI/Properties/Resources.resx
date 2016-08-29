@@ -240,6 +240,14 @@
     <value>Año</value>
     <comment>Default value for Year Combobox.</comment>
   </data>
+  <data name="EmployeeWrapperViewModel_Error_InvalidBirthDate" xml:space="preserve">
+    <value>La fecha es inválida</value>
+    <comment>Error when the BirthDate is invalid, because the day doesn't pertains the current selected month.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_Error_MissingBirthDate" xml:space="preserve">
+    <value>Ingrese la fecha de nacimiento</value>
+    <comment>Error when the BirthDate is missing.</comment>
+  </data>
   <data name="EmployeeWrapperViewModel_Error_MissingWorkTime" xml:space="preserve">
     <value>El tipo de jornada debe seleccionarse</value>
     <comment>The validation error message returned if the WorkTime property has an invalid value.</comment>
