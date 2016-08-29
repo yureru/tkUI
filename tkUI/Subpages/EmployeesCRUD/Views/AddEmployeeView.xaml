@@ -168,7 +168,10 @@
             Text="{Binding Path=Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
             Validation.ErrorTemplate="{x:Null}"
             />
-        
+            <ContentPresenter
+            Grid.Row="9" Grid.Column="2"
+            Content="{Binding ElementName=emailTxt, Path=(Validation.Errors).CurrentItem}"
+            />
             <!-- Phone -->
         <Label Grid.Row="10" Grid.Column="0"
                Content="_Teléfono:"
@@ -181,6 +184,10 @@
             Text="{Binding Path=Phone, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
             Validation.ErrorTemplate="{x:Null}"
             />
+            <ContentPresenter
+                Grid.Row="11" Grid.Column="2"
+                Content="{Binding ElementName=phoneTxt, Path=(Validation.Errors).CurrentItem}"
+                />
             <!-- Pay -->
         <Label Grid.Row="12" Grid.Column="0"
                Content="_Sueldo por día:"
@@ -193,6 +200,10 @@
             Text="{Binding Path=Pay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
             Validation.ErrorTemplate="{x:Null}"
             />
+            <ContentPresenter
+                Grid.Row="13" Grid.Column="2"
+                Content="{Binding ElementName=payTxt, Path=(Validation.Errors).CurrentItem}"
+                />
             <!-- Worktime -->
             <Label Grid.Row="14" Grid.Column="0"
                Content="_Jornada laboral:"

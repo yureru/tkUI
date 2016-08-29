@@ -181,7 +181,7 @@ namespace tkUI.DataAccess
                             (string)employeeElem.Attribute("birthdate"),
                             (string)employeeElem.Attribute("email"),
                             (string)employeeElem.Attribute("phone"),
-                            (uint)employeeElem.Attribute("pay"),
+                            (string)employeeElem.Attribute("pay"),
                             (string)employeeElem.Attribute("workTime"),
                             (string)employeeElem.Attribute("address"),
                             (string)employeeElem.Attribute("startedWorking"))).ToList();

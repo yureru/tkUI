@@ -228,4 +228,32 @@
     <value>Tiempo Parcial</value>
     <comment>Option when an employee is working part time.</comment>
   </data>
+  <data name="BirthDate_Combobox_Day" xml:space="preserve">
+    <value>Día</value>
+    <comment>Default value for Day Combobox.</comment>
+  </data>
+  <data name="BirthDate_Combobox_Month" xml:space="preserve">
+    <value>Mes</value>
+    <comment>Default value for Month Combobox.</comment>
+  </data>
+  <data name="BirthDate_Combobox_Year" xml:space="preserve">
+    <value>Año</value>
+    <comment>Default value for Year Combobox.</comment>
+  </data>
+  <data name="Employee_Error_InvalidEmail" xml:space="preserve">
+    <value>La dirección e-mail es inválida.</value>
+    <comment>Error when the Email is in a wrong, invalid format.</comment>
+  </data>
+  <data name="Employee_Error_MissingEmail" xml:space="preserve">
+    <value>Ingrese dirección e-mail</value>
+    <comment>Error when the Email is missing.</comment>
+  </data>
+  <data name="Employee_Error_MissingPay" xml:space="preserve">
+    <value>Ingrese el sueldo</value>
+    <comment>Error when the Pay is missing.</comment>
+  </data>
+  <data name="Employee_Error_MissingPhone" xml:space="preserve">
+    <value>Ingrese número de teléfono</value>
+    <comment>Error when the Phone is missing.</comment>
+  </data>
 </root>

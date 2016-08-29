@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using tkUI.Properties;
+
 namespace tkUI.Helper_Classes
 {
     /// <summary>
@@ -75,7 +77,7 @@ namespace tkUI.Helper_Classes
             // TODO: "Día" and "Año" should be string resources to allow use them in EmployeeWrapperViewModel
             if (isPopulatingDays)
             {
-                items.Add("Día");
+                items.Add(Resources.BirthDate_Combobox_Day);
 
                 for (; from <= upTo; ++from)
                 {
@@ -84,7 +86,7 @@ namespace tkUI.Helper_Classes
             }
             else
             {
-                items.Add("Año");
+                items.Add(Resources.BirthDate_Combobox_Year);
 
                 for (; from >= upTo; --from)
                 {
@@ -99,10 +101,10 @@ namespace tkUI.Helper_Classes
         {
             _months = new string[]
                 {
-                    "Mes", "Enero", "Febrero", "Marzo",
-                    "Abril", "Mayo", "Junio", "Julio",
-                    "Agosto", "Septiembre", "Octubre", "Noviembre",
-                    "Diciembre"
+                    Resources.BirthDate_Combobox_Month,
+                    "Enero", "Febrero", "Marzo", "Abril",
+                    "Mayo", "Junio", "Julio", "Agosto",
+                    "Septiembre", "Octubre", "Noviembre", "Diciembre"
                 };
         }
 

@@ -62,9 +62,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             _employeeRepository = employeeRepository;
             _genderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
             _employee.WorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
-            this.Day = "Día";
-            this.Month = "Mes";
-            this.Year = "Año";
+            this.Day = Resources.BirthDate_Combobox_Day;
+            this.Month = Resources.BirthDate_Combobox_Month;
+            this.Year = Resources.BirthDate_Combobox_Year;
         }
 
         #endregion // Constructors
@@ -217,7 +217,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        public uint Pay
+        public string Pay
         {
             get { return _employee.Pay; }
             set
