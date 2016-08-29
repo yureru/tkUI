@@ -187,6 +187,15 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ingrese la dirección.
+        /// </summary>
+        internal static string Employee_Error_MissingAddress {
+            get {
+                return ResourceManager.GetString("Employee_Error_MissingAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ingrese dirección e-mail.
         /// </summary>
         internal static string Employee_Error_MissingEmail {
@@ -237,6 +246,15 @@ namespace tkUI.Properties {
         internal static string EmployeeWrapperViewModel_Error_MissingGenderType {
             get {
                 return ResourceManager.GetString("EmployeeWrapperViewModel_Error_MissingGenderType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El tipo de jornada debe seleccionarse.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Error_MissingWorkTime {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Error_MissingWorkTime", resourceCulture);
             }
         }
         

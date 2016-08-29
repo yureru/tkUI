@@ -136,7 +136,8 @@ namespace tkUI.Models
             "LastName",
             "Email",
             "Phone",
-            "Pay"
+            "Pay",
+            "Address"
         };
 
         string GetValidationError(string propertyName)
@@ -164,6 +165,9 @@ namespace tkUI.Models
                     break;
                 case "Pay":
                     error = this.ValidatePay();
+                    break;
+                case "Address":
+                    error = this.ValidateAddress();
                     break;
                 default:
                     Debug.Fail("Unexpected property being validated on Customer: " + propertyName);
@@ -220,6 +224,15 @@ namespace tkUI.Models
             if (IsStringMissing(this.Pay))
             {
                 return Resources.Employee_Error_MissingPay;
+            }
+            return null;
+        }
+
+        string ValidateAddress()
+        {
+            if (IsStringMissing(this.Address))
+            {
+                return Resources.Employee_Error_MissingAddress;
             }
             return null;
         }

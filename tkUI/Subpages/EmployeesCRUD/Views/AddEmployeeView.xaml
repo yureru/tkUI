@@ -210,11 +210,15 @@
                HorizontalAlignment="Right"
                />
             <ComboBox Grid.Row="14" Grid.Column="2"
+                      Name="workCombo"
                       ItemsSource="{Binding Path=WorkTimeOptions, Mode=OneTime}"
                       SelectedItem="{Binding Path=WorkTime, ValidatesOnDataErrors=True}"
                       Validation.ErrorTemplate="{x:Null}"
                       />
-
+            <ContentPresenter
+                Grid.Row="15" Grid.Column="2"
+                Content="{Binding ElementName=workCombo, Path=(Validation.Errors).CurrentItem}"
+                />
 
             <!-- Address -->
         <Label Grid.Row="16" Grid.Column="0"
@@ -228,6 +232,10 @@
             Text="{Binding Path=Address, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
             Validation.ErrorTemplate="{x:Null}"
             />
+            <ContentPresenter
+                Grid.Row="17" Grid.Column="2"
+                Content="{Binding ElementName=addressTxt, Path=(Validation.Errors).CurrentItem}"
+                />
             <!-- Save Button -->
         <Button
             Grid.Row="18" Grid.Column="2"

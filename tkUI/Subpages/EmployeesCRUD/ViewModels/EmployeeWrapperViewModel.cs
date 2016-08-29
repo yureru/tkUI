@@ -233,7 +233,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        public string WorktTime
+        public string WorkTime
         {
             get { return _employee.WorkTime; }
             set
@@ -317,7 +317,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        public string WorkTime
+        /*public string WorkTime
         {
             get { return _employee.WorkTime; }
             set
@@ -331,7 +331,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
                 this.OnPropertyChanged("WorkTime");
             }
-        }
+        }*/
 
         public string[] WorkTimeOptions
         {
@@ -643,13 +643,25 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 string error = null;
 
-                if (propertyName == "GenderType")
+                /*if (propertyName == "GenderType")
                 {
                     error = this.ValidateGenderType();
                 }
                 else
                 {
                     error = (_employee as IDataErrorInfo)[propertyName];
+                }*/
+                switch (propertyName)
+                {
+                    case "GenderType":
+                        error = this.ValidateGenderType();
+                        break;
+                    case "WorkTime":
+                        error = this.ValidateWorkTime();
+                        break;
+                    default:
+                        error = (_employee as IDataErrorInfo)[propertyName];
+                        break;
                 }
 
                 CommandManager.InvalidateRequerySuggested();
@@ -667,6 +679,17 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
             
             return Resources.EmployeeWrapperViewModel_Error_MissingGenderType;
+        }
+
+        string ValidateWorkTime()
+        {
+            if (this.WorkTime == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime
+                || this.WorkTime == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime)
+            {
+                return null;
+            }
+
+            return Resources.EmployeeWrapperViewModel_Error_MissingWorkTime;
         }
 
         #endregion // Interface Implementations

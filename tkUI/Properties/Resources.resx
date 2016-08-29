@@ -240,9 +240,17 @@
     <value>Año</value>
     <comment>Default value for Year Combobox.</comment>
   </data>
+  <data name="EmployeeWrapperViewModel_Error_MissingWorkTime" xml:space="preserve">
+    <value>El tipo de jornada debe seleccionarse</value>
+    <comment>The validation error message returned if the WorkTime property has an invalid value.</comment>
+  </data>
   <data name="Employee_Error_InvalidEmail" xml:space="preserve">
     <value>La dirección e-mail es inválida.</value>
     <comment>Error when the Email is in a wrong, invalid format.</comment>
+  </data>
+  <data name="Employee_Error_MissingAddress" xml:space="preserve">
+    <value>Ingrese la dirección</value>
+    <comment>Error when the Address is missing.</comment>
   </data>
   <data name="Employee_Error_MissingEmail" xml:space="preserve">
     <value>Ingrese dirección e-mail</value>
