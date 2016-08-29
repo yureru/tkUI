@@ -319,22 +319,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        /*public string WorkTime
-        {
-            get { return _employee.WorkTime; }
-            set
-            {
-                if (_employee.WorkTime == null || String.IsNullOrEmpty(_employee.WorkTime))
-                {
-                    return;
-                }
-
-                _employee.WorkTime = value;
-
-                this.OnPropertyChanged("WorkTime");
-            }
-        }*/
-
         public string[] WorkTimeOptions
         {
             get
@@ -645,14 +629,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 string error = null;
 
-                /*if (propertyName == "GenderType")
-                {
-                    error = this.ValidateGenderType();
-                }
-                else
-                {
-                    error = (_employee as IDataErrorInfo)[propertyName];
-                }*/
                 switch (propertyName)
                 {
                     case "GenderType":
@@ -697,19 +673,16 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             return Resources.EmployeeWrapperViewModel_Error_MissingWorkTime;
         }
 
-        // TODO: Validate when the date is incorrect (leap days, the month has the specified days, etc.)
+        /// <summary>
+        /// Validates a date with the values of Day, Month, and Year from the Comboboxes.
+        /// </summary>
+        /// <returns>An error message if the date is invalid or missing.</returns>
         string ValidateBirthdate()
         {
-            /*if (this.Birthdate == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime
-                || this.Birthdate == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime)
-            {
-                return null;
-            }*/
             if (this.Day != Resources.BirthDate_Combobox_Day
                 && this.Month != Resources.BirthDate_Combobox_Month
                 && this.Year != Resources.BirthDate_Combobox_Year)
             {
-                // TODO: Validate date
                 try
                 {
                     var date = new DateTime(int.Parse(Year), BirthDate.ParseMonth(Month), int.Parse(Day));
@@ -718,8 +691,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 {
                     return Resources.EmployeeWrapperViewModel_Error_InvalidBirthDate;
                 }
+
                 return null;
             }
+
             return Resources.EmployeeWrapperViewModel_Error_MissingBirthDate;
         }
 

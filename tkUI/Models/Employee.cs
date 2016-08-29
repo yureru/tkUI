@@ -218,7 +218,7 @@ namespace tkUI.Models
             return null;
         }
 
-        // TODO: Validate properly: Colplying minimum wage, and not an exhorbitant salary.
+        // TODO: Validate properly: Complying minimum wage, and not an exhorbitant salary.
         string ValidatePay()
         {
             if (IsStringMissing(this.Pay))

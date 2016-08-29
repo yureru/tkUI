@@ -55,9 +55,9 @@ namespace tkUI.Helper_Classes
             {
                 if (_years == null)
                 {
+                    // minimumAge is the minimum allowed age to work
                     const int minimumAge = 15;
                     _years = PopulateDaysOrYears(DateTime.Today.Year - minimumAge, 1900, false);
-                    
                 }
 
                 return _years;
@@ -108,6 +108,11 @@ namespace tkUI.Helper_Classes
                 };
         }
 
+        /// <summary>
+        /// Returns a number based on the month, where January is 1, February is 2, and December is 12.
+        /// </summary>
+        /// <param name="month">The name of the month.</param>
+        /// <returns>The int representing a month, 0 if the month wasn't found.</returns>
         public static int ParseMonth(string month)
         {
             switch (month)
