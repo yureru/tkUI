@@ -664,7 +664,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                         error = this.ValidateWorkTime();
                         break;
                     case "Day":
-                        error = this.ValidateBirthdate();
+                        //error = this.ValidateBirthdate();
+                        error = BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year);
                         break;
                     default:
                         error = (_employee as IDataErrorInfo)[propertyName];
@@ -697,31 +698,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
 
             return Resources.EmployeeWrapperViewModel_Error_MissingWorkTime;
-        }
-
-        /// <summary>
-        /// Validates a date with the values of Day, Month, and Year from the Comboboxes.
-        /// </summary>
-        /// <returns>An error message if the date is invalid or missing.</returns>
-        string ValidateBirthdate()
-        {
-            if (this.Day != Resources.BirthDate_Combobox_Day
-                && this.Month != Resources.BirthDate_Combobox_Month
-                && this.Year != Resources.BirthDate_Combobox_Year)
-            {
-                try
-                {
-                    var date = new DateTime(int.Parse(Year), BirthDate.ParseMonth(Month), int.Parse(Day));
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    return Resources.EmployeeWrapperViewModel_Error_InvalidBirthDate;
-                }
-
-                return null;
-            }
-
-            return Resources.EmployeeWrapperViewModel_Error_MissingBirthDate;
         }
 
         #endregion // Interface Implementations
