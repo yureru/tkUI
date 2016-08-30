@@ -66,11 +66,21 @@ namespace tkUI.Helper_Classes
                 }
             }
 
-            // TODO: Validate with BirthDate class
+            string d, m, y;
+            d = chunks[0];
+            m = chunks[1];
+            y = chunks[2];
 
-            Day = chunks[0];
-            Month = chunks[1];
-            Year = chunks[2];
+            var invalid = BirthDate.ValidateBirthdate(d, m, y);
+
+            if (invalid != null)
+            {
+                return false;
+            }
+
+            Day = d;
+            Month = m;
+            Year = y;
 
             return true;
         }
