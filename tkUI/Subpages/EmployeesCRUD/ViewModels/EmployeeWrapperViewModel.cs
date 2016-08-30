@@ -121,7 +121,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        public string Birthdate
+        public Birth Birthdate
         {
             get { return _employee.Birthdate; }
             set

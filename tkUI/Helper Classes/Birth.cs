@@ -37,7 +37,22 @@ namespace tkUI.Helper_Classes
 
         public string Date
         {
+            /*get
+            {
+                if (String.IsNullOrEmpty(Day) || String.IsNullOrEmpty(Month) || String.IsNullOrEmpty(Year))
+                {
+                    return "";
+                }
+                else
+                {
+                    return String.Format("{0}/{1}/{2}", Day, Month, Year);
+                }
+            }*/
             get { return String.Format("{0}/{1}/{2}", Day, Month, Year); }
+            set
+            {
+                SetDate(value);
+            }
         }
 
         #endregion // Properties
@@ -86,5 +101,30 @@ namespace tkUI.Helper_Classes
         }
 
         #endregion // Methods
+
+        #region Casts
+
+        // pls no bully
+        public static explicit operator Birth(string value)
+        {
+            var birth = new Birth();
+
+            birth.SetDate(value);
+            return birth;
+        }
+
+        public static explicit operator string(Birth value)
+        {
+            if (value == null)
+            {
+                return "";
+            }
+            else
+            {
+                return value.Date;
+            }      
+        }
+
+        #endregion // Casts
     }
 }
