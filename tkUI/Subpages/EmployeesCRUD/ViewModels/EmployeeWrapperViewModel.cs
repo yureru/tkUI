@@ -465,6 +465,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
             if (this.IsNewEmployee)
             {
+                _employee.Birthdate = new Birth(); // TODO: Change this, I don't like allocate here, it should be handled in the class or the EmployeeRepository.
+                _employee.Birthdate.SetDateWithValidatedInput(this.Day, this.Month, this.Year);
                 var newEmployee = Employee.CreateEmployee(_employee);
                 _employeeRepository.AddEmployee(newEmployee);
                 SetLastUserSaved(false);
@@ -624,6 +626,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
             }
+
+            this.Day = current.Birthdate.Day;
+            this.Month = current.Birthdate.Month;
+            this.Year = current.Birthdate.Year;
 
             //if (current.Day)
             // TODO: Populate WorkingTime and Birthdate comboboxes.

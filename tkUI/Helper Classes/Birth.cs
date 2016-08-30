@@ -100,6 +100,12 @@ namespace tkUI.Helper_Classes
             return true;
         }
 
+        public void SetDateWithValidatedInput(string day, string month, string year)
+        {
+            Day = day;
+            Month = month;
+            Year = year;
+        }
         #endregion // Methods
 
         #region Casts
