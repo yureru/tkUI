@@ -578,14 +578,16 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
 
             // Gender == true means Female
-            if (employeeEdited.Count > 0 && employeeEdited[0].Gender)
+            /*if (employeeEdited.Count > 0 && employeeEdited[0].Gender)
             {
                 this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
             }
             else
             {
                 this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
-            }
+            }*/
+
+            PopulateEditComboboxes(employeeEdited);
             
             modal.DataContext = this;
             
@@ -602,6 +604,30 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         bool CanEdit()
         {
             return true;
+        }
+
+        void PopulateEditComboboxes(List<Employee> employeeEdited)
+        {
+            if (employeeEdited.Count <= 0)
+            {
+                Debug.Fail("Employee being edited doesn't exists");
+                return;
+            }
+
+            var current = employeeEdited[0];
+
+            if (current.Gender)
+            {
+                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
+            }
+            else
+            {
+                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
+            }
+
+            //if (current.Day)
+            // TODO: Populate WorkingTime and Birthdate comboboxes.
+
         }
 
         #endregion // Private Helpers
