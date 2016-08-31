@@ -28,11 +28,14 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     class EmployeeWrapperViewModel : ObservablePageFromCRUD, IDataErrorInfo
     {
 
+        // TODO: WorkTime combo doesn't cleans after saving, and doesn't shows the error when editing and selecting "Sin especificar."
+
         #region Fields
 
         readonly Employee _employee;
         readonly EmployeeRepository _employeeRepository;
         string _genderType;
+        string _selectedWorkTime;
         string _selectedDay, _selectedMonth, _selectedYear; // TODO: Delete this and create the corresponding fields on Employee class
         string[] _genderTypeOptions;
         string[] _workTimeOptions;
@@ -61,7 +64,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             _employee = employee;
             _employeeRepository = employeeRepository;
             _genderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
-            _employee.WorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            //_employee.WorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            //this.WorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            _selectedWorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
             this.Day = Resources.BirthDate_Combobox_Day;
             this.Month = Resources.BirthDate_Combobox_Month;
             this.Year = Resources.BirthDate_Combobox_Year;
@@ -238,7 +243,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         public string WorkTime
         {
             get { return _employee.WorkTime; }
-            set
+            /*set
             {
                 if (_employee.WorkTime == value)
                 {
@@ -248,6 +253,36 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 _employee.WorkTime = value;
 
                 OnPropertyChanged("WorkTime");
+            }*/
+        }
+
+        public string WorkTimeType
+        {
+            get { return _selectedWorkTime; }
+            set
+            {
+                if (_selectedWorkTime == value || String.IsNullOrEmpty(value))
+                {
+                    return;
+                }
+
+                _selectedWorkTime = value;
+
+                /*if (_selectedWorkTime != Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified)
+                {
+                    _employee.WorkTime = value;
+                }*/
+                if (_selectedWorkTime == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime)
+                {
+                    _employee.WorkTime = Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime;
+                }
+                else if (_selectedWorkTime == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime)
+                {
+                    _employee.WorkTime = Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime;
+                }
+
+
+                this.OnPropertyChanged("WorkTimeType");
             }
         }
 
@@ -524,8 +559,18 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             FirstName = null;
             LastName = null;
-            _genderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
-            base.OnPropertyChanged("GenderType");
+            Email = null;
+            Phone = null;
+            Pay = null;
+            Address = null;
+            this.GenderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            // Cleans the forms but doesn't updates the error message
+            this.WorkTimeType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            // causes to not clean the combobox when added
+            //_selectedWorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            this.Day = Resources.BirthDate_Combobox_Day;
+            this.Month = Resources.BirthDate_Combobox_Month;
+            this.Year = Resources.BirthDate_Combobox_Year;
         }
 
         /// <summary>
@@ -630,10 +675,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             this.Day = current.Birthdate.Day;
             this.Month = current.Birthdate.Month;
             this.Year = current.Birthdate.Year;
-
-            //if (current.Day)
-            // TODO: Populate WorkingTime and Birthdate comboboxes.
-
+            // TODO: current.WorkTime isn't being saved
+            this.WorkTimeType = current.WorkTime;
+            Debug.Print(current.WorkTime);
         }
 
         #endregion // Private Helpers

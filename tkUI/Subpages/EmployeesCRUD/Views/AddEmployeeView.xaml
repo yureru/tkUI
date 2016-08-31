@@ -221,8 +221,8 @@
             <ComboBox Grid.Row="14" Grid.Column="2"
                       Name="workCombo"
                       ItemsSource="{Binding Path=WorkTimeOptions, Mode=OneTime}"
-                      SelectedItem="{Binding Path=WorkTime, ValidatesOnDataErrors=True}"
-                      Validation.ErrorTemplate="{x:Null}"
+                      SelectedItem="{Binding Path=WorkTimeType, ValidatesOnDataErrors=True}"
+                      Validation.ErrorTemplate="{x:Null}" Height="26" VerticalAlignment="Top"
                       />
             <ContentPresenter
                 Grid.Row="15" Grid.Column="2"
