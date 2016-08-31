@@ -108,6 +108,10 @@ namespace tkUI.Helper_Classes
                 };
         }
 
+        #endregion // Private Methods
+
+        #region Methods
+
         /// <summary>
         /// Returns a number based on the month, where January is 1, February is 2, and December is 12.
         /// </summary>
@@ -146,7 +150,32 @@ namespace tkUI.Helper_Classes
             }
         }
 
-        #endregion // Private Methods
+        /// <summary>
+        /// Validates a date with the values of Day, Month, and Year from the Comboboxes.
+        /// </summary>
+        /// <returns>An error message if the date is invalid or missing.</returns>
+        public static string ValidateBirthdate(string day, string month, string year)
+        {
+            if (day != Resources.BirthDate_Combobox_Day
+                && month != Resources.BirthDate_Combobox_Month
+                && year != Resources.BirthDate_Combobox_Year)
+            {
+                try
+                {
+                    var date = new DateTime(int.Parse(year), BirthDate.ParseMonth(month), int.Parse(day));
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    return Resources.EmployeeWrapperViewModel_Error_InvalidBirthDate;
+                }
+
+                return null;
+            }
+
+            return Resources.EmployeeWrapperViewModel_Error_MissingBirthDate;
+        }
+
+        #endregion // Methods
 
     }
 }

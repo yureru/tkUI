@@ -33,6 +33,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         readonly Employee _employee;
         readonly EmployeeRepository _employeeRepository;
         string _genderType;
+        string _selectedWorkTime;
         string _selectedDay, _selectedMonth, _selectedYear; // TODO: Delete this and create the corresponding fields on Employee class
         string[] _genderTypeOptions;
         string[] _workTimeOptions;
@@ -61,7 +62,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             _employee = employee;
             _employeeRepository = employeeRepository;
             _genderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
-            _employee.WorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            _selectedWorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
             this.Day = Resources.BirthDate_Combobox_Day;
             this.Month = Resources.BirthDate_Combobox_Month;
             this.Year = Resources.BirthDate_Combobox_Year;
@@ -121,7 +122,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        public string Birthdate
+        public Birth Birthdate
         {
             get { return _employee.Birthdate; }
             set
@@ -238,7 +239,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         public string WorkTime
         {
             get { return _employee.WorkTime; }
-            set
+            /*set
             {
                 if (_employee.WorkTime == value)
                 {
@@ -248,7 +249,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 _employee.WorkTime = value;
 
                 OnPropertyChanged("WorkTime");
-            }
+            }*/
         }
 
         public string Address
@@ -316,6 +317,27 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     };
                 }
                 return _genderTypeOptions;
+            }
+        }
+
+        public string WorkTimeType
+        {
+            get { return _selectedWorkTime; }
+            set
+            {
+                if (_selectedWorkTime == value || String.IsNullOrEmpty(value))
+                {
+                    return;
+                }
+
+                _selectedWorkTime = value;
+
+                if (_selectedWorkTime != Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified)
+                {
+                    _employee.WorkTime = _selectedWorkTime;
+                }
+
+                this.OnPropertyChanged("WorkTimeType");
             }
         }
 
@@ -465,6 +487,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
             if (this.IsNewEmployee)
             {
+                _employee.Birthdate = new Birth(); // TODO: Change this, I don't like allocating here, it should be handled in the class or the EmployeeRepository.
+                _employee.Birthdate.SetDateWithValidatedInput(this.Day, this.Month, this.Year);
                 var newEmployee = Employee.CreateEmployee(_employee);
                 _employeeRepository.AddEmployee(newEmployee);
                 SetLastUserSaved(false);
@@ -522,8 +546,15 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             FirstName = null;
             LastName = null;
-            _genderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
-            base.OnPropertyChanged("GenderType");
+            Email = null;
+            Phone = null;
+            Pay = null;
+            Address = null;
+            this.GenderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            this.WorkTimeType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            this.Day = Resources.BirthDate_Combobox_Day;
+            this.Month = Resources.BirthDate_Combobox_Month;
+            this.Year = Resources.BirthDate_Combobox_Year;
         }
 
         /// <summary>
@@ -577,15 +608,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             var listEmp = _employeeRepository.GetEmployees();
             var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
 
-            // Gender == true means Female
-            if (employeeEdited.Count > 0 && employeeEdited[0].Gender)
-            {
-                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
-            }
-            else
-            {
-                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
-            }
+            PopulateEditComboboxes(employeeEdited);
             
             modal.DataContext = this;
             
@@ -602,6 +625,38 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         bool CanEdit()
         {
             return true;
+        }
+
+        /// <summary>
+        /// Loads the corresponding data for the Comboboxes in the modal edit dialog.
+        /// That's because the textboxes are loaded automatically but the Comboboxes aren't (?)
+        /// </summary>
+        /// <param name="employeeEdited">The "list" of the employees, but it's actually a list with only one item.</param>
+        void PopulateEditComboboxes(List<Employee> employeeEdited)
+        {
+            if (employeeEdited.Count <= 0)
+            {
+                Debug.Fail("Employee being edited doesn't exists");
+                return;
+            }
+
+            var current = employeeEdited[0];
+
+            // Gender == true means Female
+            if (current.Gender)
+            {
+                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
+            }
+            else
+            {
+                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
+            }
+
+            this.Day = current.Birthdate.Day;
+            this.Month = current.Birthdate.Month;
+            this.Year = current.Birthdate.Year;
+            this.WorkTimeType = current.WorkTime;
+            Debug.Print(current.WorkTime);
         }
 
         #endregion // Private Helpers
@@ -634,11 +689,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     case "GenderType":
                         error = this.ValidateGenderType();
                         break;
-                    case "WorkTime":
+                    case "WorkTimeType": // TODO: Shows error but doesn't blocks the Save button when invalid.
                         error = this.ValidateWorkTime();
                         break;
-                    case "Day":
-                        error = this.ValidateBirthdate();
+                    case "Day": // TODO: Shows error but doesn't blocks the Save button when invalid.
+                        //error = this.ValidateBirthdate();
+                        error = BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year);
                         break;
                     default:
                         error = (_employee as IDataErrorInfo)[propertyName];
@@ -664,38 +720,13 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         string ValidateWorkTime()
         {
-            if (this.WorkTime == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime
-                || this.WorkTime == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime)
+            if (this.WorkTimeType == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime
+                || this.WorkTimeType == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime)
             {
                 return null;
             }
 
             return Resources.EmployeeWrapperViewModel_Error_MissingWorkTime;
-        }
-
-        /// <summary>
-        /// Validates a date with the values of Day, Month, and Year from the Comboboxes.
-        /// </summary>
-        /// <returns>An error message if the date is invalid or missing.</returns>
-        string ValidateBirthdate()
-        {
-            if (this.Day != Resources.BirthDate_Combobox_Day
-                && this.Month != Resources.BirthDate_Combobox_Month
-                && this.Year != Resources.BirthDate_Combobox_Year)
-            {
-                try
-                {
-                    var date = new DateTime(int.Parse(Year), BirthDate.ParseMonth(Month), int.Parse(Day));
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    return Resources.EmployeeWrapperViewModel_Error_InvalidBirthDate;
-                }
-
-                return null;
-            }
-
-            return Resources.EmployeeWrapperViewModel_Error_MissingBirthDate;
         }
 
         #endregion // Interface Implementations

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using tkUI.Helper_Classes;
 
 using tkUI.Properties;
 
@@ -29,7 +30,7 @@ namespace tkUI.Models
 
         public bool Gender { get; set; }
 
-        public string Birthdate { get; set; }
+        public Birth Birthdate { get; set; }
 
         public string Email { get; set; }
 
@@ -61,7 +62,7 @@ namespace tkUI.Models
                 FirstName = firstName,
                 LastName = lastName,
                 Gender = gender,
-                Birthdate = birthdate,
+                Birthdate = (Birth)birthdate,
                 Email = email,
                 Phone = phone,
                 Pay = pay,
@@ -82,7 +83,7 @@ namespace tkUI.Models
         /// <returns></returns>
         public static Employee CreateEmployee(Employee employee)
         {
-            return CreateEmployee(employee.ID, employee.FirstName, employee.LastName, employee.Gender, employee.Birthdate,
+            return CreateEmployee(employee.ID, employee.FirstName, employee.LastName, employee.Gender, (string)employee.Birthdate,
                 employee.Email, employee.Phone, employee.Pay, employee.WorkTime, employee.Address, employee.StartedWorking);
         }
 
