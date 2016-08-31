@@ -222,7 +222,7 @@
                       Name="workCombo"
                       ItemsSource="{Binding Path=WorkTimeOptions, Mode=OneTime}"
                       SelectedItem="{Binding Path=WorkTimeType, ValidatesOnDataErrors=True}"
-                      Validation.ErrorTemplate="{x:Null}" Height="26" VerticalAlignment="Top"
+                      Validation.ErrorTemplate="{x:Null}"
                       />
             <ContentPresenter
                 Grid.Row="15" Grid.Column="2"

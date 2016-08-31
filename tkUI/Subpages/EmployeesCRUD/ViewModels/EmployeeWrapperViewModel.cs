@@ -28,8 +28,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     class EmployeeWrapperViewModel : ObservablePageFromCRUD, IDataErrorInfo
     {
 
-        // TODO: WorkTime combo doesn't cleans after saving, and doesn't shows the error when editing and selecting "Sin especificar."
-
         #region Fields
 
         readonly Employee _employee;
@@ -268,17 +266,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
                 _selectedWorkTime = value;
 
-                /*if (_selectedWorkTime != Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified)
+                if (_selectedWorkTime != Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified)
                 {
-                    _employee.WorkTime = value;
-                }*/
-                if (_selectedWorkTime == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime)
-                {
-                    _employee.WorkTime = Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime;
-                }
-                else if (_selectedWorkTime == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime)
-                {
-                    _employee.WorkTime = Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime;
+                    _employee.WorkTime = _selectedWorkTime;
                 }
 
 
@@ -710,7 +700,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     case "GenderType":
                         error = this.ValidateGenderType();
                         break;
-                    case "WorkTime":
+                    case "WorkTimeType":
                         error = this.ValidateWorkTime();
                         break;
                     case "Day":
@@ -741,8 +731,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         string ValidateWorkTime()
         {
-            if (this.WorkTime == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime
-                || this.WorkTime == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime)
+            if (this.WorkTimeType == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime
+                || this.WorkTimeType == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime)
             {
                 return null;
             }
