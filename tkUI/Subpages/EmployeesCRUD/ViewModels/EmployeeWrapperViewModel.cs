@@ -62,8 +62,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             _employee = employee;
             _employeeRepository = employeeRepository;
             _genderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
-            //_employee.WorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
-            //this.WorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
             _selectedWorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
             this.Day = Resources.BirthDate_Combobox_Day;
             this.Month = Resources.BirthDate_Combobox_Month;
@@ -254,28 +252,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }*/
         }
 
-        public string WorkTimeType
-        {
-            get { return _selectedWorkTime; }
-            set
-            {
-                if (_selectedWorkTime == value || String.IsNullOrEmpty(value))
-                {
-                    return;
-                }
-
-                _selectedWorkTime = value;
-
-                if (_selectedWorkTime != Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified)
-                {
-                    _employee.WorkTime = _selectedWorkTime;
-                }
-
-
-                this.OnPropertyChanged("WorkTimeType");
-            }
-        }
-
         public string Address
         {
             get { return _employee.Address; }
@@ -341,6 +317,27 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     };
                 }
                 return _genderTypeOptions;
+            }
+        }
+
+        public string WorkTimeType
+        {
+            get { return _selectedWorkTime; }
+            set
+            {
+                if (_selectedWorkTime == value || String.IsNullOrEmpty(value))
+                {
+                    return;
+                }
+
+                _selectedWorkTime = value;
+
+                if (_selectedWorkTime != Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified)
+                {
+                    _employee.WorkTime = _selectedWorkTime;
+                }
+
+                this.OnPropertyChanged("WorkTimeType");
             }
         }
 
@@ -490,7 +487,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
             if (this.IsNewEmployee)
             {
-                _employee.Birthdate = new Birth(); // TODO: Change this, I don't like allocate here, it should be handled in the class or the EmployeeRepository.
+                _employee.Birthdate = new Birth(); // TODO: Change this, I don't like allocating here, it should be handled in the class or the EmployeeRepository.
                 _employee.Birthdate.SetDateWithValidatedInput(this.Day, this.Month, this.Year);
                 var newEmployee = Employee.CreateEmployee(_employee);
                 _employeeRepository.AddEmployee(newEmployee);
@@ -554,10 +551,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             Pay = null;
             Address = null;
             this.GenderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
-            // Cleans the forms but doesn't updates the error message
             this.WorkTimeType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
-            // causes to not clean the combobox when added
-            //_selectedWorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
             this.Day = Resources.BirthDate_Combobox_Day;
             this.Month = Resources.BirthDate_Combobox_Month;
             this.Year = Resources.BirthDate_Combobox_Year;
@@ -614,16 +608,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             var listEmp = _employeeRepository.GetEmployees();
             var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
 
-            // Gender == true means Female
-            /*if (employeeEdited.Count > 0 && employeeEdited[0].Gender)
-            {
-                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
-            }
-            else
-            {
-                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
-            }*/
-
             PopulateEditComboboxes(employeeEdited);
             
             modal.DataContext = this;
@@ -643,6 +627,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             return true;
         }
 
+        /// <summary>
+        /// Loads the corresponding data for the Comboboxes in the modal edit dialog.
+        /// That's because the textboxes are loaded automatically but the Comboboxes aren't (?)
+        /// </summary>
+        /// <param name="employeeEdited">The "list" of the employees, but it's actually a list with only one item.</param>
         void PopulateEditComboboxes(List<Employee> employeeEdited)
         {
             if (employeeEdited.Count <= 0)
@@ -653,6 +642,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
             var current = employeeEdited[0];
 
+            // Gender == true means Female
             if (current.Gender)
             {
                 this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
@@ -665,7 +655,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             this.Day = current.Birthdate.Day;
             this.Month = current.Birthdate.Month;
             this.Year = current.Birthdate.Year;
-            // TODO: current.WorkTime isn't being saved
             this.WorkTimeType = current.WorkTime;
             Debug.Print(current.WorkTime);
         }
@@ -700,10 +689,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     case "GenderType":
                         error = this.ValidateGenderType();
                         break;
-                    case "WorkTimeType":
+                    case "WorkTimeType": // TODO: Shows error but doesn't blocks the Save button when invalid.
                         error = this.ValidateWorkTime();
                         break;
-                    case "Day":
+                    case "Day": // TODO: Shows error but doesn't blocks the Save button when invalid.
                         //error = this.ValidateBirthdate();
                         error = BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year);
                         break;
