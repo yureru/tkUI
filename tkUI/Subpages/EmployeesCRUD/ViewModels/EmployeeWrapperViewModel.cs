@@ -515,6 +515,19 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             _employeeRepository.DeleteByID((int) id);
         }
 
+        /// <summary>
+        /// Checks all the properties (primarly Comboboxes) to see if they're valid
+        /// and therefore the employee can be saved.
+        /// </summary>
+        /// <returns>True if the fields are valid, false otherwise.</returns>
+        bool FieldsAreValid()
+        {
+            return String.IsNullOrEmpty(this.ValidateGenderType())
+                && _employee.IsValid
+                && String.IsNullOrEmpty(this.ValidateWorkTime())
+                && String.IsNullOrEmpty(BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year));
+        }
+
         #endregion // Private Methods
 
         #region Private Helpers
@@ -530,12 +543,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         bool CanSave
         {
-            get
-            {
-                return String.IsNullOrEmpty(this.ValidateGenderType()) && _employee.IsValid
-                    && String.IsNullOrEmpty(this.ValidateWorkTime())
-                    && String.IsNullOrEmpty(BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year));
-            }
+            get { return FieldsAreValid(); }
         }
 
         bool CanDelete()
