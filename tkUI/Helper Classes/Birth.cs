@@ -132,5 +132,14 @@ namespace tkUI.Helper_Classes
         }
 
         #endregion // Casts
+
+        #region Overrides
+
+        public override string ToString()
+        {
+            return this.Date;
+        }
+
+        #endregion // Overrides
     }
 }

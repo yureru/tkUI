@@ -491,6 +491,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 _employee.Birthdate.SetDateWithValidatedInput(this.Day, this.Month, this.Year);
                 var newEmployee = Employee.CreateEmployee(_employee);
                 _employeeRepository.AddEmployee(newEmployee);
+                PrintEmployeeFields(newEmployee);
                 SetLastUserSaved(false);
                 CleanForm();
                 flag = true;
@@ -499,9 +500,13 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             // The user was saved in the ListEmployeeView/Edit button.
             if (!flag)
             {
+                PrintEmployeeFields(_employee);
                 SetLastUserSaved(true);
                 base.OnPropertyChanged("Gender");
             }
+
+            
+
             base.OnPropertyChanged("DisplayName");
         }
 
@@ -526,6 +531,13 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 && _employee.IsValid
                 && String.IsNullOrEmpty(this.ValidateWorkTime())
                 && String.IsNullOrEmpty(BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year));
+        }
+
+        [Conditional("DEBUG")]
+        [DebuggerStepThrough]
+        void PrintEmployeeFields(Employee item)
+        {
+            Debug.Print(item.ToString());
         }
 
         #endregion // Private Methods

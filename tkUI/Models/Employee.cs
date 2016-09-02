@@ -46,6 +46,8 @@ namespace tkUI.Models
 
         #endregion // Fields
 
+
+
         #region Creation
 
         public static Employee CreateNewEmployee()
@@ -255,7 +257,28 @@ namespace tkUI.Models
             return Regex.IsMatch(email, pattern, RegexOptions.IgnoreCase);
         }
 
-        #endregion
+        #endregion // Validation
+
+        #region Overrides
+
+        public override string ToString()
+        {
+            return  "Name: " + this.FirstName + "\n"
+                  + "SecondName: " + this.LastName + "\n"
+                  + "ID: " + this.ID + "\n"
+                  + "Gender: " + this.Gender + "\n"
+                  + "Birth: " + this.Birthdate + "\n"
+                  + "Email: " + this.Email + "\n"
+                  + "Phone: " + this.Phone + "\n"
+                  + "Pay: " + this.Pay + "\n"
+                  + "Worktime: " + this.WorkTime + "\n"
+                  + "Address: " + this.Address + "\n"
+                  + "StartedWorking: " + this.StartedWorking + "\n";
+        }
+
+        #endregion // Overrides
+
+
 
     }
 }
