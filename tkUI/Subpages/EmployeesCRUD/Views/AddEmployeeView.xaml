@@ -124,7 +124,8 @@
         <!-- Birthdate -->
         <Label Grid.Row="6" Grid.Column="0"
             Content="_Fecha de nacimiento:"
-               HorizontalAlignment="Right"
+            HorizontalAlignment="Right"
+            Target="{Binding ElementName=dayCombo}"
             />
             <StackPanel Grid.Row="6" Grid.Column="2" Orientation="Horizontal">
                 <Grid>
@@ -217,6 +218,7 @@
             <Label Grid.Row="14" Grid.Column="0"
                Content="_Jornada laboral:"
                HorizontalAlignment="Right"
+               Target="{Binding ElementName=workCombo}"
                />
             <ComboBox Grid.Row="14" Grid.Column="2"
                       Name="workCombo"

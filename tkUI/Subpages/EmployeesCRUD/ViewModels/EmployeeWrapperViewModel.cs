@@ -530,7 +530,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         bool CanSave
         {
-            get { return String.IsNullOrEmpty(this.ValidateGenderType()) && _employee.IsValid; }
+            get
+            {
+                return String.IsNullOrEmpty(this.ValidateGenderType()) && _employee.IsValid
+                    && String.IsNullOrEmpty(this.ValidateWorkTime())
+                    && String.IsNullOrEmpty(BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year));
+            }
         }
 
         bool CanDelete()
