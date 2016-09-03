@@ -86,11 +86,24 @@ namespace tkUI.Models
         public static Employee CreateEmployee(Employee employee)
         {
             return CreateEmployee(employee.ID, employee.FirstName, employee.LastName, employee.Gender, (string)employee.Birthdate,
-                employee.Email, employee.Phone, employee.Pay, employee.WorkTime, employee.Address, employee.StartedWorking);
+            employee.Email, employee.Phone, employee.Pay, employee.WorkTime, employee.Address, Employee.StartedDate());
         }
 
         #endregion // Creation
 
+        #region Helper Methods
+
+        /// <summary>
+        /// Returns date in the form "DD/MM/YYYY" at the time of Employee's creation (when started working.)
+        /// </summary>
+        /// <returns></returns>
+        static string StartedDate()
+        {
+            var creationDate = DateTime.Today;
+            return String.Format("{0}/{1}/{2}", creationDate.Day, creationDate.Month, creationDate.Year);
+        }
+
+        #endregion // Helper Methods
 
         #region Interface Implementations
 
