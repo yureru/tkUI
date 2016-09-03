@@ -236,6 +236,14 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        public string PrettyPay
+        {
+            get
+            {
+                return String.Format("${0}.00", Pay);
+            }
+        }
+
         public string WorkTime
         {
             get { return _employee.WorkTime; }
@@ -492,9 +500,13 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             if (!isNewUser)
             {
                 SaveBirthdateToEmployee(_employee);
-                PrintEmployeeFields(_employee);
+                //PrintEmployeeFields(_employee);
                 SetLastUserSaved(true);
+                /* Notify the change of this properties to be fectched, just in case they were edited.
+                 * To allow the ListEmployees be updated with the new values.
+                 */
                 base.OnPropertyChanged("Gender");
+                base.OnPropertyChanged("PrettyPay");
             }
 
             
@@ -588,7 +600,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             // Search for the employee by id
             var listEmp = _employeeRepository.GetEmployees();
             var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
-
+            PrintEmployeeFields(employeeEdited[0]);
             PopulateEditComboboxes(employeeEdited);
 
             modal.DataContext = this;
@@ -678,6 +690,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 Debug.Fail("Employee being edited doesn't exists");
                 return;
             }
+
+            LastUserSaved = null; // Cleans saved message after opening the Edit dialog.
 
             var current = employeeEdited[0];
 
