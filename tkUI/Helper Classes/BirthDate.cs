@@ -10,7 +10,7 @@ namespace tkUI.Helper_Classes
 {
     /// <summary>
     /// Class to retrieve a range of Days, Months, and Years that could be used in
-    /// a Combobox tp select an specific date.
+    /// a Combobox to select an specific date.
     /// </summary>
     class BirthDate
     {
@@ -156,6 +156,7 @@ namespace tkUI.Helper_Classes
         /// <returns>An error message if the date is invalid or missing.</returns>
         public static string ValidateBirthdate(string day, string month, string year)
         {
+            // TODO: Check this function when editing an user, sometimes throws a lot exceptions but this should throw once at most.
             if (day != Resources.BirthDate_Combobox_Day
                 && month != Resources.BirthDate_Combobox_Month
                 && year != Resources.BirthDate_Combobox_Year)

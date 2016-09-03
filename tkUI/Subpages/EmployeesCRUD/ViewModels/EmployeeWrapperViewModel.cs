@@ -491,7 +491,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 _employee.Birthdate.SetDateWithValidatedInput(this.Day, this.Month, this.Year);
                 var newEmployee = Employee.CreateEmployee(_employee);
                 _employeeRepository.AddEmployee(newEmployee);
-                PrintEmployeeFields(newEmployee);
+                //PrintEmployeeFields(newEmployee);
                 SetLastUserSaved(false);
                 CleanForm();
                 flag = true;
@@ -500,6 +500,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             // The user was saved in the ListEmployeeView/Edit button.
             if (!flag)
             {
+                SaveBirthdateToEmployee(_employee);
                 PrintEmployeeFields(_employee);
                 SetLastUserSaved(true);
                 base.OnPropertyChanged("Gender");
@@ -563,6 +564,50 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             return true;
         }
 
+
+        bool CanEdit()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Method that shows a modal dialog that allow us to edit an employee.
+        /// Currently it's using the Show() so it doesn't blocks.
+        /// </summary>
+        /// <param name="id"></param>
+        void ShowEditDialog(object id)
+        {
+            if (!(id is int))
+            {
+                throw new ArgumentException("Param passed to EditCommand should be integer.");
+            }
+
+            Window modal = new Window();
+            // Create the forms to edit
+            var view = new AddEmployeeView();
+            modal.Width = 450;
+            modal.Height = 350;
+            modal.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            // Search for the employee by id
+            var listEmp = _employeeRepository.GetEmployees();
+            var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
+
+            PopulateEditComboboxes(employeeEdited);
+            //PrintEmployeeFields(employeeEdited[0]);
+
+            modal.DataContext = this;
+
+            modal.Content = view;
+            modal.Title = "Edit Employee";
+            //modal.ShowDialog();
+            modal.Show();
+
+            // Check if the fields are different to the original Employee element, if so:
+            // 1. The Save button can performs.
+            // 2. If the users close the window without saving ask him if he wanna save
+        }
+
         /// <summary>
         /// Cleans the UI forms. That way the user can enter new data without cleaning
         /// himself the controls.
@@ -610,46 +655,16 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        /// <summary>
-        /// Method that shows a modal dialog that allow us to edit an employee.
-        /// Currently it's using the Show() so it doesn't blocks.
-        /// </summary>
-        /// <param name="id"></param>
-        void ShowEditDialog(object id)
+        void SaveBirthdateToEmployee(Employee item)
         {
-            if (!(id is int))
+            if (this.Day == item.Birthdate.Day
+                && this.Month == item.Birthdate.Month
+                && this.Year == item.Birthdate.Year)
             {
-                throw new ArgumentException("Param passed to EditCommand should be integer.");
+                return;
             }
 
-            Window modal = new Window();
-            // Create the forms to edit
-            var view = new AddEmployeeView();
-            modal.Width = 450;
-            modal.Height = 350;
-            modal.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            // Search for the employee by id
-            var listEmp = _employeeRepository.GetEmployees();
-            var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
-
-            PopulateEditComboboxes(employeeEdited);
-            
-            modal.DataContext = this;
-            
-            modal.Content = view;
-            modal.Title = "Edit Employee";
-            //modal.ShowDialog();
-            modal.Show();
-
-            // Check if the fields are different to the original Employee element, if so:
-            // 1. The Save button can performs.
-            // 2. If the users close the window without saving ask him if he wanna save
-        }
-
-        bool CanEdit()
-        {
-            return true;
+            item.Birthdate.SetDateWithValidatedInput(this.Day, this.Month, this.Year);
         }
 
         /// <summary>
