@@ -261,6 +261,10 @@ namespace tkUI.Models
 
         #region Overrides
 
+        /// <summary>
+        /// Prints all the fields of Employee in a formatted manner.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return  "Name: " + this.FirstName + "\n"
@@ -277,8 +281,6 @@ namespace tkUI.Models
         }
 
         #endregion // Overrides
-
-
 
     }
 }

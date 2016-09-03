@@ -74,7 +74,7 @@ namespace tkUI.Helper_Classes
         static List<string> PopulateDaysOrYears(int from, int upTo, bool isPopulatingDays)
         {
             var items = new List<string>();
-            // TODO: "Día" and "Año" should be string resources to allow use them in EmployeeWrapperViewModel
+
             if (isPopulatingDays)
             {
                 items.Add(Resources.BirthDate_Combobox_Day);

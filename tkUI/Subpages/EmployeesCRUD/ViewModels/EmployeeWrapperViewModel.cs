@@ -239,17 +239,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         public string WorkTime
         {
             get { return _employee.WorkTime; }
-            /*set
-            {
-                if (_employee.WorkTime == value)
-                {
-                    return;
-                }
-
-                _employee.WorkTime = value;
-
-                OnPropertyChanged("WorkTime");
-            }*/
         }
 
         public string Address
@@ -268,6 +257,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        //TODO: Implement this property
         public string Startedworking
         {
             get { return _employee.StartedWorking; }
@@ -476,10 +466,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         /// <summary>
         /// Saves the customer to the repository. Creates a new Employee to add it.
+        /// It's also used when we edit an Employee.
         /// </summary>
         public void Save()
         {
-            bool flag = false;
+            bool isNewUser = false;
             if (!_employee.IsValid)
             {
                 throw new InvalidOperationException(Resources.EmployeeWrapperViewModel_Exception_CannotSave);
@@ -494,11 +485,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 //PrintEmployeeFields(newEmployee);
                 SetLastUserSaved(false);
                 CleanForm();
-                flag = true;
+                isNewUser = true;
             }
 
             // The user was saved in the ListEmployeeView/Edit button.
-            if (!flag)
+            if (!isNewUser)
             {
                 SaveBirthdateToEmployee(_employee);
                 PrintEmployeeFields(_employee);
@@ -534,6 +525,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 && String.IsNullOrEmpty(BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year));
         }
 
+        /// <summary>
+        /// Function that prints an Employee object.
+        /// Just to make sure the data is being populated/edited correctly.
+        /// </summary>
+        /// <param name="item">Employee object.</param>
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
         void PrintEmployeeFields(Employee item)
@@ -574,7 +570,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// Method that shows a modal dialog that allow us to edit an employee.
         /// Currently it's using the Show() so it doesn't blocks.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Employee's ID</param>
         void ShowEditDialog(object id)
         {
             if (!(id is int))
@@ -594,7 +590,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
 
             PopulateEditComboboxes(employeeEdited);
-            //PrintEmployeeFields(employeeEdited[0]);
 
             modal.DataContext = this;
 
@@ -655,6 +650,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        /// <summary>
+        /// Saves a Birthdate when we're editing an user.
+        /// </summary>
+        /// <param name="item"></param>
         void SaveBirthdateToEmployee(Employee item)
         {
             if (this.Day == item.Birthdate.Day
@@ -701,7 +700,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         #endregion // Private Helpers
 
-
         #region Interface Implementations
 
         public override string Name
@@ -729,11 +727,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     case "GenderType":
                         error = this.ValidateGenderType();
                         break;
-                    case "WorkTimeType": // TODO: Shows error but doesn't blocks the Save button when invalid.
+                    case "WorkTimeType":
                         error = this.ValidateWorkTime();
                         break;
-                    case "Day": // TODO: Shows error but doesn't blocks the Save button when invalid.
-                        //error = this.ValidateBirthdate();
+                    case "Day":
                         error = BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year);
                         break;
                     default:
