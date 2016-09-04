@@ -46,6 +46,8 @@ namespace tkUI.Models
 
         #endregion // Fields
 
+
+
         #region Creation
 
         public static Employee CreateNewEmployee()
@@ -84,11 +86,24 @@ namespace tkUI.Models
         public static Employee CreateEmployee(Employee employee)
         {
             return CreateEmployee(employee.ID, employee.FirstName, employee.LastName, employee.Gender, (string)employee.Birthdate,
-                employee.Email, employee.Phone, employee.Pay, employee.WorkTime, employee.Address, employee.StartedWorking);
+            employee.Email, employee.Phone, employee.Pay, employee.WorkTime, employee.Address, Employee.StartedDate());
         }
 
         #endregion // Creation
 
+        #region Helper Methods
+
+        /// <summary>
+        /// Returns date in the form "DD/MM/YYYY" at the time of Employee's creation (when started working.)
+        /// </summary>
+        /// <returns></returns>
+        static string StartedDate()
+        {
+            var creationDate = DateTime.Today;
+            return String.Format("{0}/{1}/{2}", creationDate.Day, creationDate.Month, creationDate.Year);
+        }
+
+        #endregion // Helper Methods
 
         #region Interface Implementations
 
@@ -255,7 +270,30 @@ namespace tkUI.Models
             return Regex.IsMatch(email, pattern, RegexOptions.IgnoreCase);
         }
 
-        #endregion
+        #endregion // Validation
+
+        #region Overrides
+
+        /// <summary>
+        /// Prints all the fields of Employee in a formatted manner.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return  "Name: " + this.FirstName + "\n"
+                  + "SecondName: " + this.LastName + "\n"
+                  + "ID: " + this.ID + "\n"
+                  + "Gender: " + this.Gender + "\n"
+                  + "Birth: " + this.Birthdate + "\n"
+                  + "Email: " + this.Email + "\n"
+                  + "Phone: " + this.Phone + "\n"
+                  + "Pay: " + this.Pay + "\n"
+                  + "Worktime: " + this.WorkTime + "\n"
+                  + "Address: " + this.Address + "\n"
+                  + "StartedWorking: " + this.StartedWorking + "\n";
+        }
+
+        #endregion // Overrides
 
     }
 }

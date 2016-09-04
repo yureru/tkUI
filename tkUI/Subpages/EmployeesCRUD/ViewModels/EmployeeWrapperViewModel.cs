@@ -236,20 +236,17 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        public string PrettyPay
+        {
+            get
+            {
+                return String.Format("${0}.00", Pay);
+            }
+        }
+
         public string WorkTime
         {
             get { return _employee.WorkTime; }
-            /*set
-            {
-                if (_employee.WorkTime == value)
-                {
-                    return;
-                }
-
-                _employee.WorkTime = value;
-
-                OnPropertyChanged("WorkTime");
-            }*/
         }
 
         public string Address
@@ -268,6 +265,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        //TODO: Implement this property
         public string Startedworking
         {
             get { return _employee.StartedWorking; }
@@ -476,10 +474,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         /// <summary>
         /// Saves the customer to the repository. Creates a new Employee to add it.
+        /// It's also used when we edit an Employee.
         /// </summary>
         public void Save()
         {
-            bool flag = false;
+            bool isNewUser = false;
             if (!_employee.IsValid)
             {
                 throw new InvalidOperationException(Resources.EmployeeWrapperViewModel_Exception_CannotSave);
@@ -491,17 +490,27 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 _employee.Birthdate.SetDateWithValidatedInput(this.Day, this.Month, this.Year);
                 var newEmployee = Employee.CreateEmployee(_employee);
                 _employeeRepository.AddEmployee(newEmployee);
+                //PrintEmployeeFields(newEmployee);
                 SetLastUserSaved(false);
                 CleanForm();
-                flag = true;
+                isNewUser = true;
             }
 
             // The user was saved in the ListEmployeeView/Edit button.
-            if (!flag)
+            if (!isNewUser)
             {
+                SaveBirthdateToEmployee(_employee);
+                //PrintEmployeeFields(_employee);
                 SetLastUserSaved(true);
+                /* Notify the change of this properties to be fectched, just in case they were edited.
+                 * To allow the ListEmployees be updated with the new values.
+                 */
                 base.OnPropertyChanged("Gender");
+                base.OnPropertyChanged("PrettyPay");
             }
+
+            
+
             base.OnPropertyChanged("DisplayName");
         }
 
@@ -513,6 +522,31 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
 
             _employeeRepository.DeleteByID((int) id);
+        }
+
+        /// <summary>
+        /// Checks all the properties (primarly Comboboxes) to see if they're valid
+        /// and therefore the employee can be saved.
+        /// </summary>
+        /// <returns>True if the fields are valid, false otherwise.</returns>
+        bool FieldsAreValid()
+        {
+            return String.IsNullOrEmpty(this.ValidateGenderType())
+                && _employee.IsValid
+                && String.IsNullOrEmpty(this.ValidateWorkTime())
+                && String.IsNullOrEmpty(BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year));
+        }
+
+        /// <summary>
+        /// Function that prints an Employee object.
+        /// Just to make sure the data is being populated/edited correctly.
+        /// </summary>
+        /// <param name="item">Employee object.</param>
+        [Conditional("DEBUG")]
+        [DebuggerStepThrough]
+        void PrintEmployeeFields(Employee item)
+        {
+            Debug.Print(item.ToString());
         }
 
         #endregion // Private Methods
@@ -530,12 +564,59 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         bool CanSave
         {
-            get { return String.IsNullOrEmpty(this.ValidateGenderType()) && _employee.IsValid; }
+            get { return FieldsAreValid(); }
         }
 
         bool CanDelete()
         {
             return true;
+        }
+
+
+        bool CanEdit()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Method that shows a modal dialog that allow us to edit an employee.
+        /// Currently it's using the Show() so it doesn't blocks.
+        /// </summary>
+        /// <param name="id">Employee's ID</param>
+        void ShowEditDialog(object id)
+        {
+            if (!(id is int))
+            {
+                throw new ArgumentException("Param passed to EditCommand should be integer.");
+            }
+
+            Window modal = new Window();
+            // Create the forms to edit
+            var view = new AddEmployeeView();
+            modal.Width = 450;
+            modal.Height = 350;
+            modal.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            // Search for the employee by id
+            var listEmp = _employeeRepository.GetEmployees();
+            var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
+            PrintEmployeeFields(employeeEdited[0]);
+            PopulateEditComboboxes(employeeEdited);
+            /* Random thought:
+             * We can create dummies values so the Binding to the current employee doesn't happens,
+             * then when we click the Save button, in the function save we edit the proper Employee, passing
+             * any data and doing there the edit.
+             */
+            modal.DataContext = this;
+
+            modal.Content = view;
+            modal.Title = "Edit Employee";
+            //modal.ShowDialog();
+            modal.Show();
+
+            // Check if the fields are different to the original Employee element, if so:
+            // 1. The Save button can performs.
+            // 2. If the users close the window without saving ask him if he wanna save
         }
 
         /// <summary>
@@ -586,45 +667,19 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         }
 
         /// <summary>
-        /// Method that shows a modal dialog that allow us to edit an employee.
-        /// Currently it's using the Show() so it doesn't blocks.
+        /// Saves a Birthdate when we're editing an user.
         /// </summary>
-        /// <param name="id"></param>
-        void ShowEditDialog(object id)
+        /// <param name="item"></param>
+        void SaveBirthdateToEmployee(Employee item)
         {
-            if (!(id is int))
+            if (this.Day == item.Birthdate.Day
+                && this.Month == item.Birthdate.Month
+                && this.Year == item.Birthdate.Year)
             {
-                throw new ArgumentException("Param passed to EditCommand should be integer.");
+                return;
             }
 
-            Window modal = new Window();
-            // Create the forms to edit
-            var view = new AddEmployeeView();
-            modal.Width = 450;
-            modal.Height = 350;
-            modal.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            // Search for the employee by id
-            var listEmp = _employeeRepository.GetEmployees();
-            var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
-
-            PopulateEditComboboxes(employeeEdited);
-            
-            modal.DataContext = this;
-            
-            modal.Content = view;
-            modal.Title = "Edit Employee";
-            //modal.ShowDialog();
-            modal.Show();
-
-            // Check if the fields are different to the original Employee element, if so:
-            // 1. The Save button can performs.
-            // 2. If the users close the window without saving ask him if he wanna save
-        }
-
-        bool CanEdit()
-        {
-            return true;
+            item.Birthdate.SetDateWithValidatedInput(this.Day, this.Month, this.Year);
         }
 
         /// <summary>
@@ -639,6 +694,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 Debug.Fail("Employee being edited doesn't exists");
                 return;
             }
+
+            LastUserSaved = null; // Cleans saved message after opening the Edit dialog.
 
             var current = employeeEdited[0];
 
@@ -660,7 +717,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         }
 
         #endregion // Private Helpers
-
 
         #region Interface Implementations
 
@@ -689,11 +745,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     case "GenderType":
                         error = this.ValidateGenderType();
                         break;
-                    case "WorkTimeType": // TODO: Shows error but doesn't blocks the Save button when invalid.
+                    case "WorkTimeType":
                         error = this.ValidateWorkTime();
                         break;
-                    case "Day": // TODO: Shows error but doesn't blocks the Save button when invalid.
-                        //error = this.ValidateBirthdate();
+                    case "Day":
                         error = BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year);
                         break;
                     default:

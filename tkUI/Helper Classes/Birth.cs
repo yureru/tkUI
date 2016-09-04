@@ -37,17 +37,6 @@ namespace tkUI.Helper_Classes
 
         public string Date
         {
-            /*get
-            {
-                if (String.IsNullOrEmpty(Day) || String.IsNullOrEmpty(Month) || String.IsNullOrEmpty(Year))
-                {
-                    return "";
-                }
-                else
-                {
-                    return String.Format("{0}/{1}/{2}", Day, Month, Year);
-                }
-            }*/
             get { return String.Format("{0}/{1}/{2}", Day, Month, Year); }
             set
             {
@@ -64,6 +53,11 @@ namespace tkUI.Helper_Classes
 
         #region Methods
 
+        /// <summary>
+        /// Set the Date with a string, the string is *validated* here.
+        /// </summary>
+        /// <param name="date">String of form "DD/MM/YYYY"</param>
+        /// <returns>True if date is valid, false otherwise.</returns>
         public bool SetDate(string date)
         {
             var chunks = date.Split('/');
@@ -100,6 +94,12 @@ namespace tkUI.Helper_Classes
             return true;
         }
 
+        /// <summary>
+        /// Populates the fields with the values, these values MUST be valid already.
+        /// </summary>
+        /// <param name="day">String of form "DD"</param>
+        /// <param name="month">String of form "MM"</param>
+        /// <param name="year">String of form "YYYY"</param>
         public void SetDateWithValidatedInput(string day, string month, string year)
         {
             Day = day;
@@ -132,5 +132,14 @@ namespace tkUI.Helper_Classes
         }
 
         #endregion // Casts
+
+        #region Overrides
+
+        public override string ToString()
+        {
+            return this.Date;
+        }
+
+        #endregion // Overrides
     }
 }
