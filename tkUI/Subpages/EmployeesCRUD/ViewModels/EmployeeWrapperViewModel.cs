@@ -43,6 +43,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         RelayCommand _deleteCommand;
         RelayCommand _editCommand;
 
+        static EmployeeWrapperViewModel _editingCurrentEmployee;
+        static bool _editingCurrentEmployeeIsInitialized;
+
         #endregion // Fields
 
         #region Constructors
@@ -578,6 +581,25 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             return true;
         }
 
+        /* Random thought:
+             * We can create dummies values so the Binding to the current employee doesn't happens,
+             * then when we click the Save button, in the function save we edit the proper Employee, passing
+             * any data and doing there the edit.
+             */
+        /* I think we have two options for doing the above.
+         * 1. We can create an EmployeeWrapperViewModel instance here before editing, saving the data there,
+         * then using a new method created that receives two Employee objects and copies the data from one to another.
+         * The new instance of EmployeeWrapperViewModel would serve as a "temp" variable.
+         * The downside of this is that we're creating another EmployeeWrapperViewModel.
+         * 
+         * 2. Create a wrapper for an Employee that is exactly the same as EmployeeWrapperViewModel 
+         * but it contains only those wrappers, no other functionality, then use that to save the temp
+         * data.
+         * The downside is that we now have two wrapppers for an Employee, and if we change Employee
+         * we would need to make double job to change the wrappers in EmployeeWrapperViewModel and the
+         * new small wrapper. Though we could use the small wrapper in EmployeeWrapperViewModel?
+
+        */
         /// <summary>
         /// Method that shows a modal dialog that allow us to edit an employee.
         /// Currently it's using the Show() so it doesn't blocks.
@@ -600,13 +622,13 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             // Search for the employee by id
             var listEmp = _employeeRepository.GetEmployees();
             var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
+            /*
+             * 1- Pass employee to be edited to a function that saves this fields to the Edit modal, populating all the fields and comboboxes.
+             * 2- When the user clicked save, copy this fields of employee temp to the current Employee being edited.
+             */
             PrintEmployeeFields(employeeEdited[0]);
             PopulateEditComboboxes(employeeEdited);
-            /* Random thought:
-             * We can create dummies values so the Binding to the current employee doesn't happens,
-             * then when we click the Save button, in the function save we edit the proper Employee, passing
-             * any data and doing there the edit.
-             */
+            
             modal.DataContext = this;
 
             modal.Content = view;
@@ -714,6 +736,27 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             this.Year = current.Birthdate.Year;
             this.WorkTimeType = current.WorkTime;
             Debug.Print(current.WorkTime);
+        }
+
+        /// <summary>
+        /// Copies the employee currently being edited to a temporal variable so it can be populated
+        /// all the fields and Comboboxes of the edit modal dialog.
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <param name="temp"></param>
+        void CopyEmployeeFields(Employee employee, EmployeeWrapperViewModel temp)
+        {
+            temp.FirstName = employee.FirstName;
+            temp.LastName = employee.LastName;
+            temp._employee.Gender = employee.Gender;
+            temp.Day = employee.Birthdate.Day;
+            temp.Month = employee.Birthdate.Month;
+            temp.Year = employee.Birthdate.Year;
+            temp.Email = employee.Email;
+            temp.Phone = employee.Phone;
+            temp.Pay = employee.Pay;
+            temp._employee.WorkTime = employee.WorkTime;
+            temp.Address = employee.Address;
         }
 
         #endregion // Private Helpers
