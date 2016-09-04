@@ -602,7 +602,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
             PrintEmployeeFields(employeeEdited[0]);
             PopulateEditComboboxes(employeeEdited);
-
+            /* Random thought:
+             * We can create dummies values so the Binding to the current employee doesn't happens,
+             * then when we click the Save button, in the function save we edit the proper Employee, passing
+             * any data and doing there the edit.
+             */
             modal.DataContext = this;
 
             modal.Content = view;
