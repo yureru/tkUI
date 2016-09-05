@@ -502,7 +502,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             // The user was saved in the ListEmployeeView/Edit button.
             if (!isNewUser)
             {
-                SaveBirthdateToEmployee(_employee);
+                //SaveBirthdateToEmployee(_employee);
+                SaveEmployeeBeingEdited(_editingCurrentEmployee, _employee);
                 //PrintEmployeeFields(_employee);
                 SetLastUserSaved(true);
                 /* Notify the change of this properties to be fectched, just in case they were edited.
@@ -801,6 +802,20 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 temp.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
             }
+        }
+
+        void SaveEmployeeBeingEdited(EmployeeWrapperViewModel newData, Employee employee)
+        {
+            employee.FirstName = newData.FirstName;
+            employee.LastName = newData.LastName;
+            employee.Gender = newData._employee.Gender;
+            employee.Birthdate.Day = newData.Day;
+            employee.Birthdate.Month = newData.Month;
+            employee.Birthdate.Year = newData.Year;
+            employee.Email = newData.Email;
+            employee.Phone = newData.Phone;
+            employee.WorkTime = newData.WorkTime;
+            employee.Address = newData.Address;
         }
 
         #endregion // Private Helpers
