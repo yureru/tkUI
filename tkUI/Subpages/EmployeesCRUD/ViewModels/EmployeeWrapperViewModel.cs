@@ -862,6 +862,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             original.OnPropertyChanged("DisplayName");
             original.OnPropertyChanged("Gender");
             //TODO Changes are made but aren't notified to the original EmployeeWrapper
+            // TODO: Now the we found a way to notify the changes, do all the remainder OnPropertyChanged here.
+            // TODO: Need some deep cleaning this disgusting codebase.
+            // TODO: When we click two times the Save button when editing, a new user is created.
+            // TODO: Do a thorough testing of the app.
             //newData.CleanForm();
         }
 
