@@ -627,9 +627,21 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
              * 2- When the user clicked save, copy this fields of employee temp to the current Employee being edited.
              */
             PrintEmployeeFields(employeeEdited[0]);
-            PopulateEditComboboxes(employeeEdited);
-            
-            modal.DataContext = this;
+
+            if (!_editingCurrentEmployeeIsInitialized)
+            {
+                _editingCurrentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository);
+                _editingCurrentEmployeeIsInitialized = true;
+            }
+
+            //PopulateEditComboboxes(employeeEdited);
+
+            //PopulateEditComboboxes()
+
+            //modal.DataContext = this;
+            CopyEmployeeFields(employeeEdited[0], _editingCurrentEmployee);
+            PrintEmployeeFields(_editingCurrentEmployee._employee);
+            modal.DataContext = _editingCurrentEmployee;
 
             modal.Content = view;
             modal.Title = "Edit Employee";
@@ -738,6 +750,27 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             Debug.Print(current.WorkTime);
         }
 
+        /*void PopulateEditComboboxes(Employee employee)
+        {
+            LastUserSaved = null;
+
+            // Gender == true means Female
+            if (employee.Gender)
+            {
+                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
+            }
+            else
+            {
+                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
+            }
+
+            this.Day = employee.Birthdate.Day;
+            this.Month = current.Birthdate.Month;
+            this.Year = current.Birthdate.Year;
+            this.WorkTimeType = current.WorkTime;
+            Debug.Print(current.WorkTime);
+        }*/
+
         /// <summary>
         /// Copies the employee currently being edited to a temporal variable so it can be populated
         /// all the fields and Comboboxes of the edit modal dialog.
@@ -746,6 +779,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// <param name="temp"></param>
         void CopyEmployeeFields(Employee employee, EmployeeWrapperViewModel temp)
         {
+            temp.LastUserSaved = null;
             temp.FirstName = employee.FirstName;
             temp.LastName = employee.LastName;
             temp._employee.Gender = employee.Gender;
@@ -757,6 +791,16 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             temp.Pay = employee.Pay;
             temp._employee.WorkTime = employee.WorkTime;
             temp.Address = employee.Address;
+            temp.WorkTimeType = employee.WorkTime;
+            // Gender == true means Female
+            if (employee.Gender)
+            {
+                temp.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
+            }
+            else
+            {
+                temp.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
+            }
         }
 
         #endregion // Private Helpers
