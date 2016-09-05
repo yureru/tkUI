@@ -32,6 +32,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         readonly Employee _employee;
         readonly EmployeeRepository _employeeRepository;
+        static EmployeeWrapperViewModel _orignalData;
         string _genderType;
         string _selectedWorkTime;
         string _selectedDay, _selectedMonth, _selectedYear; // TODO: Delete this and create the corresponding fields on Employee class
@@ -45,6 +46,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         static EmployeeWrapperViewModel _editingCurrentEmployee;
         static bool _editingCurrentEmployeeIsInitialized;
+        static bool _isEditingUser;
+        static Employee _employeeBeingEdited;
 
         #endregion // Fields
 
@@ -481,13 +484,14 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// </summary>
         public void Save()
         {
-            bool isNewUser = false;
+            //bool isNewUser = false;
             if (!_employee.IsValid)
             {
                 throw new InvalidOperationException(Resources.EmployeeWrapperViewModel_Exception_CannotSave);
             }
 
-            if (this.IsNewEmployee)
+            //if (this.IsNewEmployee)
+            if (!_isEditingUser)
             {
                 _employee.Birthdate = new Birth(); // TODO: Change this, I don't like allocating here, it should be handled in the class or the EmployeeRepository.
                 _employee.Birthdate.SetDateWithValidatedInput(this.Day, this.Month, this.Year);
@@ -496,14 +500,17 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 //PrintEmployeeFields(newEmployee);
                 SetLastUserSaved(false);
                 CleanForm();
-                isNewUser = true;
+                //isNewUser = true;
             }
 
             // The user was saved in the ListEmployeeView/Edit button.
-            if (!isNewUser)
+            //if (!isNewUser)
+            if (_isEditingUser)
             {
+                Debug.Print("Saving edited user");
+                _isEditingUser = false;
                 //SaveBirthdateToEmployee(_employee);
-                SaveEmployeeBeingEdited(_editingCurrentEmployee, _employee);
+                SaveEmployeeBeingEdited(_editingCurrentEmployee, _employeeBeingEdited, _orignalData);
                 //PrintEmployeeFields(_employee);
                 SetLastUserSaved(true);
                 /* Notify the change of this properties to be fectched, just in case they were edited.
@@ -612,7 +619,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 throw new ArgumentException("Param passed to EditCommand should be integer.");
             }
-
+            _isEditingUser = true;
             Window modal = new Window();
             // Create the forms to edit
             var view = new AddEmployeeView();
@@ -623,6 +630,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             // Search for the employee by id
             var listEmp = _employeeRepository.GetEmployees();
             var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
+            _employeeBeingEdited = employeeEdited[0];
+            _orignalData = this;
             /*
              * 1- Pass employee to be edited to a function that saves this fields to the Edit modal, populating all the fields and comboboxes.
              * 2- When the user clicked save, copy this fields of employee temp to the current Employee being edited.
@@ -785,8 +794,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             temp.LastName = employee.LastName;
             temp._employee.Gender = employee.Gender;
             temp.Day = employee.Birthdate.Day;
+            temp.Birthdate = employee.Birthdate;
+            //temp._employee.Birthdate.Day = employee.Birthdate.Day;
             temp.Month = employee.Birthdate.Month;
+            //temp._employee.Birthdate.Month = employee.Birthdate.Month;
             temp.Year = employee.Birthdate.Year;
+            //temp._employee.Birthdate.Year = employee.Birthdate.Year;
             temp.Email = employee.Email;
             temp.Phone = employee.Phone;
             temp.Pay = employee.Pay;
@@ -802,9 +815,38 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 temp.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
             }
+            // Didn't werked
+            /*temp.LastUserSaved = null;
+            temp._employee.ID = employee.ID; // new
+            temp._employee.FirstName = employee.FirstName;
+            temp._employee.LastName = employee.LastName;
+            temp._employee.Gender = employee.Gender;
+            temp._employee.Birthdate = employee.Birthdate; // new
+            temp.Day = employee.Birthdate.Day;
+            temp._employee.Birthdate.Day = employee.Birthdate.Day;
+            temp.Month = employee.Birthdate.Month;
+            temp._employee.Birthdate.Month = employee.Birthdate.Month;
+            temp.Year = employee.Birthdate.Year;
+            temp._employee.Birthdate.Year = employee.Birthdate.Year;
+            temp._employee.Email = employee.Email;
+            temp._employee.Phone = employee.Phone;
+            temp._employee.Pay = employee.Pay;
+            temp._employee.WorkTime = employee.WorkTime;
+            temp._employee.StartedWorking = employee.StartedWorking; // new
+            temp._employee.Address = employee.Address;
+            temp.WorkTimeType = employee.WorkTime;*/
+            // Gender == true means Female
+            if (employee.Gender)
+            {
+                temp.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
+            }
+            else
+            {
+                temp.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
+            }
         }
 
-        void SaveEmployeeBeingEdited(EmployeeWrapperViewModel newData, Employee employee)
+        void SaveEmployeeBeingEdited(EmployeeWrapperViewModel newData, Employee employee, EmployeeWrapperViewModel original)
         {
             employee.FirstName = newData.FirstName;
             employee.LastName = newData.LastName;
@@ -816,6 +858,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             employee.Phone = newData.Phone;
             employee.WorkTime = newData.WorkTime;
             employee.Address = newData.Address;
+            original.OnPropertyChanged("FirstName");
+            original.OnPropertyChanged("DisplayName");
+            original.OnPropertyChanged("Gender");
+            //TODO Changes are made but aren't notified to the original EmployeeWrapper
+            //newData.CleanForm();
         }
 
         #endregion // Private Helpers
