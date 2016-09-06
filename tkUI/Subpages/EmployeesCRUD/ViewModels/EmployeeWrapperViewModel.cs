@@ -856,11 +856,18 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             employee.Birthdate.Year = newData.Year;
             employee.Email = newData.Email;
             employee.Phone = newData.Phone;
+            employee.Pay = newData.Pay;
             employee.WorkTime = newData.WorkTime;
             employee.Address = newData.Address;
-            original.OnPropertyChanged("FirstName");
+            //original.OnPropertyChanged("FirstName");
             original.OnPropertyChanged("DisplayName");
             original.OnPropertyChanged("Gender");
+            original.OnPropertyChanged("Birthdate");
+            original.OnPropertyChanged("Email");
+            original.OnPropertyChanged("Phone");
+            original.OnPropertyChanged("PrettyPay");
+            original.OnPropertyChanged("WorkTime");
+            original.OnPropertyChanged("Address");
             //TODO Changes are made but aren't notified to the original EmployeeWrapper
             // TODO: Now the we found a way to notify the changes, do all the remainder OnPropertyChanged here.
             // TODO: Need some deep cleaning this disgusting codebase.
