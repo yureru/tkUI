@@ -32,14 +32,16 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
          * Fixed.
          * 1- When editing an employee it works fine, but if we click the save button in the edition twice, the first click is going
          * to save the employee being edited, and the second is going to create a new Employee.
+         * ** Solution: Just delete the assignment to _isEditingUser = false in the Save method. Since modal event handles that.
+         *
+         * Fixed. 
+         * 2- After creating and user and editing it, we cannot add a new Employee until we click the save button twice.
+         * Actually we don't know if this happens only after creating the first Employee, or after creating the first Employee and editing it.
          * ** This happens when we click an Edit button, close the modal (or leave it open), and then we go to add a new Employee. Due _isEditingUser variable.
          * ** Solution:
          * - Easy: Make the modal blocking.
          * - Difficult: When we open the edit modal, block the main UI in a way that is unselectable but not blocked to changes (let's say timers, events, and so.)
          * - Actually implemented: We subscribe the modal to the events Activated and Deactivated, we use those event handlers to change _isEditingUser.
-         * 
-         * 2- After creating and user and editing it, we cannot add a new Employee until we click the save button twice.
-         * Actually we don't know if this happens only after creating the first Employee, or after creating the first Employee and editing it.
          * 
          * 3- If we click on the edit button of an employee the modal dialog is created, and since this modals are non-blocking
          * we can create another modal from the same or other different employee causing that the first modal and the newly modal
@@ -49,9 +51,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
          *      - Allow having different modals but always from a different Employee. It *can't* create two modals from the same Employee. This
          *      can be handled with a collection of EmployeeWrapperViewModel.
          *      And both modals will have the corresponding data of the Employee being edited.
-         * 
+         *      
+         * Fixed.
          * 4- Make sure that the user can't delete the Employee if a modal dialog is open about this employee, or give a warning and if the
          * user is sure delete the Employee and also close the dialog.
+         * ** Solution: By using a _IsModalSpawned flag and the modal's Closed event.
              */
         #region Fields
 
@@ -72,6 +76,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         static EmployeeWrapperViewModel _editingCurrentEmployee;
         static bool _editingCurrentEmployeeIsInitialized;
         static bool _isEditingUser;
+        static bool _isModalSpawned;
         static Employee _employeeBeingEdited;
 
         #endregion // Fields
@@ -508,45 +513,29 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// </summary>
         public void Save()
         {
-            //bool isNewUser = false;
             if (!_employee.IsValid)
             {
                 throw new InvalidOperationException(Resources.EmployeeWrapperViewModel_Exception_CannotSave);
             }
 
-            //if (this.IsNewEmployee)
             if (!_isEditingUser)
             {
                 _employee.Birthdate = new Birth(); // TODO: Change this, I don't like allocating here, it should be handled in the class or the EmployeeRepository.
                 _employee.Birthdate.SetDateWithValidatedInput(this.Day, this.Month, this.Year);
                 var newEmployee = Employee.CreateEmployee(_employee);
                 _employeeRepository.AddEmployee(newEmployee);
-                //PrintEmployeeFields(newEmployee);
                 SetLastUserSaved(false);
                 CleanForm();
-                //isNewUser = true;
             }
 
             // The user was saved in the ListEmployeeView/Edit button.
-            //if (!isNewUser)
             if (_isEditingUser)
             {
                 Debug.Print("Saving edited user");
-                _isEditingUser = false;
-                //SaveBirthdateToEmployee(_employee);
                 SaveEmployeeBeingEdited(_editingCurrentEmployee, _employeeBeingEdited, _orignalData);
-                //PrintEmployeeFields(_employee);
                 SetLastUserSaved(true);
-                /* Notify the change of this properties to be fectched, just in case they were edited.
-                 * To allow the ListEmployees be updated with the new values.
-                 */
-                /*base.OnPropertyChanged("Gender");
-                base.OnPropertyChanged("PrettyPay");*/
             }
 
-            
-
-            base.OnPropertyChanged("DisplayName");
         }
 
         public void Delete(object id)
@@ -608,10 +597,16 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             return true;
         }
 
-
         bool CanEdit()
         {
-            return true;
+            if (!_isModalSpawned)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /* Random thought:
@@ -652,8 +647,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             modal.Height = 350;
             modal.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
+            _isModalSpawned = true; // States a modal is currently being used.
             modal.Activated += Modal_Activated;
             modal.Deactivated += Modal_Deactivated;
+            modal.Closed += Modal_Closed;
 
             // Search for the employee by id
             var listEmp = _employeeRepository.GetEmployees();
@@ -672,8 +669,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 _editingCurrentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository);
                 _editingCurrentEmployeeIsInitialized = true;
             }
-
-            //PopulateEditComboboxes(employeeEdited);
 
             CopyEmployeeFields(employeeEdited[0], _editingCurrentEmployee);
             PrintEmployeeFields(_editingCurrentEmployee._employee);
@@ -869,6 +864,14 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         void Modal_Deactivated(object sender, EventArgs e)
         {
             _isEditingUser = false;
+        }
+
+        /// <summary>
+        /// Sets flag only when the modal is closed. That allow us to show only one modal at the time.
+        /// </summary>
+        void Modal_Closed(object sender, EventArgs e)
+        {
+            _isModalSpawned = false;
         }
 
         #endregion // Private Helpers
