@@ -27,7 +27,27 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     /// </summary>
     class EmployeeWrapperViewModel : ObservablePageFromCRUD, IDataErrorInfo
     {
-
+        // TODO: The followwing tasks
+        /*
+         * 1- When editing an employee it works fine, but if we click the save button in the edition twice, the first click is going
+         * to save the employee being edited, and the second is going to create a new Employee.
+         * ** This happens when we click an Edit button, close the modal, and then we go to add a new Employee.
+         * 
+         * 2- After creating and user and editing it, we cannot add a new Employee until we click the save button twice.
+         * Actually we don't know if this happens only after creating the first Employee, or after creating the first Employee and editing it.
+         * 
+         * 3- If we click on the edit button of an employee the modal dialog is created, and since this modals are non-blocking
+         * we can create another modal from the same or other different employee causing that the first modal and the newly modal
+         * contains the data of the newly created modal. And it's silly since we can create several edit modal dialogs from the same
+         * user. So we have several options here.
+         *      - Make the edit modal blocking. (Not recommended for UX reasons).
+         *      - Allow having different modals but always from a different Employee. It *can't* create two modals from the same Employee. This
+         *      can be handled with a collection of EmployeeWrapperViewModel.
+         *      And both modals will have the corresponding data of the Employee being edited.
+         * 
+         * 4- Make sure that the user can't delete the Employee if a modal dialog is open about this employee, or give a warning and if the
+         * user is sure delete the Employee and also close the dialog.
+             */
         #region Fields
 
         readonly Employee _employee;
@@ -271,7 +291,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        //TODO: Implement this property
         public string Startedworking
         {
             get { return _employee.StartedWorking; }
@@ -516,8 +535,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 /* Notify the change of this properties to be fectched, just in case they were edited.
                  * To allow the ListEmployees be updated with the new values.
                  */
-                base.OnPropertyChanged("Gender");
-                base.OnPropertyChanged("PrettyPay");
+                /*base.OnPropertyChanged("Gender");
+                base.OnPropertyChanged("PrettyPay");*/
             }
 
             
@@ -564,6 +583,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         #region Private Helpers
 
+        /* *** Currently unused *** */
         /// <summary>
         /// Returns true if this customer was created by the user and it has not yet
         /// been saved to the customer repository.
@@ -638,6 +658,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
              */
             PrintEmployeeFields(employeeEdited[0]);
 
+            // Initialize the Employee object that's going to be used as a temporal.
             if (!_editingCurrentEmployeeIsInitialized)
             {
                 _editingCurrentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository);
@@ -646,9 +667,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
             //PopulateEditComboboxes(employeeEdited);
 
-            //PopulateEditComboboxes()
-
-            //modal.DataContext = this;
             CopyEmployeeFields(employeeEdited[0], _editingCurrentEmployee);
             PrintEmployeeFields(_editingCurrentEmployee._employee);
             modal.DataContext = _editingCurrentEmployee;
@@ -710,6 +728,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        /* *** Currently Unused *** */
         /// <summary>
         /// Saves a Birthdate when we're editing an user.
         /// </summary>
@@ -726,6 +745,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             item.Birthdate.SetDateWithValidatedInput(this.Day, this.Month, this.Year);
         }
 
+        /* *** Currently unused *** */
         /// <summary>
         /// Loads the corresponding data for the Comboboxes in the modal edit dialog.
         /// That's because the textboxes are loaded automatically but the Comboboxes aren't (?)
@@ -760,27 +780,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             Debug.Print(current.WorkTime);
         }
 
-        /*void PopulateEditComboboxes(Employee employee)
-        {
-            LastUserSaved = null;
-
-            // Gender == true means Female
-            if (employee.Gender)
-            {
-                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
-            }
-            else
-            {
-                this.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
-            }
-
-            this.Day = employee.Birthdate.Day;
-            this.Month = current.Birthdate.Month;
-            this.Year = current.Birthdate.Year;
-            this.WorkTimeType = current.WorkTime;
-            Debug.Print(current.WorkTime);
-        }*/
-
         /// <summary>
         /// Copies the employee currently being edited to a temporal variable so it can be populated
         /// all the fields and Comboboxes of the edit modal dialog.
@@ -795,46 +794,15 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             temp._employee.Gender = employee.Gender;
             temp.Day = employee.Birthdate.Day;
             temp.Birthdate = employee.Birthdate;
-            //temp._employee.Birthdate.Day = employee.Birthdate.Day;
             temp.Month = employee.Birthdate.Month;
-            //temp._employee.Birthdate.Month = employee.Birthdate.Month;
             temp.Year = employee.Birthdate.Year;
-            //temp._employee.Birthdate.Year = employee.Birthdate.Year;
             temp.Email = employee.Email;
             temp.Phone = employee.Phone;
             temp.Pay = employee.Pay;
             temp._employee.WorkTime = employee.WorkTime;
             temp.Address = employee.Address;
             temp.WorkTimeType = employee.WorkTime;
-            // Gender == true means Female
-            if (employee.Gender)
-            {
-                temp.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
-            }
-            else
-            {
-                temp.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
-            }
-            // Didn't werked
-            /*temp.LastUserSaved = null;
-            temp._employee.ID = employee.ID; // new
-            temp._employee.FirstName = employee.FirstName;
-            temp._employee.LastName = employee.LastName;
-            temp._employee.Gender = employee.Gender;
-            temp._employee.Birthdate = employee.Birthdate; // new
-            temp.Day = employee.Birthdate.Day;
-            temp._employee.Birthdate.Day = employee.Birthdate.Day;
-            temp.Month = employee.Birthdate.Month;
-            temp._employee.Birthdate.Month = employee.Birthdate.Month;
-            temp.Year = employee.Birthdate.Year;
-            temp._employee.Birthdate.Year = employee.Birthdate.Year;
-            temp._employee.Email = employee.Email;
-            temp._employee.Phone = employee.Phone;
-            temp._employee.Pay = employee.Pay;
-            temp._employee.WorkTime = employee.WorkTime;
-            temp._employee.StartedWorking = employee.StartedWorking; // new
-            temp._employee.Address = employee.Address;
-            temp.WorkTimeType = employee.WorkTime;*/
+
             // Gender == true means Female
             if (employee.Gender)
             {
@@ -846,6 +814,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        /// <summary>
+        /// Saves the employee after clicking the Save button in the modal.
+        /// </summary>
+        /// <param name="newData">The wrapper of a temporal Employee object.</param>
+        /// <param name="employee">The employee in the repository that is going to be actually saved</param>
+        /// <param name="original">The original context where the employee resides, so it can nortify changes.</param>
         void SaveEmployeeBeingEdited(EmployeeWrapperViewModel newData, Employee employee, EmployeeWrapperViewModel original)
         {
             employee.FirstName = newData.FirstName;
@@ -868,9 +842,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             original.OnPropertyChanged("PrettyPay");
             original.OnPropertyChanged("WorkTime");
             original.OnPropertyChanged("Address");
-            //TODO Changes are made but aren't notified to the original EmployeeWrapper
-            // TODO: Now the we found a way to notify the changes, do all the remainder OnPropertyChanged here.
-            // TODO: Need some deep cleaning this disgusting codebase.
             // TODO: When we click two times the Save button when editing, a new user is created.
             // TODO: Do a thorough testing of the app.
             //newData.CleanForm();
