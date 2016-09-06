@@ -29,9 +29,14 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     {
         // TODO: The followwing tasks
         /*
+         * Fixed.
          * 1- When editing an employee it works fine, but if we click the save button in the edition twice, the first click is going
          * to save the employee being edited, and the second is going to create a new Employee.
-         * ** This happens when we click an Edit button, close the modal, and then we go to add a new Employee.
+         * ** This happens when we click an Edit button, close the modal (or leave it open), and then we go to add a new Employee. Due _isEditingUser variable.
+         * ** Solution:
+         * - Easy: Make the modal blocking.
+         * - Difficult: When we open the edit modal, block the main UI in a way that is unselectable but not blocked to changes (let's say timers, events, and so.)
+         * - Actually implemented: We subscribe the modal to the events Activated and Deactivated, we use those event handlers to change _isEditingUser.
          * 
          * 2- After creating and user and editing it, we cannot add a new Employee until we click the save button twice.
          * Actually we don't know if this happens only after creating the first Employee, or after creating the first Employee and editing it.
@@ -647,6 +652,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             modal.Height = 350;
             modal.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
+            modal.Activated += Modal_Activated;
+            modal.Deactivated += Modal_Deactivated;
+
             // Search for the employee by id
             var listEmp = _employeeRepository.GetEmployees();
             var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
@@ -845,6 +853,22 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             // TODO: When we click two times the Save button when editing, a new user is created.
             // TODO: Do a thorough testing of the app.
             //newData.CleanForm();
+        }
+
+        /// <summary>
+        /// Enables _isEditingUser flag when only the edit modal dialog is activated.
+        /// </summary>
+        void Modal_Activated(object sender, EventArgs e)
+        {
+            _isEditingUser = true;
+        }
+
+        /// <summary>
+        /// Disables _isEditingUser flag when the edit modal dialog is deactivated.
+        /// </summary>
+        void Modal_Deactivated(object sender, EventArgs e)
+        {
+            _isEditingUser = false;
         }
 
         #endregion // Private Helpers
