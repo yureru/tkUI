@@ -304,6 +304,42 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No se puede borrar un usuario siendo editado.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_ToolTip_DeleteButton_Disabled {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_ToolTip_DeleteButton_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Borrar.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_ToolTip_DeleteButton_Enabled {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_ToolTip_DeleteButton_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se pueden editar dos empleados al mismo tiempo.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_ToolTip_EditButton_Disabled {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_ToolTip_EditButton_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editar.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_ToolTip_EditButton_Enabled {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_ToolTip_EditButton_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tiempo Completo.
         /// </summary>
         internal static string EmployeeWrapperViewModel_WorkingTimeOptions_FullTime {

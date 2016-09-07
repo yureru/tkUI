@@ -152,7 +152,7 @@
             <!-- User image -->
             <Button Template="{StaticResource imgButton}" helper:Icons.Image="Resources/Header/avatar25.png" Grid.Column="2" Grid.Row="1" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             <!-- User name -->
-            <TextBlock Grid.Column="3" Grid.Row="1" TextBlock.FontFamily="Resources/#NeueHaasGroteskDisp W02" TextBlock.FontSize="17.333" Foreground="#002c3d" Margin="1,3,4,0">Bryan Rolando</TextBlock>
+            <TextBlock Grid.Column="3" Grid.Row="1" TextBlock.FontFamily="Resources/#NeueHaasGroteskDisp W02" TextBlock.FontSize="17.333" Foreground="#002c3d" Margin="1,3,4,0">Roli</TextBlock>
             <!-- User arrow options -->
             <StackPanel Grid.Column="4" Grid.Row="1" HorizontalAlignment="Right" Margin="0,3,31,0">
                 <Button Template="{StaticResource arrowDropdown}" helper:Icons.Image="Resources/Header/ArrowIcon.png"/>

@@ -27,11 +27,42 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     /// </summary>
     class EmployeeWrapperViewModel : ObservablePageFromCRUD, IDataErrorInfo
     {
-
+        // TODO: Add a string resources that should be used only for the XAML and not for code-behind files.
+        // TODO: The followwing tasks
+        /*
+         * Fixed.
+         * 1- When editing an employee it works fine, but if we click the save button in the edition twice, the first click is going
+         * to save the employee being edited, and the second is going to create a new Employee.
+         * ** Solution: Just delete the assignment to _isEditingUser = false in the Save method. Since modal event handles that.
+         *
+         * Fixed. 
+         * 2- After creating and user and editing it, we cannot add a new Employee until we click the save button twice.
+         * Actually we don't know if this happens only after creating the first Employee, or after creating the first Employee and editing it.
+         * ** This happens when we click an Edit button, close the modal (or leave it open), and then we go to add a new Employee. Due _isEditingUser variable.
+         * ** Solution:
+         * - Easy: Make the modal blocking.
+         * - Difficult: When we open the edit modal, block the main UI in a way that is unselectable but not blocked to changes (let's say timers, events, and so.)
+         * - Actually implemented: We subscribe the modal to the events Activated and Deactivated, we use those event handlers to change _isEditingUser.
+         * 
+         * 3- If we click on the edit button of an employee the modal dialog is created, and since this modals are non-blocking
+         * we can create another modal from the same or other different employee causing that the first modal and the newly modal
+         * contains the data of the newly created modal. And it's silly since we can create several edit modal dialogs from the same
+         * user. So we have several options here.
+         *      - Make the edit modal blocking. (Not recommended for UX reasons).
+         *      - Allow having different modals but always from a different Employee. It *can't* create two modals from the same Employee. This
+         *      can be handled with a collection of EmployeeWrapperViewModel.
+         *      And both modals will have the corresponding data of the Employee being edited.
+         *      
+         * Fixed.
+         * 4- Make sure that the user can't delete the Employee if a modal dialog is open about this employee, or give a warning and if the
+         * user is sure delete the Employee and also close the dialog.
+         * ** Solution: By using a _IsModalSpawned flag and the modal's Closed event.
+             */
         #region Fields
 
         readonly Employee _employee;
         readonly EmployeeRepository _employeeRepository;
+        static EmployeeWrapperViewModel _orignalData;
         string _genderType;
         string _selectedWorkTime;
         string _selectedDay, _selectedMonth, _selectedYear; // TODO: Delete this and create the corresponding fields on Employee class
@@ -42,6 +73,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         RelayCommand _saveCommand;
         RelayCommand _deleteCommand;
         RelayCommand _editCommand;
+
+        static EmployeeWrapperViewModel _editingCurrentEmployee;
+        static bool _editingCurrentEmployeeIsInitialized;
+        static bool _isEditingUser;
+        static bool _isModalSpawned;
+        static Employee _employeeBeingEdited;
 
         #endregion // Fields
 
@@ -265,7 +302,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        //TODO: Implement this property
         public string Startedworking
         {
             get { return _employee.StartedWorking; }
@@ -443,6 +479,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 if (_deleteCommand == null)
                 {
+                    
                     _deleteCommand = new RelayCommand(
                         param => this.Delete(param),
                         param => this.CanDelete()
@@ -470,6 +507,42 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         #endregion // Presentations Properties
 
+        #region ToolTips
+
+        /* *** Currently Unused *** */
+        public string EditToolTip
+        {
+            get
+            {
+                //if(!_isModalSpawned)
+                if (CanEdit())
+                {
+                    return Resources.EmployeeWrapperViewModel_ToolTip_EditButton_Enabled;
+                }
+                else
+                {
+                    return Resources.EmployeeWrapperViewModel_ToolTip_EditButton_Disabled;
+                }
+            }
+        }
+
+        public string DeleteToolTip
+        {
+            get
+            {
+                if (!_isModalSpawned)
+                {
+                    return Resources.EmployeeWrapperViewModel_ToolTip_DeleteButton_Enabled;
+                }
+                else
+                {
+                    return Resources.EmployeeWrapperViewModel_ToolTip_DeleteButton_Disabled;
+                }
+            }
+        }
+
+        #endregion // ToolTips
+
         #region Private Methods
 
         /// <summary>
@@ -478,40 +551,29 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// </summary>
         public void Save()
         {
-            bool isNewUser = false;
             if (!_employee.IsValid)
             {
                 throw new InvalidOperationException(Resources.EmployeeWrapperViewModel_Exception_CannotSave);
             }
 
-            if (this.IsNewEmployee)
+            if (!_isEditingUser)
             {
                 _employee.Birthdate = new Birth(); // TODO: Change this, I don't like allocating here, it should be handled in the class or the EmployeeRepository.
                 _employee.Birthdate.SetDateWithValidatedInput(this.Day, this.Month, this.Year);
                 var newEmployee = Employee.CreateEmployee(_employee);
                 _employeeRepository.AddEmployee(newEmployee);
-                //PrintEmployeeFields(newEmployee);
                 SetLastUserSaved(false);
                 CleanForm();
-                isNewUser = true;
             }
 
             // The user was saved in the ListEmployeeView/Edit button.
-            if (!isNewUser)
+            if (_isEditingUser)
             {
-                SaveBirthdateToEmployee(_employee);
-                //PrintEmployeeFields(_employee);
+                Debug.Print("Saving edited user");
+                SaveEmployeeBeingEdited(_editingCurrentEmployee, _employeeBeingEdited, _orignalData);
                 SetLastUserSaved(true);
-                /* Notify the change of this properties to be fectched, just in case they were edited.
-                 * To allow the ListEmployees be updated with the new values.
-                 */
-                base.OnPropertyChanged("Gender");
-                base.OnPropertyChanged("PrettyPay");
             }
 
-            
-
-            base.OnPropertyChanged("DisplayName");
         }
 
         public void Delete(object id)
@@ -553,6 +615,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         #region Private Helpers
 
+        /* *** Currently unused *** */
         /// <summary>
         /// Returns true if this customer was created by the user and it has not yet
         /// been saved to the customer repository.
@@ -569,15 +632,64 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         bool CanDelete()
         {
-            return true;
-        }
+            /*if (!(id is int))
+            {
+                throw new ArgumentException("Param passed to EditCommand should be integer.");
+            }*/
+            //Debug.Print(id.GetType().ToString());
 
+            //return true;
+            /* TODO: We have two options here:
+             * 1- Find a way to disable the delete button for the employee being edited.
+             * 2- Do the same as with the edit button: While a modal is open, disable the editions for other employees. 
+             *      here we will deactivate deletions for all others employees.
+             */
+            if (!_isModalSpawned)
+            {
+                return true;
+            }
+            else
+            {
+                /*if (!testFlag)
+                {
+                    Debug.Print(((int)id).ToString());
+                    testFlag = true;
+                }*/
+                return false;
+            }
+        }
 
         bool CanEdit()
         {
-            return true;
+            if (!_isModalSpawned)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
+        /* Random thought:
+             * We can create dummies values so the Binding to the current employee doesn't happens,
+             * then when we click the Save button, in the function save we edit the proper Employee, passing
+             * any data and doing there the edit.
+             */
+        /* I think we have two options for doing the above.
+         * 1. We can create an EmployeeWrapperViewModel instance here before editing, saving the data there,
+         * then using a new method created that receives two Employee objects and copies the data from one to another.
+         * The new instance of EmployeeWrapperViewModel would serve as a "temp" variable.
+         * The downside of this is that we're creating another EmployeeWrapperViewModel.
+         * 
+         * 2. Create a wrapper for an Employee that is exactly the same as EmployeeWrapperViewModel 
+         * but it contains only those wrappers, no other functionality, then use that to save the temp
+         * data.
+         * The downside is that we now have two wrapppers for an Employee, and if we change Employee
+         * we would need to make double job to change the wrappers in EmployeeWrapperViewModel and the
+         * new small wrapper. Though we could use the small wrapper in EmployeeWrapperViewModel?
+
+        */
         /// <summary>
         /// Method that shows a modal dialog that allow us to edit an employee.
         /// Currently it's using the Show() so it doesn't blocks.
@@ -589,7 +701,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 throw new ArgumentException("Param passed to EditCommand should be integer.");
             }
-
+            _isEditingUser = true;
             Window modal = new Window();
             // Create the forms to edit
             var view = new AddEmployeeView();
@@ -597,17 +709,34 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             modal.Height = 350;
             modal.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
+            _isModalSpawned = true; // States a modal is currently being used.
+            //OnPropertyChanged("EditToolTip");
+            OnPropertyChanged("DeleteToolTip");
+            modal.Activated += Modal_Activated;
+            modal.Deactivated += Modal_Deactivated;
+            modal.Closed += Modal_Closed;
+
             // Search for the employee by id
             var listEmp = _employeeRepository.GetEmployees();
             var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
-            PrintEmployeeFields(employeeEdited[0]);
-            PopulateEditComboboxes(employeeEdited);
-            /* Random thought:
-             * We can create dummies values so the Binding to the current employee doesn't happens,
-             * then when we click the Save button, in the function save we edit the proper Employee, passing
-             * any data and doing there the edit.
+            _employeeBeingEdited = employeeEdited[0];
+            _orignalData = this;
+            /*
+             * 1- Pass employee to be edited to a function that saves this fields to the Edit modal, populating all the fields and comboboxes.
+             * 2- When the user clicked save, copy this fields of employee temp to the current Employee being edited.
              */
-            modal.DataContext = this;
+            PrintEmployeeFields(employeeEdited[0]);
+
+            // Initialize the Employee object that's going to be used as a temporal.
+            if (!_editingCurrentEmployeeIsInitialized)
+            {
+                _editingCurrentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository);
+                _editingCurrentEmployeeIsInitialized = true;
+            }
+
+            CopyEmployeeFields(employeeEdited[0], _editingCurrentEmployee);
+            PrintEmployeeFields(_editingCurrentEmployee._employee);
+            modal.DataContext = _editingCurrentEmployee;
 
             modal.Content = view;
             modal.Title = "Edit Employee";
@@ -666,6 +795,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        /* *** Currently Unused *** */
         /// <summary>
         /// Saves a Birthdate when we're editing an user.
         /// </summary>
@@ -682,6 +812,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             item.Birthdate.SetDateWithValidatedInput(this.Day, this.Month, this.Year);
         }
 
+        /* *** Currently unused *** */
         /// <summary>
         /// Loads the corresponding data for the Comboboxes in the modal edit dialog.
         /// That's because the textboxes are loaded automatically but the Comboboxes aren't (?)
@@ -714,6 +845,98 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             this.Year = current.Birthdate.Year;
             this.WorkTimeType = current.WorkTime;
             Debug.Print(current.WorkTime);
+        }
+
+        /// <summary>
+        /// Copies the employee currently being edited to a temporal variable so it can be populated
+        /// all the fields and Comboboxes of the edit modal dialog.
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <param name="temp"></param>
+        void CopyEmployeeFields(Employee employee, EmployeeWrapperViewModel temp)
+        {
+            temp.LastUserSaved = null;
+            temp.FirstName = employee.FirstName;
+            temp.LastName = employee.LastName;
+            temp._employee.Gender = employee.Gender;
+            temp.Day = employee.Birthdate.Day;
+            temp.Birthdate = employee.Birthdate;
+            temp.Month = employee.Birthdate.Month;
+            temp.Year = employee.Birthdate.Year;
+            temp.Email = employee.Email;
+            temp.Phone = employee.Phone;
+            temp.Pay = employee.Pay;
+            temp._employee.WorkTime = employee.WorkTime;
+            temp.Address = employee.Address;
+            temp.WorkTimeType = employee.WorkTime;
+
+            // Gender == true means Female
+            if (employee.Gender)
+            {
+                temp.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
+            }
+            else
+            {
+                temp.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
+            }
+        }
+
+        /// <summary>
+        /// Saves the employee after clicking the Save button in the modal.
+        /// </summary>
+        /// <param name="newData">The wrapper of a temporal Employee object.</param>
+        /// <param name="employee">The employee in the repository that is going to be actually saved</param>
+        /// <param name="original">The original context where the employee resides, so it can nortify changes.</param>
+        void SaveEmployeeBeingEdited(EmployeeWrapperViewModel newData, Employee employee, EmployeeWrapperViewModel original)
+        {
+            employee.FirstName = newData.FirstName;
+            employee.LastName = newData.LastName;
+            employee.Gender = newData._employee.Gender;
+            employee.Birthdate.Day = newData.Day;
+            employee.Birthdate.Month = newData.Month;
+            employee.Birthdate.Year = newData.Year;
+            employee.Email = newData.Email;
+            employee.Phone = newData.Phone;
+            employee.Pay = newData.Pay;
+            employee.WorkTime = newData.WorkTime;
+            employee.Address = newData.Address;
+            //original.OnPropertyChanged("FirstName");
+            original.OnPropertyChanged("DisplayName");
+            original.OnPropertyChanged("Gender");
+            original.OnPropertyChanged("Birthdate");
+            original.OnPropertyChanged("Email");
+            original.OnPropertyChanged("Phone");
+            original.OnPropertyChanged("PrettyPay");
+            original.OnPropertyChanged("WorkTime");
+            original.OnPropertyChanged("Address");
+            // TODO: When we click two times the Save button when editing, a new user is created.
+            // TODO: Do a thorough testing of the app.
+            //newData.CleanForm();
+        }
+
+        /// <summary>
+        /// Enables _isEditingUser flag when only the edit modal dialog is activated.
+        /// </summary>
+        void Modal_Activated(object sender, EventArgs e)
+        {
+            _isEditingUser = true;
+        }
+
+        /// <summary>
+        /// Disables _isEditingUser flag when the edit modal dialog is deactivated.
+        /// </summary>
+        void Modal_Deactivated(object sender, EventArgs e)
+        {
+            _isEditingUser = false;
+        }
+
+        /// <summary>
+        /// Sets flag only when the modal is closed. That allow us to show only one modal at the time.
+        /// </summary>
+        void Modal_Closed(object sender, EventArgs e)
+        {
+            _isModalSpawned = false;
+            OnPropertyChanged("DeleteToolTip");
         }
 
         #endregion // Private Helpers
