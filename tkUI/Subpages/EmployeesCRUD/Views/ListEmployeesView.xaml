@@ -74,7 +74,7 @@
                     Content="{Binding Path=TotalSelectedEmployees}"
                     />
                 <Button Template="{StaticResource glyphImageButton}"
-                    Style="{StaticResource enableStates}"
+                    Style="{StaticResource enableStatesDelete}"
                     Command="{Binding Path=DeleteRangeUsers}"
                     helper:Icons.Image="..\..\..\Resources\GeneralGlyphs\TrashIcon.png"
                         
@@ -115,13 +115,14 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Button Template="{StaticResource glyphImageButton}"
-                                            Style="{StaticResource enableStates}"
+                                            Style="{StaticResource enableStatesEdit}"
                                             Command="{Binding Path=EditCommand}"
                                             CommandParameter="{Binding Path=ID}"
                                             helper:Icons.Image="..\..\..\Resources\GeneralGlyphs\PencilThickIcon.png"
                                             helper:IconsClicked.ImageClicked="..\..\..\Resources\GeneralGlyphs\PencilThickSelectedIcon.png" Margin="0,0,5,0"
                                             ToolTipService.ShowOnDisabled="True"
-                                            ToolTip="{Binding Path=EditToolTip, Mode=OneWay}"/>
+                                            />
+                                    <!--ToolTip="{Binding Path=EditToolTip, Mode=OneWay}"-->
 
                                     <Button Template="{StaticResource glyphImageButton}"
                                             Command="{Binding Path=DeleteCommand}"

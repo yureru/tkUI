@@ -27,6 +27,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     /// </summary>
     class EmployeeWrapperViewModel : ObservablePageFromCRUD, IDataErrorInfo
     {
+        // TODO: Add a string resources that should be used only for the XAML and not for code-behind files.
         // TODO: The followwing tasks
         /*
          * Fixed.
@@ -478,6 +479,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 if (_deleteCommand == null)
                 {
+                    
                     _deleteCommand = new RelayCommand(
                         param => this.Delete(param),
                         param => this.CanDelete()
@@ -507,10 +509,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         #region ToolTips
 
+        /* *** Currently Unused *** */
         public string EditToolTip
         {
             get
             {
+                //if(!_isModalSpawned)
                 if (CanEdit())
                 {
                     return Resources.EmployeeWrapperViewModel_ToolTip_EditButton_Enabled;
@@ -613,7 +617,26 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         bool CanDelete()
         {
-            return true;
+            /*if (!(id is int))
+            {
+                throw new ArgumentException("Param passed to EditCommand should be integer.");
+            }*/
+            //Debug.Print(id.GetType().ToString());
+
+            //return true;
+            if (!_isModalSpawned)
+            {
+                return true;
+            }
+            else
+            {
+                /*if (!testFlag)
+                {
+                    Debug.Print(((int)id).ToString());
+                    testFlag = true;
+                }*/
+                return false;
+            }
         }
 
         bool CanEdit()
