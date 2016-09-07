@@ -128,7 +128,10 @@
                                             Command="{Binding Path=DeleteCommand}"
                                             CommandParameter="{Binding Path=ID}"
                                             helper:Icons.Image="..\..\..\Resources\GeneralGlyphs\TrashIcon.png"
-                                            helper:IconsClicked.ImageClicked="..\..\..\Resources\GeneralGlyphs\TrashSelectedIcon.png" Margin="0,0,5,0" ToolTip="Eliminar"/>
+                                            helper:IconsClicked.ImageClicked="..\..\..\Resources\GeneralGlyphs\TrashSelectedIcon.png" Margin="0,0,5,0"
+                                            ToolTipService.ShowOnDisabled="True"
+                                            ToolTip="{Binding Path=DeleteToolTip, Mode=OneWay}"
+                                            />
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

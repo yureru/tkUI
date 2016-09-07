@@ -526,6 +526,21 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        public string DeleteToolTip
+        {
+            get
+            {
+                if (!_isModalSpawned)
+                {
+                    return Resources.EmployeeWrapperViewModel_ToolTip_DeleteButton_Enabled;
+                }
+                else
+                {
+                    return Resources.EmployeeWrapperViewModel_ToolTip_DeleteButton_Disabled;
+                }
+            }
+        }
+
         #endregion // ToolTips
 
         #region Private Methods
@@ -624,6 +639,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             //Debug.Print(id.GetType().ToString());
 
             //return true;
+            /* TODO: We have two options here:
+             * 1- Find a way to disable the delete button for the employee being edited.
+             * 2- Do the same as with the edit button: While a modal is open, disable the editions for other employees. 
+             *      here we will deactivate deletions for all others employees.
+             */
             if (!_isModalSpawned)
             {
                 return true;
@@ -690,7 +710,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             modal.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             _isModalSpawned = true; // States a modal is currently being used.
-            OnPropertyChanged("EditToolTip");
+            //OnPropertyChanged("EditToolTip");
+            OnPropertyChanged("DeleteToolTip");
             modal.Activated += Modal_Activated;
             modal.Deactivated += Modal_Deactivated;
             modal.Closed += Modal_Closed;
@@ -915,7 +936,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         void Modal_Closed(object sender, EventArgs e)
         {
             _isModalSpawned = false;
-            OnPropertyChanged("EditToolTip");
+            OnPropertyChanged("DeleteToolTip");
         }
 
         #endregion // Private Helpers
