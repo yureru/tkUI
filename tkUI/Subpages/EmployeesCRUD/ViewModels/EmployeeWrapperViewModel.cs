@@ -505,6 +505,25 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         #endregion // Presentations Properties
 
+        #region ToolTips
+
+        public string EditToolTip
+        {
+            get
+            {
+                if (CanEdit())
+                {
+                    return Resources.EmployeeWrapperViewModel_ToolTip_EditButton_Enabled;
+                }
+                else
+                {
+                    return Resources.EmployeeWrapperViewModel_ToolTip_EditButton_Disabled;
+                }
+            }
+        }
+
+        #endregion // ToolTips
+
         #region Private Methods
 
         /// <summary>
@@ -648,6 +667,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             modal.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             _isModalSpawned = true; // States a modal is currently being used.
+            OnPropertyChanged("EditToolTip");
             modal.Activated += Modal_Activated;
             modal.Deactivated += Modal_Deactivated;
             modal.Closed += Modal_Closed;
@@ -872,6 +892,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         void Modal_Closed(object sender, EventArgs e)
         {
             _isModalSpawned = false;
+            OnPropertyChanged("EditToolTip");
         }
 
         #endregion // Private Helpers

@@ -272,4 +272,20 @@
     <value>Ingrese número de teléfono</value>
     <comment>Error when the Phone is missing.</comment>
   </data>
+  <data name="EmployeeWrapperViewModel_ToolTip_DeleteButton_Disabled" xml:space="preserve">
+    <value>No se puede borrar un usuario siendo editado</value>
+    <comment>ToolTip message when the edit button is disabled due the edit modal being open for that current employee.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_ToolTip_DeleteButton_Enabled" xml:space="preserve">
+    <value>Borrar</value>
+    <comment>ToolTip message when delete button is available.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_ToolTip_EditButton_Disabled" xml:space="preserve">
+    <value>No se pueden editar dos empleados al mismo tiempo</value>
+    <comment>ToolTip message when edit button is disbled due an edit modal open.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_ToolTip_EditButton_Enabled" xml:space="preserve">
+    <value>Editar</value>
+    <comment>ToolTip message when edit button is available.</comment>
+  </data>
 </root>
