@@ -57,6 +57,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
          * 4- Make sure that the user can't delete the Employee if a modal dialog is open about this employee, or give a warning and if the
          * user is sure delete the Employee and also close the dialog.
          * ** Solution: By using a _IsModalSpawned flag and the modal's Closed event.
+         * 
              */
         #region Fields
 
@@ -70,6 +71,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         string[] _workTimeOptions;
         string _lastUserSaved;
         bool _isSelected;
+        bool _editModalClosed;
         RelayCommand _saveCommand;
         RelayCommand _deleteCommand;
         RelayCommand _editCommand;
@@ -306,6 +308,44 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             get { return _employee.StartedWorking; }
             set { }
+        }
+
+        /*public bool EditModalClosed
+        {
+            get
+            {
+                return !_editModalClosed;
+                //return false;
+            }
+
+            set
+            {
+                if (_editModalClosed == value)
+                {
+                    return;
+                }
+                _editModalClosed = value;
+                OnPropertyChanged("EditModalClosed");
+            }
+        }*/
+
+        public bool EditModalOpen
+        {
+            get
+            {
+                return !_employee.ModalOpen;
+            }
+
+            set
+            {
+                if (_employee.ModalOpen == value)
+                {
+                    return;
+                }
+
+                _employee.ModalOpen = value;
+                OnPropertyChanged("EditModalOpen");
+            }
         }
 
         #endregion // Employee Properties
@@ -644,19 +684,29 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
              * 2- Do the same as with the edit button: While a modal is open, disable the editions for other employees. 
              *      here we will deactivate deletions for all others employees.
              */
-            if (!_isModalSpawned)
+            /*if (!_isModalSpawned)
             {
                 return true;
             }
             else
             {
-                /*if (!testFlag)
-                {
-                    Debug.Print(((int)id).ToString());
-                    testFlag = true;
-                }*/
+                //if (!testFlag)
+                //{
+                  //  Debug.Print(((int)id).ToString());
+                    //testFlag = true;
+                //}
+                return false;
+            }*/
+
+            /*if (_employee.ModalOpen)
+            {
                 return false;
             }
+            else
+            {
+                return true;
+            }*/
+            return true;
         }
 
         bool CanEdit()
@@ -920,6 +970,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         void Modal_Activated(object sender, EventArgs e)
         {
             _isEditingUser = true;
+            //_employee.ModalOpen = true;
+            EditModalOpen = true;
         }
 
         /// <summary>
@@ -928,6 +980,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         void Modal_Deactivated(object sender, EventArgs e)
         {
             _isEditingUser = false;
+            //_employee.ModalOpen = false;
+            
         }
 
         /// <summary>
@@ -936,6 +990,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         void Modal_Closed(object sender, EventArgs e)
         {
             _isModalSpawned = false;
+            EditModalOpen = false;
             OnPropertyChanged("DeleteToolTip");
         }
 

@@ -44,6 +44,7 @@ namespace tkUI.Models
 
         public string StartedWorking { get; set; }
 
+        public bool ModalOpen { get; set; }
         #endregion // Fields
 
 
