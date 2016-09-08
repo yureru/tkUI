@@ -202,12 +202,27 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         #region Methods
 
         /// <summary>
-        /// Deletes a selected range of employees.
+        /// Deletes a selected range of employees. If the range contains an employee with a edit modal open, shows a warning and
+        /// tells it can't perform that action.
         /// It shows a confirmation dialog to do this action.
         /// </summary>
         public void DeleteFromRange()
         {
+            // Check if there's an employee with an edit modal dialog open
+            // isModalOpen will contain an employee if it has a the edit modal open.
+            // Note that we're comparing to false, see EditModalOpen for full explanation.
+            //var isEditModalOpen = from emp in this.AllEmployees where emp.EditModalOpen == false select emp;
+            var isEditModalOpen = from emp in this.AllEmployees where emp.EditModalOpen == false where emp.IsSelected select emp;
 
+            // Show error message
+            if (isEditModalOpen.Count() > 0)
+            {
+                var warningResult = MessageBox.Show("No se puede eliminar el rango porque contiene un empleado que está siendo editado", "Advertencia",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Ok, we can delete a range.
             var result = MessageBox.Show(String.Format("¿Desea eliminar los {0} empleados seleccionados?", TotalSelectedEmployees), "Confirmación",
                  MessageBoxButton.YesNo, MessageBoxImage.None);
 
