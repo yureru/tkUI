@@ -44,10 +44,20 @@ namespace tkUI.Models
 
         public string StartedWorking { get; set; }
 
-        public bool ModalOpen { get; set; }
         #endregion // Fields
 
 
+        /* Properties that aren't needed to save as part of Employee object
+         * therefore they shouldn't be saved in a DB or in the repository. */
+        #region Presentation Properties
+
+        /// <summary>
+        /// Used to know if an specific employee instance has a edit modal open,
+        /// therefore it can't be deleted the Employee.
+        /// </summary>
+        public bool ModalOpen { get; set; }
+
+        #endregion // Presentation Properties
 
         #region Creation
 

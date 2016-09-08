@@ -29,34 +29,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     {
         // TODO: Add a string resources that should be used only for the XAML and not for code-behind files.
         // TODO: The followwing tasks
-        /*
-         * Fixed.
-         * 1- When editing an employee it works fine, but if we click the save button in the edition twice, the first click is going
-         * to save the employee being edited, and the second is going to create a new Employee.
-         * ** Solution: Just delete the assignment to _isEditingUser = false in the Save method. Since modal event handles that.
-         *
-         * Fixed. 
-         * 2- After creating and user and editing it, we cannot add a new Employee until we click the save button twice.
-         * Actually we don't know if this happens only after creating the first Employee, or after creating the first Employee and editing it.
-         * ** This happens when we click an Edit button, close the modal (or leave it open), and then we go to add a new Employee. Due _isEditingUser variable.
-         * ** Solution:
-         * - Easy: Make the modal blocking.
-         * - Difficult: When we open the edit modal, block the main UI in a way that is unselectable but not blocked to changes (let's say timers, events, and so.)
-         * - Actually implemented: We subscribe the modal to the events Activated and Deactivated, we use those event handlers to change _isEditingUser.
-         * 
-         * 3- If we click on the edit button of an employee the modal dialog is created, and since this modals are non-blocking
-         * we can create another modal from the same or other different employee causing that the first modal and the newly modal
-         * contains the data of the newly created modal. And it's silly since we can create several edit modal dialogs from the same
-         * user. So we have several options here.
-         *      - Make the edit modal blocking. (Not recommended for UX reasons).
-         *      - Allow having different modals but always from a different Employee. It *can't* create two modals from the same Employee. This
-         *      can be handled with a collection of EmployeeWrapperViewModel.
-         *      And both modals will have the corresponding data of the Employee being edited.
-         *      
-         * Fixed.
-         * 4- Make sure that the user can't delete the Employee if a modal dialog is open about this employee, or give a warning and if the
-         * user is sure delete the Employee and also close the dialog.
-         * ** Solution: By using a _IsModalSpawned flag and the modal's Closed event.
+        /* 1- Warn the user can't delete a range of employees if an employee with an edit modal is open.
          * 
              */
         #region Fields
@@ -71,7 +44,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         string[] _workTimeOptions;
         string _lastUserSaved;
         bool _isSelected;
-        bool _editModalClosed;
+
         RelayCommand _saveCommand;
         RelayCommand _deleteCommand;
         RelayCommand _editCommand;
@@ -310,25 +283,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             set { }
         }
 
-        /*public bool EditModalClosed
-        {
-            get
-            {
-                return !_editModalClosed;
-                //return false;
-            }
-
-            set
-            {
-                if (_editModalClosed == value)
-                {
-                    return;
-                }
-                _editModalClosed = value;
-                OnPropertyChanged("EditModalClosed");
-            }
-        }*/
-
+        /// <summary>
+        /// Checks if there's an edit modal open for a given employee instance.
+        /// </summary>
         public bool EditModalOpen
         {
             get
@@ -655,7 +612,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         #region Private Helpers
 
-        /* *** Currently unused *** */
         /// <summary>
         /// Returns true if this customer was created by the user and it has not yet
         /// been saved to the customer repository.
