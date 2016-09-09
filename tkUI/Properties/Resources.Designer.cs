@@ -360,6 +360,26 @@ namespace tkUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap EyeIcon {
+            get {
+                object obj = ResourceManager.GetObject("EyeIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap EyeSelectedIcon {
+            get {
+                object obj = ResourceManager.GetObject("EyeSelectedIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Header_bg_bar {
             get {
                 object obj = ResourceManager.GetObject("Header_bg_bar", resourceCulture);
@@ -384,6 +404,42 @@ namespace tkUI.Properties {
             get {
                 object obj = ResourceManager.GetObject("HumanSelectedIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmación.
+        /// </summary>
+        internal static string ListEmployeesViewModel_Confirmation_Self {
+            get {
+                return ResourceManager.GetString("ListEmployeesViewModel_Confirmation_Self", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Desea eliminar los {0} empleados seleccionados?.
+        /// </summary>
+        internal static string ListEmployeesViewModel_Format_ConfirmationRange {
+            get {
+                return ResourceManager.GetString("ListEmployeesViewModel_Format_ConfirmationRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se puede eliminar el rango porque contiene un empleado que está siendo editado.
+        /// </summary>
+        internal static string ListEmployeesViewModel_Warning_InvalidRange {
+            get {
+                return ResourceManager.GetString("ListEmployeesViewModel_Warning_InvalidRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advertencia.
+        /// </summary>
+        internal static string ListEmployeesViewModel_Warning_Self {
+            get {
+                return ResourceManager.GetString("ListEmployeesViewModel_Warning_Self", resourceCulture);
             }
         }
         

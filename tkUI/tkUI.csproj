@@ -139,6 +139,9 @@
     <Compile Include="Subpages\EmployeesCRUD\Views\ListEmployeesView.xaml.cs">
       <DependentUpon>ListEmployeesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Subpages\EmployeesCRUD\Views\SingleEmployeeView.xaml.cs">
+      <DependentUpon>SingleEmployeeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Subpages\GraphQuickBoxes\Models\DashboardGraphsModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Models\EmployeesDismissedModel.cs" />
     <Compile Include="Subpages\GraphQuickBoxes\Models\EmployeesHiredAndDismissedModel.cs" />
@@ -223,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Subpages\EmployeesCRUD\Views\ListEmployeesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Subpages\EmployeesCRUD\Views\SingleEmployeeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -389,6 +396,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\GeneralGlyphs\TrashSelectedIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GeneralGlyphs\EyeIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GeneralGlyphs\EyeSelectedIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

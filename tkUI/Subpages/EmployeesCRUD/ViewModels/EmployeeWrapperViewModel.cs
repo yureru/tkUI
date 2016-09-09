@@ -28,10 +28,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     class EmployeeWrapperViewModel : ObservablePageFromCRUD, IDataErrorInfo
     {
         // TODO: Add a string resources that should be used only for the XAML and not for code-behind files.
-        // TODO: The followwing tasks
-        /* 1- Warn the user can't delete a range of employees if an employee with an edit modal is open.
-         * 
-             */
+
         #region Fields
 
         readonly Employee _employee;
@@ -48,6 +45,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         RelayCommand _saveCommand;
         RelayCommand _deleteCommand;
         RelayCommand _editCommand;
+        RelayCommand _viewCommand;
+
 
         static EmployeeWrapperViewModel _editingCurrentEmployee;
         static bool _editingCurrentEmployeeIsInitialized;
@@ -506,6 +505,23 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
+        public ICommand ViewCommand
+        {
+            get
+            {
+                if (_viewCommand == null)
+                {
+                    _viewCommand = new RelayCommand(
+                        param => this.ShowViewDialog(param),
+                        param => this.CanView()
+                        );
+                }
+                return _viewCommand;
+            }
+        }
+
+        
+
         #endregion // Presentations Properties
 
         #region ToolTips
@@ -611,6 +627,18 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             Debug.Print(item.ToString());
         }
 
+        private void ShowViewDialog(object id)
+        {
+            if (!(id is int))
+            {
+                throw new ArgumentException("Param passed to ViewCommand should be integer.");
+            }
+
+
+        }
+
+        
+
         #endregion // Private Methods
 
         #region Private Helpers
@@ -644,6 +672,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 return false;
             }
+        }
+
+        bool CanView()
+        {
+            return true;
         }
 
         /// <summary>

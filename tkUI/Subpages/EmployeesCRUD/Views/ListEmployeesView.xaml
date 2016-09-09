@@ -115,6 +115,15 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Button Template="{StaticResource glyphImageButton}"
+                                            Style="{StaticResource enableStatesDelete}"
+                                            Command="{Binding Path=EditCommand}"
+                                            CommandParameter="{Binding Path=ID}"
+                                            helper:Icons.Image="..\..\..\Resources\GeneralGlyphs\EyeIcon.png"
+                                            helper:IconsClicked.ImageClicked="..\..\..\Resources\GeneralGlyphs\EyeSelectedIcon.png" Margin="0,0,5,0"
+                                            ToolTipService.ShowOnDisabled="True"
+                                            />
+                                    
+                                    <Button Template="{StaticResource glyphImageButton}"
                                             Style="{StaticResource enableStatesEdit}"
                                             Command="{Binding Path=EditCommand}"
                                             CommandParameter="{Binding Path=ID}"

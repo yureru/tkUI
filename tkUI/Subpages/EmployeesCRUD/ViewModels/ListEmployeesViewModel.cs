@@ -13,6 +13,7 @@ using System.Windows.Input;
 using tkUI.DataAccess;
 using tkUI.Subpages.EmployeesCRUD.Utils;
 using tkUI.Helper_Classes;
+using tkUI.Properties;
 
 using System.Diagnostics;
 
@@ -204,7 +205,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// <summary>
         /// Deletes a selected range of employees. If the range contains an employee with a edit modal open, shows a warning and
         /// tells it can't perform that action.
-        /// It shows a confirmation dialog to do this action.
+        /// It shows a confirmation dialog if the range is valid.
         /// </summary>
         public void DeleteFromRange()
         {
@@ -217,14 +218,14 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             // Show error message
             if (isEditModalOpen.Count() > 0)
             {
-                var warningResult = MessageBox.Show("No se puede eliminar el rango porque contiene un empleado que está siendo editado", "Advertencia",
+                var warningResult = MessageBox.Show(Resources.ListEmployeesViewModel_Warning_InvalidRange, Resources.ListEmployeesViewModel_Warning_Self,
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             // Ok, we can delete a range.
-            var result = MessageBox.Show(String.Format("¿Desea eliminar los {0} empleados seleccionados?", TotalSelectedEmployees), "Confirmación",
-                 MessageBoxButton.YesNo, MessageBoxImage.None);
+            var result = MessageBox.Show(String.Format(Resources.ListEmployeesViewModel_Format_ConfirmationRange, TotalSelectedEmployees), 
+                Resources.ListEmployeesViewModel_Confirmation_Self, MessageBoxButton.YesNo, MessageBoxImage.None);
 
             if (result == MessageBoxResult.No || result == MessageBoxResult.None)
             {
