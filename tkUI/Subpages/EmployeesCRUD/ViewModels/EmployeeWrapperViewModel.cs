@@ -89,6 +89,14 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             set { }
         }
 
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
+
         public string FirstName
         {
             get { return _employee.FirstName; }
@@ -633,7 +641,19 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 throw new ArgumentException("Param passed to ViewCommand should be integer.");
             }
+            var modal = new Window();
+            var view = new SingleEmployeeView();
 
+            var listEmp = _employeeRepository.GetEmployees();
+            var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
+
+            var currentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository);
+
+            CopyEmployeeFields(employeeEdited[0], currentEmployee);
+            modal.DataContext = currentEmployee;
+            modal.Content = view;
+
+            modal.Show();
 
         }
 
