@@ -286,6 +286,51 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parámetro pasado a DeleteCommand debe ser un integer..
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Exception_DeleteWrongParam {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Exception_DeleteWrongParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parámetro pasado a EditCommand debe ser un integer..
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Exception_EditWrongParam {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Exception_EditWrongParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se encontró el usuario buscado por el ID: {0}..
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Exception_EmployeeIDNotFound {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Exception_EmployeeIDNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se puede buscar a un empleado con un integer menor o igual que cero..
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Exception_IDLessOrEqualThanZero {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Exception_IDLessOrEqualThanZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parámetro pasado a ViewCommand debe ser un integer..
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Exception_ViewWrongParam {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Exception_ViewWrongParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mujer.
         /// </summary>
         internal static string EmployeeWrapperViewModel_GenderTypeOptions_Female {

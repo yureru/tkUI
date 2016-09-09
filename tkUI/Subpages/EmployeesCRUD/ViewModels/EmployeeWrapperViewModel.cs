@@ -28,6 +28,13 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     class EmployeeWrapperViewModel : ObservablePageFromCRUD, IDataErrorInfo
     {
         // TODO: Add a string resources that should be used only for the XAML and not for code-behind files.
+        /* TODO:
+         * 2- Re-design the SingleEmployeeView
+         * 3- Validate other fields: Like min wage.
+         * 4- Change size for edit modal (more width).
+         * 5- Set properties like title, size for SingleEmployeeView.
+         * 
+             */
 
         #region Fields
 
@@ -604,7 +611,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             if (!(id is int))
             {
-                throw new ArgumentException("Param passed to DeleteCommand should be integer.");
+                throw new ArgumentException(Resources.EmployeeWrapperViewModel_Exception_DeleteWrongParam);
             }
 
             _employeeRepository.DeleteByID((int) id);
@@ -624,82 +631,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         }
 
         /// <summary>
-        /// Function that prints an Employee object.
-        /// Just to make sure the data is being populated/edited correctly.
-        /// </summary>
-        /// <param name="item">Employee object.</param>
-        [Conditional("DEBUG")]
-        [DebuggerStepThrough]
-        void PrintEmployeeFields(Employee item)
-        {
-            Debug.Print(item.ToString());
-        }
-
-        private void ShowViewDialog(object id)
-        {
-            if (!(id is int))
-            {
-                throw new ArgumentException("Param passed to ViewCommand should be integer.");
-            }
-            var modal = new Window();
-            var view = new SingleEmployeeView();
-
-            var listEmp = _employeeRepository.GetEmployees();
-            var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
-
-            var currentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository);
-
-            CopyEmployeeFields(employeeEdited[0], currentEmployee);
-            modal.DataContext = currentEmployee;
-            modal.Content = view;
-
-            modal.Show();
-
-        }
-
-        
-
-        #endregion // Private Methods
-
-        #region Private Helpers
-
-        /// <summary>
-        /// Returns true if this customer was created by the user and it has not yet
-        /// been saved to the customer repository.
-        /// </summary>
-        bool IsNewEmployee
-        {
-            get { return !_employeeRepository.ContainsEmployee(_employee); }
-        }
-
-        bool CanSave
-        {
-            get { return FieldsAreValid(); }
-        }
-
-        bool CanDelete()
-        {
-            return true;
-        }
-
-        bool CanEdit()
-        {
-            if (!_isModalSpawned)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        bool CanView()
-        {
-            return true;
-        }
-
-        /// <summary>
         /// Method that shows a modal dialog that allow us to edit an employee.
         /// Currently it's using the Show() so it doesn't blocks.
         /// </summary>
@@ -708,7 +639,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             if (!(id is int))
             {
-                throw new ArgumentException("Param passed to EditCommand should be integer.");
+                throw new ArgumentException(Resources.EmployeeWrapperViewModel_Exception_EditWrongParam);
             }
             _isEditingUser = true;
             Window modal = new Window();
@@ -752,6 +683,100 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             // Check if the fields are different to the original Employee element, if so:
             // 1. The Save button can performs.
             // 2. If the users close the window without saving ask him if he wanna save
+        }
+
+        private void ShowViewDialog(object id)
+        {
+            if (!(id is int))
+            {
+                throw new ArgumentException(Resources.EmployeeWrapperViewModel_Exception_ViewWrongParam);
+            }
+
+            var modal = new Window();
+            var view = new SingleEmployeeView();
+
+            var employeeToShow = GetEmployeeByID((int)id);
+
+            if (employeeToShow == null)
+            {
+                throw new ArgumentNullException(String.Format(Resources.EmployeeWrapperViewModel_Exception_EmployeeIDNotFound, (int)id));
+            }
+
+            var currentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository);
+            CopyEmployeeFields(employeeToShow, currentEmployee);
+
+            // Modal's chrome properties
+            modal.Title = "Empleado: " + currentEmployee.FullName;
+            modal.Width = 400;
+            modal.Width = 600;
+
+            modal.DataContext = currentEmployee;
+            modal.Content = view;
+
+            modal.Show();
+        }
+
+        /// <summary>
+        /// Searchs and returns an Employee by id.
+        /// </summary>
+        /// <param name="id">Integer of the ID, should be > 0.</param>
+        /// <returns></returns>
+        Employee GetEmployeeByID(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentOutOfRangeException(Resources.EmployeeWrapperViewModel_Exception_IDLessOrEqualThanZero);
+            }
+
+            var listEmp = _employeeRepository.GetEmployees();
+            var employeeEdited = (from emps in listEmp where emps.ID.Equals(id) select emps).ToList();
+
+            if (employeeEdited.Count <= 0)
+            {
+                return null;
+            }
+
+            return employeeEdited[0];
+        }
+
+        #endregion // Private Methods
+
+        #region Private Helpers
+
+        /// <summary>
+        /// Returns true if this customer was created by the user and it has not yet
+        /// been saved to the customer repository.
+        /// </summary>
+        bool IsNewEmployee
+        {
+            get { return !_employeeRepository.ContainsEmployee(_employee); }
+        }
+
+        bool CanSave
+        {
+            get { return FieldsAreValid(); }
+        }
+
+        bool CanDelete()
+        {
+            return true;
+        }
+
+        bool CanEdit()
+        {
+            if (!_isModalSpawned)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        bool CanView()
+        {
+            return true;
         }
 
         /// <summary>
@@ -944,6 +969,18 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             _isModalSpawned = false;
             EditModalOpen = false;
             OnPropertyChanged("DeleteToolTip");
+        }
+
+        /// <summary>
+        /// Function that prints an Employee object.
+        /// Just to make sure the data is being populated/edited correctly.
+        /// </summary>
+        /// <param name="item">Employee object.</param>
+        [Conditional("DEBUG")]
+        [DebuggerStepThrough]
+        void PrintEmployeeFields(Employee item)
+        {
+            Debug.Print(item.ToString());
         }
 
         #endregion // Private Helpers
