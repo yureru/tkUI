@@ -223,6 +223,33 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to El sueldo solo puede contener números.
+        /// </summary>
+        internal static string Employee_Error_PayContainsNonDigits {
+            get {
+                return ResourceManager.GetString("Employee_Error_PayContainsNonDigits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El sueldo es mayor que el máximo en la compañía.
+        /// </summary>
+        internal static string Employee_Error_PayIsAboveMaximumWage {
+            get {
+                return ResourceManager.GetString("Employee_Error_PayIsAboveMaximumWage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El sueldo es menor que el mínimo.
+        /// </summary>
+        internal static string Employee_Error_PayIsBelowMinimumWage {
+            get {
+                return ResourceManager.GetString("Employee_Error_PayIsBelowMinimumWage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El teléfono solo puede contener números.
         /// </summary>
         internal static string Employee_Error_PhoneContainsNonDigits {
