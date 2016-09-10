@@ -178,7 +178,7 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to La dirección e-mail es inválida..
+        ///   Looks up a localized string similar to La dirección e-mail es inválida.
         /// </summary>
         internal static string Employee_Error_InvalidEmail {
             get {
@@ -219,6 +219,15 @@ namespace tkUI.Properties {
         internal static string Employee_Error_MissingPhone {
             get {
                 return ResourceManager.GetString("Employee_Error_MissingPhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El teléfono solo puede contener números.
+        /// </summary>
+        internal static string Employee_Error_PhoneContainsNonDigits {
+            get {
+                return ResourceManager.GetString("Employee_Error_PhoneContainsNonDigits", resourceCulture);
             }
         }
         

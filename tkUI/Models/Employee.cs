@@ -242,6 +242,12 @@ namespace tkUI.Models
             {
                 return Resources.Employee_Error_MissingPhone;
             }
+
+            if (!RangeChecker.IsDigitsOnly(this.Phone))
+            {
+                return Resources.Employee_Error_PhoneContainsNonDigits;
+            }
+
             return null;
         }
 

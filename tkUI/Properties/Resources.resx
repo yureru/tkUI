@@ -253,7 +253,7 @@
     <comment>The validation error message returned if the WorkTime property has an invalid value.</comment>
   </data>
   <data name="Employee_Error_InvalidEmail" xml:space="preserve">
-    <value>La dirección e-mail es inválida.</value>
+    <value>La dirección e-mail es inválida</value>
     <comment>Error when the Email is in a wrong, invalid format.</comment>
   </data>
   <data name="Employee_Error_MissingAddress" xml:space="preserve">
@@ -329,5 +329,9 @@
   </data>
   <data name="EyeSelectedIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GeneralGlyphs\EyeSelectedIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Employee_Error_PhoneContainsNonDigits" xml:space="preserve">
+    <value>El teléfono solo puede contener números</value>
+    <comment>Error when the Phone field contains characters that aren't digits.</comment>
   </data>
 </root>

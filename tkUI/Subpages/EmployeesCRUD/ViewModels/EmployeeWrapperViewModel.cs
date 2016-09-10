@@ -30,10 +30,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         // TODO: Add a string resources that should be used only for the XAML and not for code-behind files.
         /* TODO:
          * 2- Re-design the SingleEmployeeView
-         * 3- Validate other fields: Like min wage.
-         * 4- Change size for edit modal (more width).
-         * 5- Set properties like title, size for SingleEmployeeView.
-         * 
+         * 3- Validate other fields: Like min and max wage, Phone contain only digits.
              */
 
         #region Fields
@@ -645,8 +642,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             Window modal = new Window();
             // Create the forms to edit
             var view = new AddEmployeeView();
-            modal.Width = 450;
-            modal.Height = 350;
+            modal.Width = 500;
+            modal.Height = 400;
             modal.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             _isModalSpawned = true; // States a modal is currently being used.
@@ -706,9 +703,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             CopyEmployeeFields(employeeToShow, currentEmployee);
 
             // Modal's chrome properties
-            modal.Title = "Empleado: " + currentEmployee.FullName;
+            modal.Title = (currentEmployee.Gender == "Mujer" ? "Empleada: " : "Empleado: ") + currentEmployee.FullName;
+            modal.Height = 500;
             modal.Width = 400;
-            modal.Width = 600;
 
             modal.DataContext = currentEmployee;
             modal.Content = view;
