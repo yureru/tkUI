@@ -191,17 +191,17 @@ namespace tkUI.DataAccess
             using (XmlReader xmlRdr = new XmlTextReader(stream))
                 return (from employeeElem in XDocument.Load(xmlRdr).Element("employees").Elements("employee")
                         select Employee.CreateEmployee(
-                            (int)employeeElem.Attribute("id"),
-                            (string)employeeElem.Attribute("firstName"),
-                            (string)employeeElem.Attribute("lastName"),
-                            (bool)employeeElem.Attribute("gender"),
-                            (string)employeeElem.Attribute("birthdate"),
-                            (string)employeeElem.Attribute("email"),
-                            (string)employeeElem.Attribute("phone"),
-                            (string)employeeElem.Attribute("pay"),
-                            (string)employeeElem.Attribute("workTime"),
-                            (string)employeeElem.Attribute("address"),
-                            (string)employeeElem.Attribute("startedWorking"))).ToList();
+                            (int)employeeElem.Attribute(_xmlAttributes[0]),
+                            (string)employeeElem.Attribute(_xmlAttributes[1]),
+                            (string)employeeElem.Attribute(_xmlAttributes[2]),
+                            (bool)employeeElem.Attribute(_xmlAttributes[3]),
+                            (string)employeeElem.Attribute(_xmlAttributes[4]),
+                            (string)employeeElem.Attribute(_xmlAttributes[5]),
+                            (string)employeeElem.Attribute(_xmlAttributes[6]),
+                            (string)employeeElem.Attribute(_xmlAttributes[7]),
+                            (string)employeeElem.Attribute(_xmlAttributes[8]),
+                            (string)employeeElem.Attribute(_xmlAttributes[9]),
+                            (string)employeeElem.Attribute(_xmlAttributes[10]))).ToList();
         }
 
         public bool SaveEmployees()
