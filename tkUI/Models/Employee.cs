@@ -277,7 +277,7 @@ namespace tkUI.Models
             return null;
         }
 
-        // TODO: Validate properly: Complying minimum wage, and not an exhorbitant salary.
+        // TODO: Maybe use a decimal instead of an integer.
         string ValidatePay()
         {
             if (IsStringMissing(this.Pay))

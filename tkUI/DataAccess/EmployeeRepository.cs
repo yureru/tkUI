@@ -22,12 +22,27 @@ namespace tkUI.DataAccess
     /// </summary>
     class EmployeeRepository
     {
+        // TODO: Do the following tasks
+        /* 1- Pass the URI (path) to the SaveEmployees function.
+         * 2- Save the data of the current collection to a temporal file (employeesTempID.xaml for example) veryfing that
+         * aren't any errors.
+         * 3- Move/Overwrite to the original file.
+             */
 
         #region Fields
 
         readonly List<Employee> _employees;
 
         int _currentID;
+
+        static string[] _xmlElements = { "employees", "employee" };
+        static string[] _xmlAttributes =
+            {
+                "id", "firstName", "lastName",
+                "gender", "birthdate", "email",
+                "phone", "pay", "workTime",
+                "address", "startedWorking"
+            };
 
         #endregion // Fields
 
@@ -185,6 +200,35 @@ namespace tkUI.DataAccess
                             (string)employeeElem.Attribute("workTime"),
                             (string)employeeElem.Attribute("address"),
                             (string)employeeElem.Attribute("startedWorking"))).ToList();
+        }
+
+        static bool SaveEmployees(string employeeDataFile)
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = ("  ");
+            using (XmlWriter writer = XmlWriter.Create("employees.xml", settings))
+            {
+                // Write XML data
+                writer.WriteStartElement(_xmlElements[0]); // Write root element
+
+                // Loop, writing all Fields of Employee of the collection.
+                writer.WriteStartElement(_xmlElements[1]);
+                writer.WriteAttributeString(_xmlAttributes[0], "1");
+                writer.WriteAttributeString(_xmlAttributes[1], "Nachi");
+                writer.WriteAttributeString(_xmlAttributes[2], "Sakaue");
+                writer.WriteAttributeString(_xmlAttributes[3], "true");
+                writer.WriteAttributeString(_xmlAttributes[4], "true");
+                writer.WriteAttributeString(_xmlAttributes[5], "true");
+                writer.WriteAttributeString(_xmlAttributes[6], "true");
+                writer.WriteAttributeString(_xmlAttributes[7], "10");
+                writer.WriteAttributeString(_xmlAttributes[8], "true");
+                writer.WriteAttributeString(_xmlAttributes[9], "true");
+                writer.WriteAttributeString(_xmlAttributes[10], "true");
+                writer.WriteEndElement();
+                writer.Flush();
+            }
+            return true; // TODO: Check for exceptions.
         }
 
         static Stream GetResourceStream(string resourceFile)

@@ -29,8 +29,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     {
         // TODO: Add a string resources that should be used only for the XAML and not for code-behind files.
         /* TODO:
-         * 2- Re-design the SingleEmployeeView
-         * 3- Validate other fields: Like min and max wage, Phone contain only digits.
+         * 1- Re-design the SingleEmployeeView
              */
 
         #region Fields
@@ -40,7 +39,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         static EmployeeWrapperViewModel _orignalData;
         string _genderType;
         string _selectedWorkTime;
-        string _selectedDay, _selectedMonth, _selectedYear; // TODO: Delete this and create the corresponding fields on Employee class
+        string _selectedDay, _selectedMonth, _selectedYear;
         string[] _genderTypeOptions;
         string[] _workTimeOptions;
         string _lastUserSaved;
