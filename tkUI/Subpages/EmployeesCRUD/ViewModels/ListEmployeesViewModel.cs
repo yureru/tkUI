@@ -32,6 +32,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         readonly EmployeeRepository _employeeRepository;
         RelayCommand _deleteRangeUsers;
+        RelayCommand _saveChangesCommand;
 
         #endregion // Fields
 
@@ -87,6 +88,21 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                         );
                 }
                 return _deleteRangeUsers;
+            }
+        }
+
+        public ICommand SaveChangesCommand
+        {
+            get
+            {
+                if (_saveChangesCommand == null)
+                {
+                    _saveChangesCommand = new RelayCommand(
+                        param => this.SaveChanges(),
+                        param => this.CanSaveChanges()
+                        );
+                }
+                return _saveChangesCommand;
             }
         }
 
@@ -256,6 +272,16 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 return false;
             }
+        }
+
+        private void SaveChanges()
+        {
+            _employeeRepository.SaveEmployees();
+        }
+
+        bool CanSaveChanges()
+        {
+            return true;
         }
 
         #endregion // Methods

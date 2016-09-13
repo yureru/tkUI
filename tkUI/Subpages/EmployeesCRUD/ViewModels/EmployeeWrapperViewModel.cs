@@ -49,6 +49,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         RelayCommand _deleteCommand;
         RelayCommand _editCommand;
         RelayCommand _viewCommand;
+        
 
 
         static EmployeeWrapperViewModel _editingCurrentEmployee;
@@ -533,6 +534,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         
 
+        
+
         #endregion // Presentations Properties
 
         #region ToolTips
@@ -711,6 +714,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
             modal.Show();
         }
+
+        
 
         /// <summary>
         /// Searchs and returns an Employee by id.

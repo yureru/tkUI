@@ -43,6 +43,7 @@ namespace tkUI.DataAccess
                 "phone", "pay", "workTime",
                 "address", "startedWorking"
             };
+        static string _xmlOriginalPath; // "Data/employees.xml"
 
         #endregion // Fields
 
@@ -54,6 +55,7 @@ namespace tkUI.DataAccess
         /// <param name="employeeDataFile"></param>
         public EmployeeRepository(string employeeDataFile)
         {
+            _xmlOriginalPath = employeeDataFile;
             _employees = LoadEmployees(employeeDataFile);
             _currentID = GetLastID();
         }
@@ -202,12 +204,16 @@ namespace tkUI.DataAccess
                             (string)employeeElem.Attribute("startedWorking"))).ToList();
         }
 
-        static bool SaveEmployees(string employeeDataFile)
+        public bool SaveEmployees()
         {
-            XmlWriterSettings settings = new XmlWriterSettings();
+            Uri uri = new Uri(createTempXmlPath(), UriKind.RelativeOrAbsolute);
+
+            Debug.Print(uri.ToString());
+
+            /*XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             settings.IndentChars = ("  ");
-            using (XmlWriter writer = XmlWriter.Create("employees.xml", settings))
+            using (XmlWriter writer = XmlWriter.Create(createTempXmlPath(), settings))
             {
                 // Write XML data
                 writer.WriteStartElement(_xmlElements[0]); // Write root element
@@ -227,14 +233,17 @@ namespace tkUI.DataAccess
                 writer.WriteAttributeString(_xmlAttributes[10], "true");
                 writer.WriteEndElement();
                 writer.Flush();
-            }
+            }*/
+
+//            using (XmlWriter writer = XmlWriter.Create()
+
             return true; // TODO: Check for exceptions.
         }
 
         static Stream GetResourceStream(string resourceFile)
         {
             Uri uri = new Uri(resourceFile, UriKind.RelativeOrAbsolute);
-            
+
             StreamResourceInfo info = Application.GetResourceStream(uri);
             if (info == null || info.Stream == null)
             {
@@ -256,6 +265,27 @@ namespace tkUI.DataAccess
         int GetLastID()
         {
             return _employees.Max(emp => emp.ID);
+        }
+
+        static string createTempXmlPath()
+        {
+            string[] splited = _xmlOriginalPath.Split('/');
+            if (splited.Length != 2)
+            {
+                throw new ArgumentOutOfRangeException("XML Path isn't correct.");
+            }
+            //return "temp_" + splited[0] + createRandomId();
+            //return splited[0] + "/temp" + createRandomId() + "_" +  splited[1];
+            var path = splited[0] + "/temp" + createRandomId() + "_" + splited[1];
+            Debug.Print(path);
+            return path;
+        }
+
+        static string createRandomId()
+        {
+            Random rand = new Random();
+            int num = rand.Next(1, 1000);
+            return num.ToString();
         }
 
         #endregion // Private Helpers
