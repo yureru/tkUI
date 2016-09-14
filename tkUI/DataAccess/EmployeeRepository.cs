@@ -225,14 +225,14 @@ namespace tkUI.DataAccess
                     writer.WriteAttributeString(_xmlAttributes[0], employee.ID.ToString());
                     writer.WriteAttributeString(_xmlAttributes[1], employee.FirstName);
                     writer.WriteAttributeString(_xmlAttributes[2], employee.LastName);
-                    writer.WriteAttributeString(_xmlAttributes[3], employee.);
-                    writer.WriteAttributeString(_xmlAttributes[4], "true");
-                    writer.WriteAttributeString(_xmlAttributes[5], "true");
-                    writer.WriteAttributeString(_xmlAttributes[6], "true");
-                    writer.WriteAttributeString(_xmlAttributes[7], "10");
-                    writer.WriteAttributeString(_xmlAttributes[8], "true");
-                    writer.WriteAttributeString(_xmlAttributes[9], "true");
-                    writer.WriteAttributeString(_xmlAttributes[10], "true");
+                    writer.WriteAttributeString(_xmlAttributes[3], employee.GenderStr);
+                    writer.WriteAttributeString(_xmlAttributes[4], (string)employee.Birthdate);
+                    writer.WriteAttributeString(_xmlAttributes[5], employee.Email);
+                    writer.WriteAttributeString(_xmlAttributes[6], employee.Phone);
+                    writer.WriteAttributeString(_xmlAttributes[7], employee.Pay);
+                    writer.WriteAttributeString(_xmlAttributes[8], employee.WorkTime);
+                    writer.WriteAttributeString(_xmlAttributes[9], employee.Address);
+                    writer.WriteAttributeString(_xmlAttributes[10], employee.StartedWorking);
                     writer.WriteEndElement();
                 }
 
@@ -251,10 +251,8 @@ namespace tkUI.DataAccess
                 writer.WriteAttributeString(_xmlAttributes[10], "true");
                 writer.WriteEndElement();
                 writer.Flush();*/
+                writer.Flush();
             }
-
-              
-
             return true; // TODO: Check for exceptions.
         }
 
