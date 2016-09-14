@@ -281,6 +281,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         bool CanSaveChanges()
         {
+            // TODO: Can't save if an employee is being edited.
             return true;
         }
 

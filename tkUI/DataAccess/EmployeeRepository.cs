@@ -235,24 +235,11 @@ namespace tkUI.DataAccess
                     writer.WriteAttributeString(_xmlAttributes[10], employee.StartedWorking);
                     writer.WriteEndElement();
                 }
-
-                // Loop, writing all Fields of Employee of the collection.
-                /*writer.WriteStartElement(_xmlElements[1]);
-                writer.WriteAttributeString(_xmlAttributes[0], "1");
-                writer.WriteAttributeString(_xmlAttributes[1], "Nachi");
-                writer.WriteAttributeString(_xmlAttributes[2], "Sakaue");
-                writer.WriteAttributeString(_xmlAttributes[3], "true");
-                writer.WriteAttributeString(_xmlAttributes[4], "true");
-                writer.WriteAttributeString(_xmlAttributes[5], "true");
-                writer.WriteAttributeString(_xmlAttributes[6], "true");
-                writer.WriteAttributeString(_xmlAttributes[7], "10");
-                writer.WriteAttributeString(_xmlAttributes[8], "true");
-                writer.WriteAttributeString(_xmlAttributes[9], "true");
-                writer.WriteAttributeString(_xmlAttributes[10], "true");
-                writer.WriteEndElement();
-                writer.Flush();*/
                 writer.Flush();
             }
+
+            //OverwriteXML(path, );
+
             return true; // TODO: Check for exceptions.
         }
 
@@ -359,6 +346,12 @@ namespace tkUI.DataAccess
 
             var fixedStr = new String(foo);
             return fixedStr;
+        }
+
+        void OverwriteXML(string newFile, string originalFile)
+        {
+            // TODO: Handle exceptions, if exceptions occurs keep the original file. Delete newFile.
+            File.Move(newFile, originalFile);
         }
 
         #endregion // Private Helpers
