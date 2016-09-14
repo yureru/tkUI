@@ -23,7 +23,7 @@ namespace tkUI.DataAccess
     class EmployeeRepository
     {
         // TODO: Do the following tasks
-        /* 1- Pass the URI (path) to the SaveEmployees function.
+        /* 1- Pass the URI (path) to the SaveEmployees function. IMPORTANT. http://puu.sh/r9xQz/b7df9d8498.png
          * 2- Save the data of the current collection to a temporal file (employeesTempID.xaml for example) veryfing that
          * aren't any errors.
          * 3- Move/Overwrite to the original file.
@@ -189,7 +189,7 @@ namespace tkUI.DataAccess
             ///TODO: Use a DB.
             using (Stream stream = GetResourceStream(employeeDataFile))
             using (XmlReader xmlRdr = new XmlTextReader(stream))
-                return (from employeeElem in XDocument.Load(xmlRdr).Element("employees").Elements("employee")
+                return (from employeeElem in XDocument.Load(xmlRdr).Element(_xmlElements[0]).Elements(_xmlElements[1])
                         select Employee.CreateEmployee(
                             (int)employeeElem.Attribute(_xmlAttributes[0]),
                             (string)employeeElem.Attribute(_xmlAttributes[1]),
@@ -206,11 +206,22 @@ namespace tkUI.DataAccess
 
         public bool SaveEmployees()
         {
-            Uri uri = new Uri(createTempXmlPath(), UriKind.RelativeOrAbsolute);
+            //Uri uri = new Uri("..\\"+createTempXmlPath(), UriKind.RelativeOrAbsolute);
+            //StreamResourceInfo info = Application.GetResourceStream(uri);
 
-            Debug.Print(uri.ToString());
+            Debug.Print("CurrentDirectory");
+            Debug.Print(getPath());
+            Debug.Print("GoBackFolder()");
+            Debug.Print(GoBackFolderPath(getPath(), '\\', 2));
+            Debug.Print("Original path");
+            Debug.Print(GoBackFolderPath(_xmlOriginalPath, '/', 1));
+            //Debug.Print(uri.PathAndQuery);
+            
 
-            /*XmlWriterSettings settings = new XmlWriterSettings();
+
+            /*Debug.Print(uri.ToString());
+
+            XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             settings.IndentChars = ("  ");
             using (XmlWriter writer = XmlWriter.Create(createTempXmlPath(), settings))
@@ -235,7 +246,7 @@ namespace tkUI.DataAccess
                 writer.Flush();
             }*/
 
-//            using (XmlWriter writer = XmlWriter.Create()
+              
 
             return true; // TODO: Check for exceptions.
         }
@@ -243,6 +254,8 @@ namespace tkUI.DataAccess
         static Stream GetResourceStream(string resourceFile)
         {
             Uri uri = new Uri(resourceFile, UriKind.RelativeOrAbsolute);
+            Debug.Print("GetResourceStream()");
+            Debug.Print(uri.ToString());
 
             StreamResourceInfo info = Application.GetResourceStream(uri);
             if (info == null || info.Stream == null)
@@ -286,6 +299,61 @@ namespace tkUI.DataAccess
             Random rand = new Random();
             int num = rand.Next(1, 1000);
             return num.ToString();
+        }
+
+        static string getPath()
+        {
+            return Environment.CurrentDirectory;
+        }
+
+        /// <summary>
+        /// Function that deletes ("goes back") from folders from a path. For example: If we specify a path like:
+        /// "C:\User\Documents\Images\Vacations\" and we want that path to go back by two folders we will obtain:
+        /// "C:\User\Documents\".
+        /// </summary>
+        /// <param name="originalPath">A path in the form of "folder/subFolder..."</param>
+        /// <param name="slashType">The type of slash used to separate the path's folders.</param>
+        /// <param name="howManyFoldersBack">Quantity of folders we're gonna go back.</param>
+        /// <returns></returns>
+        static string GoBackFolderPath(string originalPath, char slashType, int howManyFoldersBack)
+        {
+            if (originalPath == null)
+            {
+                throw new ArgumentNullException("Called GoBackFolderPath(null)");
+            }
+
+            char[] revChar = originalPath.ToCharArray();
+            Array.Reverse(revChar);
+
+            int index = 0, count = 0;
+
+            for (int i = 0; i < revChar.Length; ++i)
+            {
+                if (revChar[i] == slashType)
+                {
+                    ++count;
+                }
+
+                if (count == howManyFoldersBack)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            // Second if block (above) didn't execute.
+            if (index == 0)
+            {
+                string times = howManyFoldersBack.ToString();
+                throw new ArgumentException("Path couldn't go back " + times + "folders.");
+            }
+
+            var fixedChar = new string(revChar, index, revChar.Length - index);
+            char[] foo = fixedChar.ToCharArray();
+            Array.Reverse(foo);
+
+            var fixedStr = new String(foo);
+            return fixedStr;
         }
 
         #endregion // Private Helpers
