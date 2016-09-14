@@ -23,10 +23,11 @@ namespace tkUI.DataAccess
     class EmployeeRepository
     {
         // TODO: Do the following tasks
-        /* 1- Pass the URI (path) to the SaveEmployees function. IMPORTANT. http://puu.sh/r9xQz/b7df9d8498.png
+        /*
          * 2- Save the data of the current collection to a temporal file (employeesTempID.xaml for example) veryfing that
-         * aren't any errors.
-         * 3- Move/Overwrite to the original file.
+         * aren't any errors. OK.
+         * 3- Save the collection to the xml file.
+         * 4- Move/Overwrite to the original file.
              */
 
         #region Fields
@@ -206,31 +207,37 @@ namespace tkUI.DataAccess
 
         public bool SaveEmployees()
         {
-            //Uri uri = new Uri("..\\"+createTempXmlPath(), UriKind.RelativeOrAbsolute);
-            //StreamResourceInfo info = Application.GetResourceStream(uri);
 
-            Debug.Print("CurrentDirectory");
-            Debug.Print(getPath());
-            Debug.Print("GoBackFolder()");
-            Debug.Print(GoBackFolderPath(getPath(), '\\', 2));
-            Debug.Print("Original path");
-            Debug.Print(GoBackFolderPath(_xmlOriginalPath, '/', 1));
-            //Debug.Print(uri.PathAndQuery);
-            
-
-
-            /*Debug.Print(uri.ToString());
+            string path = GoBackFolderPath(getPath(), '\\', 2) + createTempXmlPath();
+            Debug.Print(path);
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             settings.IndentChars = ("  ");
-            using (XmlWriter writer = XmlWriter.Create(createTempXmlPath(), settings))
+            using (XmlWriter writer = XmlWriter.Create(path, settings))
             {
                 // Write XML data
                 writer.WriteStartElement(_xmlElements[0]); // Write root element
 
+                foreach (var employee in _employees)
+                {
+                    writer.WriteStartElement(_xmlElements[1]);
+                    writer.WriteAttributeString(_xmlAttributes[0], employee.ID.ToString());
+                    writer.WriteAttributeString(_xmlAttributes[1], employee.FirstName);
+                    writer.WriteAttributeString(_xmlAttributes[2], employee.LastName);
+                    writer.WriteAttributeString(_xmlAttributes[3], employee.);
+                    writer.WriteAttributeString(_xmlAttributes[4], "true");
+                    writer.WriteAttributeString(_xmlAttributes[5], "true");
+                    writer.WriteAttributeString(_xmlAttributes[6], "true");
+                    writer.WriteAttributeString(_xmlAttributes[7], "10");
+                    writer.WriteAttributeString(_xmlAttributes[8], "true");
+                    writer.WriteAttributeString(_xmlAttributes[9], "true");
+                    writer.WriteAttributeString(_xmlAttributes[10], "true");
+                    writer.WriteEndElement();
+                }
+
                 // Loop, writing all Fields of Employee of the collection.
-                writer.WriteStartElement(_xmlElements[1]);
+                /*writer.WriteStartElement(_xmlElements[1]);
                 writer.WriteAttributeString(_xmlAttributes[0], "1");
                 writer.WriteAttributeString(_xmlAttributes[1], "Nachi");
                 writer.WriteAttributeString(_xmlAttributes[2], "Sakaue");
@@ -243,8 +250,8 @@ namespace tkUI.DataAccess
                 writer.WriteAttributeString(_xmlAttributes[9], "true");
                 writer.WriteAttributeString(_xmlAttributes[10], "true");
                 writer.WriteEndElement();
-                writer.Flush();
-            }*/
+                writer.Flush();*/
+            }
 
               
 

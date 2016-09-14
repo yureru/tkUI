@@ -69,6 +69,24 @@ namespace tkUI.Models
         /// </summary>
         public bool ModalOpen { get; set; }
 
+        /// <summary>
+        /// String representation of Gender (bool).
+        /// </summary>
+        public string GenderStr
+        {
+            get
+            {
+                if (Gender)
+                {
+                    return Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
+                }
+                else
+                {
+                    return Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
+                }
+            }
+        }
+
         #endregion // Presentation Properties
 
         #region Creation
