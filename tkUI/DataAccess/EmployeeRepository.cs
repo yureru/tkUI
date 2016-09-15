@@ -44,7 +44,8 @@ namespace tkUI.DataAccess
                 "phone", "pay", "workTime",
                 "address", "startedWorking"
             };
-        static string _xmlOriginalPath; // "Data/employees.xml"
+        static string[] _baseXMLOriginalPath; // "Data/employees.xml"
+        static string _baseXMLpath;
 
         #endregion // Fields
 
@@ -56,9 +57,17 @@ namespace tkUI.DataAccess
         /// <param name="employeeDataFile"></param>
         public EmployeeRepository(string employeeDataFile)
         {
-            _xmlOriginalPath = employeeDataFile;
+            //_baseXMLOriginalPath = employeeDataFile;
             _employees = LoadEmployees(employeeDataFile);
             _currentID = GetLastID();
+            _baseXMLpath = GoBackFolderPath(getPath(), '\\', 2);
+
+            _baseXMLOriginalPath = employeeDataFile.Split('/');
+
+            if (_baseXMLOriginalPath.Length != 2)
+            {
+                throw new ArgumentOutOfRangeException("XML Path isn't correct.");
+            }
         }
 
         #endregion // Constructors
@@ -205,16 +214,17 @@ namespace tkUI.DataAccess
                             (string)employeeElem.Attribute(_xmlAttributes[10]))).ToList();
         }
 
-        public bool SaveEmployees()
+        public void SaveEmployees()
         {
-
-            string path = GoBackFolderPath(getPath(), '\\', 2) + createTempXmlPath();
-            Debug.Print(path);
+            string newFilePath = _baseXMLpath + createTempXmlPath();
+            Debug.Print(newFilePath);
+            string originalXMLPath = _baseXMLpath + _baseXMLOriginalPath[1];
+            Debug.Print(originalXMLPath);
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             settings.IndentChars = ("  ");
-            using (XmlWriter writer = XmlWriter.Create(path, settings))
+            using (XmlWriter writer = XmlWriter.Create(newFilePath, settings))
             {
                 // Write XML data
                 writer.WriteStartElement(_xmlElements[0]); // Write root element
@@ -238,9 +248,9 @@ namespace tkUI.DataAccess
                 writer.Flush();
             }
 
-            //OverwriteXML(path, );
+            OverwriteXML(newFilePath, originalXMLPath);
 
-            return true; // TODO: Check for exceptions.
+            // TODO: Check for exceptions.
         }
 
         static Stream GetResourceStream(string resourceFile)
@@ -274,14 +284,10 @@ namespace tkUI.DataAccess
 
         static string createTempXmlPath()
         {
-            string[] splited = _xmlOriginalPath.Split('/');
-            if (splited.Length != 2)
-            {
-                throw new ArgumentOutOfRangeException("XML Path isn't correct.");
-            }
+            
             //return "temp_" + splited[0] + createRandomId();
             //return splited[0] + "/temp" + createRandomId() + "_" +  splited[1];
-            var path = splited[0] + "/temp" + createRandomId() + "_" + splited[1];
+            var path = _baseXMLOriginalPath[0] + "/temp" + createRandomId() + "_" + _baseXMLOriginalPath[1];
             Debug.Print(path);
             return path;
         }
@@ -351,6 +357,7 @@ namespace tkUI.DataAccess
         void OverwriteXML(string newFile, string originalFile)
         {
             // TODO: Handle exceptions, if exceptions occurs keep the original file. Delete newFile.
+            File.Delete(originalFile);
             File.Move(newFile, originalFile);
         }
 
