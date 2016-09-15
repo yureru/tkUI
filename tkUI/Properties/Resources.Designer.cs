@@ -178,7 +178,7 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to La dirección e-mail es inválida..
+        ///   Looks up a localized string similar to La dirección e-mail es inválida.
         /// </summary>
         internal static string Employee_Error_InvalidEmail {
             get {
@@ -219,6 +219,42 @@ namespace tkUI.Properties {
         internal static string Employee_Error_MissingPhone {
             get {
                 return ResourceManager.GetString("Employee_Error_MissingPhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El sueldo solo puede contener números.
+        /// </summary>
+        internal static string Employee_Error_PayContainsNonDigits {
+            get {
+                return ResourceManager.GetString("Employee_Error_PayContainsNonDigits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El sueldo es mayor que el máximo en la compañía.
+        /// </summary>
+        internal static string Employee_Error_PayIsAboveMaximumWage {
+            get {
+                return ResourceManager.GetString("Employee_Error_PayIsAboveMaximumWage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El sueldo es menor que el mínimo.
+        /// </summary>
+        internal static string Employee_Error_PayIsBelowMinimumWage {
+            get {
+                return ResourceManager.GetString("Employee_Error_PayIsBelowMinimumWage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El teléfono solo puede contener números.
+        /// </summary>
+        internal static string Employee_Error_PhoneContainsNonDigits {
+            get {
+                return ResourceManager.GetString("Employee_Error_PhoneContainsNonDigits", resourceCulture);
             }
         }
         
@@ -282,6 +318,51 @@ namespace tkUI.Properties {
         internal static string EmployeeWrapperViewModel_Exception_CannotSave {
             get {
                 return ResourceManager.GetString("EmployeeWrapperViewModel_Exception_CannotSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parámetro pasado a DeleteCommand debe ser un integer..
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Exception_DeleteWrongParam {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Exception_DeleteWrongParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parámetro pasado a EditCommand debe ser un integer..
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Exception_EditWrongParam {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Exception_EditWrongParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se encontró el usuario buscado por el ID: {0}..
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Exception_EmployeeIDNotFound {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Exception_EmployeeIDNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se puede buscar a un empleado con un integer menor o igual que cero..
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Exception_IDLessOrEqualThanZero {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Exception_IDLessOrEqualThanZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parámetro pasado a ViewCommand debe ser un integer..
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Exception_ViewWrongParam {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Exception_ViewWrongParam", resourceCulture);
             }
         }
         
@@ -360,6 +441,26 @@ namespace tkUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap EyeIcon {
+            get {
+                object obj = ResourceManager.GetObject("EyeIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap EyeSelectedIcon {
+            get {
+                object obj = ResourceManager.GetObject("EyeSelectedIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Header_bg_bar {
             get {
                 object obj = ResourceManager.GetObject("Header_bg_bar", resourceCulture);
@@ -384,6 +485,42 @@ namespace tkUI.Properties {
             get {
                 object obj = ResourceManager.GetObject("HumanSelectedIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmación.
+        /// </summary>
+        internal static string ListEmployeesViewModel_Confirmation_Self {
+            get {
+                return ResourceManager.GetString("ListEmployeesViewModel_Confirmation_Self", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Desea eliminar los {0} empleados seleccionados?.
+        /// </summary>
+        internal static string ListEmployeesViewModel_Format_ConfirmationRange {
+            get {
+                return ResourceManager.GetString("ListEmployeesViewModel_Format_ConfirmationRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se puede eliminar el rango porque contiene un empleado que está siendo editado.
+        /// </summary>
+        internal static string ListEmployeesViewModel_Warning_InvalidRange {
+            get {
+                return ResourceManager.GetString("ListEmployeesViewModel_Warning_InvalidRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advertencia.
+        /// </summary>
+        internal static string ListEmployeesViewModel_Warning_Self {
+            get {
+                return ResourceManager.GetString("ListEmployeesViewModel_Warning_Self", resourceCulture);
             }
         }
         

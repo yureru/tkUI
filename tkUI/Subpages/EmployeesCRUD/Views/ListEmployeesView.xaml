@@ -79,6 +79,8 @@
                     helper:Icons.Image="..\..\..\Resources\GeneralGlyphs\TrashIcon.png"
                         
                     helper:IconsClicked.ImageClicked="..\..\..\Resources\GeneralGlyphs\TrashSelectedIcon.png" Margin="0,0,5,0" ToolTip="{Binding Path=RangeDeleteTooltip, Mode=OneWay}"/>
+                <Button
+                    Command="{Binding Path=SaveChangesCommand}">Save changes</Button>
             </StackPanel>
                         
         </Grid>
@@ -115,22 +117,33 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Button Template="{StaticResource glyphImageButton}"
+                                            Style="{StaticResource enableStatesDelete}"
+                                            Command="{Binding Path=ViewCommand}"
+                                            CommandParameter="{Binding Path=ID}"
+                                            helper:Icons.Image="..\..\..\Resources\GeneralGlyphs\EyeIcon.png"
+                                            helper:IconsClicked.ImageClicked="..\..\..\Resources\GeneralGlyphs\EyeSelectedIcon.png" Margin="0,0,10,0"
+                                            ToolTip="Ver usuario"
+                                            />
+                                    
+                                    <Button Template="{StaticResource glyphImageButton}"
                                             Style="{StaticResource enableStatesEdit}"
                                             Command="{Binding Path=EditCommand}"
                                             CommandParameter="{Binding Path=ID}"
                                             helper:Icons.Image="..\..\..\Resources\GeneralGlyphs\PencilThickIcon.png"
-                                            helper:IconsClicked.ImageClicked="..\..\..\Resources\GeneralGlyphs\PencilThickSelectedIcon.png" Margin="0,0,5,0"
+                                            helper:IconsClicked.ImageClicked="..\..\..\Resources\GeneralGlyphs\PencilThickSelectedIcon.png" Margin="0,0,15,0"
                                             ToolTipService.ShowOnDisabled="True"
                                             />
                                     <!--ToolTip="{Binding Path=EditToolTip, Mode=OneWay}"-->
 
                                     <Button Template="{StaticResource glyphImageButton}"
+                                            Style="{StaticResource enableStatesDelete}"
                                             Command="{Binding Path=DeleteCommand}"
                                             CommandParameter="{Binding Path=ID}"
                                             helper:Icons.Image="..\..\..\Resources\GeneralGlyphs\TrashIcon.png"
-                                            helper:IconsClicked.ImageClicked="..\..\..\Resources\GeneralGlyphs\TrashSelectedIcon.png" Margin="0,0,5,0"
+                                            helper:IconsClicked.ImageClicked="..\..\..\Resources\GeneralGlyphs\TrashSelectedIcon.png" Margin="0,0,10,0"
                                             ToolTipService.ShowOnDisabled="True"
                                             ToolTip="{Binding Path=DeleteToolTip, Mode=OneWay}"
+                                            IsEnabled="{Binding Path=EditModalOpen, Mode=OneWay}"
                                             />
                                 </StackPanel>
                             </DataTemplate>

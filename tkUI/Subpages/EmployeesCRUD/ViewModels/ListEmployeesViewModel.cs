@@ -13,6 +13,7 @@ using System.Windows.Input;
 using tkUI.DataAccess;
 using tkUI.Subpages.EmployeesCRUD.Utils;
 using tkUI.Helper_Classes;
+using tkUI.Properties;
 
 using System.Diagnostics;
 
@@ -31,6 +32,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         readonly EmployeeRepository _employeeRepository;
         RelayCommand _deleteRangeUsers;
+        RelayCommand _saveChangesCommand;
 
         #endregion // Fields
 
@@ -86,6 +88,21 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                         );
                 }
                 return _deleteRangeUsers;
+            }
+        }
+
+        public ICommand SaveChangesCommand
+        {
+            get
+            {
+                if (_saveChangesCommand == null)
+                {
+                    _saveChangesCommand = new RelayCommand(
+                        param => this.SaveChanges(),
+                        param => this.CanSaveChanges()
+                        );
+                }
+                return _saveChangesCommand;
             }
         }
 
@@ -202,14 +219,29 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         #region Methods
 
         /// <summary>
-        /// Deletes a selected range of employees.
-        /// It shows a confirmation dialog to do this action.
+        /// Deletes a selected range of employees. If the range contains an employee with a edit modal open, shows a warning and
+        /// tells it can't perform that action.
+        /// It shows a confirmation dialog if the range is valid.
         /// </summary>
         public void DeleteFromRange()
         {
+            // Check if there's an employee with an edit modal dialog open
+            // isModalOpen will contain an employee if it has a the edit modal open.
+            // Note that we're comparing to false, see EditModalOpen for full explanation.
+            //var isEditModalOpen = from emp in this.AllEmployees where emp.EditModalOpen == false select emp;
+            var isEditModalOpen = from emp in this.AllEmployees where emp.EditModalOpen == false where emp.IsSelected select emp;
 
-            var result = MessageBox.Show(String.Format("¿Desea eliminar los {0} empleados seleccionados?", TotalSelectedEmployees), "Confirmación",
-                 MessageBoxButton.YesNo, MessageBoxImage.None);
+            // Show error message
+            if (isEditModalOpen.Count() > 0)
+            {
+                var warningResult = MessageBox.Show(Resources.ListEmployeesViewModel_Warning_InvalidRange, Resources.ListEmployeesViewModel_Warning_Self,
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Ok, we can delete a range.
+            var result = MessageBox.Show(String.Format(Resources.ListEmployeesViewModel_Format_ConfirmationRange, TotalSelectedEmployees), 
+                Resources.ListEmployeesViewModel_Confirmation_Self, MessageBoxButton.YesNo, MessageBoxImage.None);
 
             if (result == MessageBoxResult.No || result == MessageBoxResult.None)
             {
@@ -240,6 +272,17 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 return false;
             }
+        }
+
+        private void SaveChanges()
+        {
+            _employeeRepository.SaveEmployees();
+        }
+
+        bool CanSaveChanges()
+        {
+            // TODO: Can't save if an employee is being edited.
+            return true;
         }
 
         #endregion // Methods

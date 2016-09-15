@@ -20,6 +20,18 @@ namespace tkUI.Models
     class Employee : IDataErrorInfo
     {
 
+        #region Constants
+
+        static int MinimumWage = 74;
+        static int MaximumWage = 10000;
+        
+        enum Wage
+        {
+            BelowMinimum, Ok, AboveMaximum
+        };
+
+        #endregion // Constants
+
         #region Fields
 
         public int ID { get; set; }
@@ -47,6 +59,35 @@ namespace tkUI.Models
         #endregion // Fields
 
 
+        /* Properties that aren't needed to save as part of Employee object
+         * therefore they shouldn't be saved in a DB or in the repository. */
+        #region Presentation Properties
+
+        /// <summary>
+        /// Used to know if an specific employee instance has a edit modal open,
+        /// therefore it can't be deleted the Employee.
+        /// </summary>
+        public bool ModalOpen { get; set; }
+
+        /// <summary>
+        /// String representation of Gender (bool).
+        /// </summary>
+        public string GenderStr
+        {
+            get
+            {
+                if (Gender)
+                {
+                    return Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female;
+                }
+                else
+                {
+                    return Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
+                }
+            }
+        }
+
+        #endregion // Presentation Properties
 
         #region Creation
 
@@ -101,6 +142,20 @@ namespace tkUI.Models
         {
             var creationDate = DateTime.Today;
             return String.Format("{0}/{1}/{2}", creationDate.Day, creationDate.Month, creationDate.Year);
+        }
+
+        static Wage PayInRange(int pay)
+        {
+            if (pay < MinimumWage)
+            {
+                return Wage.BelowMinimum;
+            }
+            else if (pay > MaximumWage)
+            {
+                return Wage.AboveMaximum;
+            }
+
+            return Wage.Ok;
         }
 
         #endregion // Helper Methods
@@ -231,16 +286,46 @@ namespace tkUI.Models
             {
                 return Resources.Employee_Error_MissingPhone;
             }
+
+            if (!RangeChecker.IsDigitsOnly(this.Phone))
+            {
+                return Resources.Employee_Error_PhoneContainsNonDigits;
+            }
+
             return null;
         }
 
-        // TODO: Validate properly: Complying minimum wage, and not an exhorbitant salary.
+        // TODO: Maybe use a decimal instead of an integer.
         string ValidatePay()
         {
             if (IsStringMissing(this.Pay))
             {
                 return Resources.Employee_Error_MissingPay;
             }
+
+            if (!RangeChecker.IsDigitsOnly(this.Pay))
+            {
+                return Resources.Employee_Error_PayContainsNonDigits;
+            }
+
+            int result;
+
+            if (!int.TryParse(this.Pay, out result))
+            {
+                return Resources.Employee_Error_PayIsAboveMaximumWage;
+            }
+
+            var range = PayInRange(result);
+
+            if (range == Wage.BelowMinimum)
+            {
+                return Resources.Employee_Error_PayIsBelowMinimumWage;
+            }
+            else if (range == Wage.AboveMaximum)
+            {
+                return Resources.Employee_Error_PayIsAboveMaximumWage;
+            }
+
             return null;
         }
 
@@ -250,6 +335,7 @@ namespace tkUI.Models
             {
                 return Resources.Employee_Error_MissingAddress;
             }
+
             return null;
         }
 

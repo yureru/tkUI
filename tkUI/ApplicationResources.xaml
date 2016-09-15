@@ -92,5 +92,13 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style x:Key="enableStatesView">
+        <Style.Triggers>
+            <Trigger Property="Button.IsEnabled" Value="False">
+                <Setter Property="Button.Opacity" Value="0.5"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
     
 </ResourceDictionary>

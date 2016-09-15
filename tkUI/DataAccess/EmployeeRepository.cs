@@ -22,12 +22,30 @@ namespace tkUI.DataAccess
     /// </summary>
     class EmployeeRepository
     {
+        // TODO: Do the following tasks
+        /*
+         * 2- Save the data of the current collection to a temporal file (employeesTempID.xaml for example) veryfing that
+         * aren't any errors. OK.
+         * 3- Save the collection to the xml file.
+         * 4- Move/Overwrite to the original file.
+             */
 
         #region Fields
 
         readonly List<Employee> _employees;
 
         int _currentID;
+
+        static string[] _xmlElements = { "employees", "employee" };
+        static string[] _xmlAttributes =
+            {
+                "id", "firstName", "lastName",
+                "gender", "birthdate", "email",
+                "phone", "pay", "workTime",
+                "address", "startedWorking"
+            };
+        static string[] _baseXMLOriginalPath; // "Data/employees.xml"
+        static string _baseXMLpath;
 
         #endregion // Fields
 
@@ -39,8 +57,17 @@ namespace tkUI.DataAccess
         /// <param name="employeeDataFile"></param>
         public EmployeeRepository(string employeeDataFile)
         {
+            //_baseXMLOriginalPath = employeeDataFile;
             _employees = LoadEmployees(employeeDataFile);
             _currentID = GetLastID();
+            _baseXMLpath = GoBackFolderPath(getPath(), '\\', 2);
+
+            _baseXMLOriginalPath = employeeDataFile.Split('/');
+
+            if (_baseXMLOriginalPath.Length != 2)
+            {
+                throw new ArgumentOutOfRangeException("XML Path isn't correct.");
+            }
         }
 
         #endregion // Constructors
@@ -172,25 +199,66 @@ namespace tkUI.DataAccess
             ///TODO: Use a DB.
             using (Stream stream = GetResourceStream(employeeDataFile))
             using (XmlReader xmlRdr = new XmlTextReader(stream))
-                return (from employeeElem in XDocument.Load(xmlRdr).Element("employees").Elements("employee")
+                return (from employeeElem in XDocument.Load(xmlRdr).Element(_xmlElements[0]).Elements(_xmlElements[1])
                         select Employee.CreateEmployee(
-                            (int)employeeElem.Attribute("id"),
-                            (string)employeeElem.Attribute("firstName"),
-                            (string)employeeElem.Attribute("lastName"),
-                            (bool)employeeElem.Attribute("gender"),
-                            (string)employeeElem.Attribute("birthdate"),
-                            (string)employeeElem.Attribute("email"),
-                            (string)employeeElem.Attribute("phone"),
-                            (string)employeeElem.Attribute("pay"),
-                            (string)employeeElem.Attribute("workTime"),
-                            (string)employeeElem.Attribute("address"),
-                            (string)employeeElem.Attribute("startedWorking"))).ToList();
+                            (int)employeeElem.Attribute(_xmlAttributes[0]),
+                            (string)employeeElem.Attribute(_xmlAttributes[1]),
+                            (string)employeeElem.Attribute(_xmlAttributes[2]),
+                            (bool)employeeElem.Attribute(_xmlAttributes[3]),
+                            (string)employeeElem.Attribute(_xmlAttributes[4]),
+                            (string)employeeElem.Attribute(_xmlAttributes[5]),
+                            (string)employeeElem.Attribute(_xmlAttributes[6]),
+                            (string)employeeElem.Attribute(_xmlAttributes[7]),
+                            (string)employeeElem.Attribute(_xmlAttributes[8]),
+                            (string)employeeElem.Attribute(_xmlAttributes[9]),
+                            (string)employeeElem.Attribute(_xmlAttributes[10]))).ToList();
+        }
+
+        public void SaveEmployees()
+        {
+            string newFilePath = _baseXMLpath + createTempXmlPath();
+            Debug.Print(newFilePath);
+            string originalXMLPath = _baseXMLpath + _baseXMLOriginalPath[1];
+            Debug.Print(originalXMLPath);
+
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = ("  ");
+            using (XmlWriter writer = XmlWriter.Create(newFilePath, settings))
+            {
+                // Write XML data
+                writer.WriteStartElement(_xmlElements[0]); // Write root element
+
+                foreach (var employee in _employees)
+                {
+                    writer.WriteStartElement(_xmlElements[1]);
+                    writer.WriteAttributeString(_xmlAttributes[0], employee.ID.ToString());
+                    writer.WriteAttributeString(_xmlAttributes[1], employee.FirstName);
+                    writer.WriteAttributeString(_xmlAttributes[2], employee.LastName);
+                    writer.WriteAttributeString(_xmlAttributes[3], employee.GenderStr);
+                    writer.WriteAttributeString(_xmlAttributes[4], (string)employee.Birthdate);
+                    writer.WriteAttributeString(_xmlAttributes[5], employee.Email);
+                    writer.WriteAttributeString(_xmlAttributes[6], employee.Phone);
+                    writer.WriteAttributeString(_xmlAttributes[7], employee.Pay);
+                    writer.WriteAttributeString(_xmlAttributes[8], employee.WorkTime);
+                    writer.WriteAttributeString(_xmlAttributes[9], employee.Address);
+                    writer.WriteAttributeString(_xmlAttributes[10], employee.StartedWorking);
+                    writer.WriteEndElement();
+                }
+                writer.Flush();
+            }
+
+            OverwriteXML(newFilePath, originalXMLPath);
+
+            // TODO: Check for exceptions.
         }
 
         static Stream GetResourceStream(string resourceFile)
         {
             Uri uri = new Uri(resourceFile, UriKind.RelativeOrAbsolute);
-            
+            Debug.Print("GetResourceStream()");
+            Debug.Print(uri.ToString());
+
             StreamResourceInfo info = Application.GetResourceStream(uri);
             if (info == null || info.Stream == null)
             {
@@ -212,6 +280,85 @@ namespace tkUI.DataAccess
         int GetLastID()
         {
             return _employees.Max(emp => emp.ID);
+        }
+
+        static string createTempXmlPath()
+        {
+            
+            //return "temp_" + splited[0] + createRandomId();
+            //return splited[0] + "/temp" + createRandomId() + "_" +  splited[1];
+            var path = _baseXMLOriginalPath[0] + "/temp" + createRandomId() + "_" + _baseXMLOriginalPath[1];
+            Debug.Print(path);
+            return path;
+        }
+
+        static string createRandomId()
+        {
+            Random rand = new Random();
+            int num = rand.Next(1, 1000);
+            return num.ToString();
+        }
+
+        static string getPath()
+        {
+            return Environment.CurrentDirectory;
+        }
+
+        /// <summary>
+        /// Function that deletes ("goes back") from folders from a path. For example: If we specify a path like:
+        /// "C:\User\Documents\Images\Vacations\" and we want that path to go back by two folders we will obtain:
+        /// "C:\User\Documents\".
+        /// </summary>
+        /// <param name="originalPath">A path in the form of "folder/subFolder..."</param>
+        /// <param name="slashType">The type of slash used to separate the path's folders.</param>
+        /// <param name="howManyFoldersBack">Quantity of folders we're gonna go back.</param>
+        /// <returns></returns>
+        static string GoBackFolderPath(string originalPath, char slashType, int howManyFoldersBack)
+        {
+            if (originalPath == null)
+            {
+                throw new ArgumentNullException("Called GoBackFolderPath(null)");
+            }
+
+            char[] revChar = originalPath.ToCharArray();
+            Array.Reverse(revChar);
+
+            int index = 0, count = 0;
+
+            for (int i = 0; i < revChar.Length; ++i)
+            {
+                if (revChar[i] == slashType)
+                {
+                    ++count;
+                }
+
+                if (count == howManyFoldersBack)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            // Second if block (above) didn't execute.
+            if (index == 0)
+            {
+                string times = howManyFoldersBack.ToString();
+                throw new ArgumentException("Path couldn't go back " + times + "folders.");
+            }
+
+            var fixedChar = new string(revChar, index, revChar.Length - index);
+            char[] foo = fixedChar.ToCharArray();
+            Array.Reverse(foo);
+
+            var fixedStr = new String(foo);
+            return fixedStr;
+        }
+
+        void OverwriteXML(string newFile, string originalFile)
+        {
+            // TODO: Handle exceptions, if exceptions occurs keep the original file. Delete newFile.
+            File.Delete(originalFile);
+            File.Move(newFile, originalFile);
         }
 
         #endregion // Private Helpers
