@@ -69,6 +69,7 @@ namespace tkUI.Models
         /// </summary>
         public bool ModalOpen { get; set; }
 
+        // TODO: Might not be useful after all.
         /// <summary>
         /// String representation of Gender (bool).
         /// </summary>

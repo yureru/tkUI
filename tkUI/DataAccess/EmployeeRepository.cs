@@ -218,7 +218,7 @@ namespace tkUI.DataAccess
         {
             string newFilePath = _baseXMLpath + createTempXmlPath();
             Debug.Print(newFilePath);
-            string originalXMLPath = _baseXMLpath + _baseXMLOriginalPath[1];
+            string originalXMLPath = _baseXMLpath + _baseXMLOriginalPath[0] + "/" + _baseXMLOriginalPath[1];
             Debug.Print(originalXMLPath);
 
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -235,7 +235,7 @@ namespace tkUI.DataAccess
                     writer.WriteAttributeString(_xmlAttributes[0], employee.ID.ToString());
                     writer.WriteAttributeString(_xmlAttributes[1], employee.FirstName);
                     writer.WriteAttributeString(_xmlAttributes[2], employee.LastName);
-                    writer.WriteAttributeString(_xmlAttributes[3], employee.GenderStr);
+                    writer.WriteAttributeString(_xmlAttributes[3], employee.Gender.ToString());
                     writer.WriteAttributeString(_xmlAttributes[4], (string)employee.Birthdate);
                     writer.WriteAttributeString(_xmlAttributes[5], employee.Email);
                     writer.WriteAttributeString(_xmlAttributes[6], employee.Phone);
