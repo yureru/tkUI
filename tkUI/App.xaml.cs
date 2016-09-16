@@ -15,6 +15,9 @@ namespace tkUI
     /// </summary>
     public partial class App : Application
     {
+        static Window _loginWindow;
+        static ApplicationView _app;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -24,10 +27,11 @@ namespace tkUI
              * 2- After the users enters the correct credentials (email and pasword) close the login window, make spawn the application
              * window, and make that new window the main one. 
              */
-            Window app = new LoginView();
+            _loginWindow = new LoginView();
             LoginViewModel context = new LoginViewModel();
-            app.DataContext = context;
-            app.Show();
+            _loginWindow.DataContext = context;
+            _loginWindow.Show();
+            //App.RunAppAfterSuccessfulLogin();
 
             /*ApplicationView app = new ApplicationView();
             string path = "Data/employees.xml";
@@ -35,5 +39,17 @@ namespace tkUI
             app.DataContext = context;
             app.Show();*/
         }
+
+        static public void RunAppAfterSuccessfulLogin()
+        {
+            _app = new ApplicationView();
+            string path = "Data/employees.xml";
+            ApplicationViewModel context = new ApplicationViewModel(path);
+            _app.DataContext = context;
+            _app.Show();
+
+            _loginWindow.Close();
+        }
+
     }
 }
