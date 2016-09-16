@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<employees>
-  <employee id="1" firstName="Nachi" lastName="Sakaue" gender="Mujer" birthdate="//" email="true" phone="true" pay="10" workTime="true" address="true" startedWorking="true" />
-  <employee id="2" firstName="Mei" lastName="Ayakura" gender="Mujer" birthdate="//" email="true" phone="true" pay="10" workTime="true" address="true" startedWorking="true" />
-  <employee id="3" firstName="Dennis" lastName="Ritchie" gender="Hombre" birthdate="//" email="true" phone="true" pay="10" workTime="true" address="true" startedWorking="true" />
-  <employee id="4" firstName="Yukihiro" lastName="Matsumoto" gender="Hombre" birthdate="//" email="true" phone="true" pay="10" workTime="true" address="true" startedWorking="true" />
-  <employee id="5" firstName="Simon" lastName="Le Bon" gender="Hombre" birthdate="//" email="true" phone="true" pay="10" workTime="true" address="true" startedWorking="true" />
-  <employee id="6" firstName="Yan" lastName="Shiba" gender="Hombre" birthdate="1/Enero/2001" email="asd@gmail.com" phone="123" pay="100" workTime="Tiempo Completo" address="Tokyo" startedWorking="14/9/2016" />
-</employees>

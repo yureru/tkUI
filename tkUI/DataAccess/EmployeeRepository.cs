@@ -22,13 +22,6 @@ namespace tkUI.DataAccess
     /// </summary>
     class EmployeeRepository
     {
-        // TODO: Do the following tasks
-        /*
-         * 2- Save the data of the current collection to a temporal file (employeesTempID.xaml for example) veryfing that
-         * aren't any errors. OK.
-         * 3- Save the collection to the xml file.
-         * 4- Move/Overwrite to the original file.
-             */
 
         #region Fields
 
@@ -36,6 +29,7 @@ namespace tkUI.DataAccess
 
         int _currentID;
 
+        // Used to load/save xml elements and properties.
         static string[] _xmlElements = { "employees", "employee" };
         static string[] _xmlAttributes =
             {
@@ -44,8 +38,9 @@ namespace tkUI.DataAccess
                 "phone", "pay", "workTime",
                 "address", "startedWorking"
             };
-        static string[] _baseXMLOriginalPath; // "Data/employees.xml"
-        static string _baseXMLpath;
+
+        static string[] _baseXMLOriginalPath;
+        static string _baseXMLpath; // Path of where the .xml file is saved
 
         #endregion // Fields
 
@@ -176,20 +171,6 @@ namespace tkUI.DataAccess
             return false;
         }
 
-        public void DeleteByRange()
-        {
-            /*
-             I think the current general steps would be:
-             Click trash icon, Command gets the elements to delete, this data is passed to the EmployeeRepository
-             which deletes the items.
-
-            It would be *great* to pass only the data or the items that are selected to deletion, the easy way to solve this
-            is use the IsSelected property, then loop through the all the elements (an O(n) operation smh), check for the IsSelected
-            property, and pass a structure to the EmployeeRepository which will delete the items based on this data.
-             */
-            //var range = from emp in _employees where emp.IsSelected
-        }
-
         #endregion // Public Interface
 
         #region Private Helpers
@@ -214,11 +195,15 @@ namespace tkUI.DataAccess
                             (string)employeeElem.Attribute(_xmlAttributes[10]))).ToList();
         }
 
+        /// <summary>
+        /// Saves the employee collection by craeting a new temporal file, after this, it will
+        /// overwrite the original one.
+        /// </summary>
         public void SaveEmployees()
         {
             string newFilePath = _baseXMLpath + createTempXmlPath();
             Debug.Print(newFilePath);
-            string originalXMLPath = _baseXMLpath + _baseXMLOriginalPath[1];
+            string originalXMLPath = _baseXMLpath + _baseXMLOriginalPath[0] + "/" + _baseXMLOriginalPath[1];
             Debug.Print(originalXMLPath);
 
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -226,16 +211,16 @@ namespace tkUI.DataAccess
             settings.IndentChars = ("  ");
             using (XmlWriter writer = XmlWriter.Create(newFilePath, settings))
             {
-                // Write XML data
                 writer.WriteStartElement(_xmlElements[0]); // Write root element
 
+                // Write each element including properties.
                 foreach (var employee in _employees)
                 {
                     writer.WriteStartElement(_xmlElements[1]);
                     writer.WriteAttributeString(_xmlAttributes[0], employee.ID.ToString());
                     writer.WriteAttributeString(_xmlAttributes[1], employee.FirstName);
                     writer.WriteAttributeString(_xmlAttributes[2], employee.LastName);
-                    writer.WriteAttributeString(_xmlAttributes[3], employee.GenderStr);
+                    writer.WriteAttributeString(_xmlAttributes[3], employee.Gender.ToString());
                     writer.WriteAttributeString(_xmlAttributes[4], (string)employee.Birthdate);
                     writer.WriteAttributeString(_xmlAttributes[5], employee.Email);
                     writer.WriteAttributeString(_xmlAttributes[6], employee.Phone);
@@ -256,8 +241,6 @@ namespace tkUI.DataAccess
         static Stream GetResourceStream(string resourceFile)
         {
             Uri uri = new Uri(resourceFile, UriKind.RelativeOrAbsolute);
-            Debug.Print("GetResourceStream()");
-            Debug.Print(uri.ToString());
 
             StreamResourceInfo info = Application.GetResourceStream(uri);
             if (info == null || info.Stream == null)
@@ -282,13 +265,13 @@ namespace tkUI.DataAccess
             return _employees.Max(emp => emp.ID);
         }
 
+        /// <summary>
+        /// Creates a path (location) including the filename of the new temporal .xml document.
+        /// </summary>
+        /// <returns>The full path including filname.</returns>
         static string createTempXmlPath()
         {
-            
-            //return "temp_" + splited[0] + createRandomId();
-            //return splited[0] + "/temp" + createRandomId() + "_" +  splited[1];
             var path = _baseXMLOriginalPath[0] + "/temp" + createRandomId() + "_" + _baseXMLOriginalPath[1];
-            Debug.Print(path);
             return path;
         }
 
@@ -299,6 +282,10 @@ namespace tkUI.DataAccess
             return num.ToString();
         }
 
+        /// <summary>
+        /// Serves to get the current location.
+        /// </summary>
+        /// <returns>Current location.</returns>
         static string getPath()
         {
             return Environment.CurrentDirectory;
@@ -354,6 +341,12 @@ namespace tkUI.DataAccess
             return fixedStr;
         }
 
+        /// <summary>
+        /// Function that overwrite the original xml file.
+        /// By "original" we meant the one that's being used to load the employee objects.
+        /// </summary>
+        /// <param name="newFile">File newly created.</param>
+        /// <param name="originalFile">Original file to overwrite.</param>
         void OverwriteXML(string newFile, string originalFile)
         {
             // TODO: Handle exceptions, if exceptions occurs keep the original file. Delete newFile.
