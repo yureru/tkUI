@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:tkUI.Login"
         mc:Ignorable="d"
-        Title="Iniciar sesión - timekeeping" Height="400" Width="300">
+        Title="Iniciar sesión - timekeeping"
+        MinHeight="400" MinWidth="330" 
+        MaxHeight="500" MaxWidth="430"
+        Height="400" Width="330">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
