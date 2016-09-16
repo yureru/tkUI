@@ -100,5 +100,11 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style x:Key="loginText">
+        <Setter Property="TextBlock.FontFamily" Value="Resources/#NeueHaasGroteskDisp W02"/>
+        <Setter Property="TextBlock.FontSize" Value="18"/>
+        <Setter Property="TextBlock.Foreground" Value="#002c3d"/>
+    </Style>
     
 </ResourceDictionary>

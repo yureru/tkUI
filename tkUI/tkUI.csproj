@@ -102,6 +102,11 @@
     <Compile Include="Helper Classes\RangeChecker.cs" />
     <Compile Include="Helper Classes\RelayCommand.cs" />
     <Compile Include="Helper Classes\SelectableEmployee.cs" />
+    <Compile Include="Login\LoginModel.cs" />
+    <Compile Include="Login\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="Models\AdministrationModel.cs" />
     <Compile Include="Models\ConfigurationModel.cs" />
     <Compile Include="Models\DashboardModel.cs" />
@@ -214,6 +219,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Login\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Subpages\EmployeesCRUD\Views\AddAdminView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
