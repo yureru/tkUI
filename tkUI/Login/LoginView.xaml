@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:tkUI.Login"
         mc:Ignorable="d"
+        UseLayoutRounding="True"
         Title="Iniciar sesión - timekeeping"
         MinHeight="400" MinWidth="330" 
         MaxHeight="500" MaxWidth="430"
@@ -18,12 +19,14 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -33,10 +36,15 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <!-- Change for the image -->
-        <TextBlock
+        <Image Source="..\Resources\Header\Logo.png"
+               Grid.ColumnSpan="4"
+               Height="15" Width="93"
+               
+               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <!--<TextBlock
             Grid.ColumnSpan="4"
             HorizontalAlignment="Center" VerticalAlignment="Center"
-            >Logo</TextBlock>
+            >Logo</TextBlock>-->
         
         <!-- Email -->
         <TextBlock
@@ -53,12 +61,12 @@
         <!-- Password -->
         <TextBlock
             Style="{StaticResource loginText}"
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center" VerticalAlignment="Center">Password</TextBlock>
         <PasswordBox
             PasswordChar="•"
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.ColumnSpan="4"
             HorizontalAlignment="Center" VerticalAlignment="Center"
             Width="250"/>
@@ -66,7 +74,7 @@
         <!-- Enter button -->
         <Button
             Template="{StaticResource buttonLarge}"
-            Grid.Row="5"
+            Grid.Row="7"
             Grid.Column="2"
             Grid.ColumnSpan="4"
             HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -81,7 +89,7 @@
         
         <!-- Forgot Password -->
         <TextBlock
-            Grid.Row="6"
+            Grid.Row="8"
             Grid.ColumnSpan="4"
             HorizontalAlignment="Right" VerticalAlignment="Center"
             Margin="0,0,50,0"
