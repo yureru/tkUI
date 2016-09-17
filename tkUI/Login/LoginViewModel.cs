@@ -23,8 +23,33 @@ namespace tkUI.Login
 
         RelayCommand _loginCommand;
 
+        string _email;
+
         #endregion // Fields
 
+        #region Properties
+
+        public string Email
+        {
+            get
+            {
+                return _email;
+            }
+
+            set
+            {
+                if (_email == value)
+                {
+                    return;
+                }
+
+                _email = value;
+
+                OnPropertyChanged("Email");
+            }
+        }
+
+        #endregion // Properties
 
         #region Commands
 
@@ -56,9 +81,12 @@ namespace tkUI.Login
         bool CanLogin()
         {
             // TODO: Mail and Password fields are filled?
-            if (LoginView.Pass != null && LoginView.Pass.Length != 0)
+            if (Email != null && !RangeChecker.IsStringMissing(Email) && RangeChecker.IsValidEmailAddress(Email))
             {
-                return true;
+                if (LoginView.Pass != null && LoginView.Pass.Length != 0)
+                {
+                    return true;
+                }
             }
 
             return false;
