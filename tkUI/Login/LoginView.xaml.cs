@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using System.Security;
+
 namespace tkUI.Login
 {
     /// <summary>
@@ -19,9 +21,25 @@ namespace tkUI.Login
     /// </summary>
     public partial class LoginView : Window
     {
+        static SecureString _pass;
+
         public LoginView()
         {
             InitializeComponent();
         }
+
+        private void passwordTxt_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            _pass = passwordTxt.SecurePassword;
+        }
+
+        public static SecureString Pass
+        {
+            get
+            {
+                return _pass;
+            }
+        }
+
     }
 }

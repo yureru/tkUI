@@ -12,6 +12,13 @@ namespace tkUI.Login
     class LoginViewModel : ObservableObject
     {
 
+        /* TODO: Following tasks for Login
+         * 1- Set names for the textbox fields, and the function validations.
+         * 2- The content presenters to show the error messages, this messages should appear only after clicking the "Ingresar" button.
+         * 3- Start implementing the login code (email and password validators).
+         
+             */
+
         #region Fields
 
         RelayCommand _loginCommand;
@@ -49,7 +56,12 @@ namespace tkUI.Login
         bool CanLogin()
         {
             // TODO: Mail and Password fields are filled?
-            return true;
+            if (LoginView.Pass != null && LoginView.Pass.Length != 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         #endregion // Private Helpers

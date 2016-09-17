@@ -54,10 +54,14 @@
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center" VerticalAlignment="Center">Email</TextBlock>
         <TextBox
+            Name="emailTxt"
             Grid.Row="2"
             Grid.ColumnSpan="4"
             HorizontalAlignment="Center" VerticalAlignment="Center"
-            Width="250"/>
+            Width="250"
+            Text="{Binding Path=Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+            Validation.ErrorTemplate="{x:Null}"
+            />
         
         <!-- Password -->
         <TextBlock
@@ -66,11 +70,14 @@
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center" VerticalAlignment="Center">Password</TextBlock>
         <PasswordBox
+            Name="passwordTxt"
             PasswordChar="•"
             Grid.Row="5"
             Grid.ColumnSpan="4"
             HorizontalAlignment="Center" VerticalAlignment="Center"
-            Width="250"/>
+            Width="250"
+            PasswordChanged="passwordTxt_PasswordChanged"
+            />
         
         <!-- Enter button -->
         <Button
