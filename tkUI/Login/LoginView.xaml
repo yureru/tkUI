@@ -62,7 +62,14 @@
             Text="{Binding Path=Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
             Validation.ErrorTemplate="{x:Null}"
             />
-        
+        <TextBlock
+            Text="{Binding Path=EmailError}"
+            Grid.Row="3"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Foreground="Red"
+            />
+
         <!-- Password -->
         <TextBlock
             Style="{StaticResource loginText}"
@@ -78,7 +85,14 @@
             Width="250"
             PasswordChanged="passwordTxt_PasswordChanged"
             />
-        
+
+        <TextBlock
+            Text="{Binding Path=PassError}"
+            Grid.Row="6"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Foreground="Red"
+            />
         <!-- Enter button -->
         <Button
             Command="{Binding Path=LoginCommand}"

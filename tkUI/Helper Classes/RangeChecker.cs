@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
+using System.Security;
 
 namespace tkUI.Helper_Classes
 {
@@ -44,5 +46,50 @@ namespace tkUI.Helper_Classes
                 value.Trim() == String.Empty;
         }
 
+        public static bool IsEqualTo(this SecureString sslh, SecureString ssrh)
+        {
+            IntPtr bstr1 = IntPtr.Zero;
+            IntPtr bstr2 = IntPtr.Zero;
+
+            try
+            {
+                bstr1 = Marshal.SecureStringToBSTR(sslh);
+                bstr2 = Marshal.SecureStringToBSTR(ssrh);
+
+                int length1 = Marshal.ReadInt32(bstr1, -4);
+                int length2 = Marshal.ReadInt32(bstr2, -4);
+
+                if (length1 == length2)
+                {
+                    for (int i = 0; i < length1; ++i)
+                    {
+                        byte b1 = Marshal.ReadByte(bstr1, i);
+                        byte b2 = Marshal.ReadByte(bstr2, i);
+
+                        if (b1 != b2)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+                return true;
+            }
+            finally
+            {
+                if (bstr1 != IntPtr.Zero)
+                {
+                    Marshal.ZeroFreeBSTR(bstr1);
+                }
+
+                if (bstr2 != IntPtr.Zero)
+                {
+                    Marshal.ZeroFreeBSTR(bstr2);
+                }
+            }
+        }
     }
 }
