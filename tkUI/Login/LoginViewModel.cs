@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Security;
 using System.Runtime.InteropServices;
 using tkUI.Helper_Classes;
+using tkUI.Properties;
 
 namespace tkUI.Login
 {
@@ -15,10 +16,9 @@ namespace tkUI.Login
     {
 
         /* TODO: Following tasks for Login
-         * 1- Set names for the textbox fields, and the function validations.
-         * 2- The content presenters to show the error messages, this messages should appear only after clicking the "Ingresar" button.
-         * 3- Start implementing the login code (email and password validators).
-         
+         * 1- Start implementing the login code (email and password validators).
+         * 2- Design the bootstrap when the app is recently installed, we need to define how the first administrator
+         * will be created.
              */
 
         #region Fields
@@ -117,12 +117,17 @@ namespace tkUI.Login
 
         #region Private Helpers
 
+        /// <summary>
+        /// Function that *will* check user's entered credentials are correct.
+        /// It needs to handle those in a secure way to avoid attacks.
+        /// Currently using dummy values.
+        /// </summary>
         void Login()
         {
-
+            // TODO: Check if mail exists.
             if (Email != "test@gmail.com")
             {
-                EmailError = "No se reconoce el e-mail.";
+                EmailError = Resources.LoginViewModel_Error_EmailWasntFound;
                 return;
             }
             /*var passUnsecure = new StringBuilder("test");
@@ -139,23 +144,26 @@ namespace tkUI.Login
                 }
                 
             }
-            //if (LoginView.Pass != pass)
+            
+            // TODO: Check if password matchs
             if (!LoginView.Pass.IsEqualTo(pass))
             {
                 EmailError = "";
-                PassError = "El password es incorrecto";
+                PassError = Properties.Resources.LoginViewModel_Error_WrongPassword;
                 return;
             }
             
-            // TODO: Do the credentials checking here.
             tkUI.App.RunAppAfterSuccessfulLogin();
-
-
         }
 
+        /// <summary>
+        /// Checks if the Login button is available to the View by verifying fields aren't empty.
+        /// </summary>
+        /// <returns>True if can Login is available, false otherwise.</returns>
         bool CanLogin()
         {
-            // TODO: Mail and Password fields are filled?
+            
+            // Mail and Password fields are filled?
             if (Email != null && !RangeChecker.IsStringMissing(Email) && RangeChecker.IsValidEmailAddress(Email))
             {
                 if (LoginView.Pass != null && LoginView.Pass.Length != 0)
@@ -166,8 +174,6 @@ namespace tkUI.Login
 
             return false;
         }
-
-        
 
         #endregion // Private Helpers
 

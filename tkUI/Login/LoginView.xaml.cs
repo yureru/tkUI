@@ -33,6 +33,9 @@ namespace tkUI.Login
             _pass = passwordTxt.SecurePassword;
         }
 
+        /// <summary>
+        /// Exposes Password obtained from the passwordTxt textbox.
+        /// </summary>
         public static SecureString Pass
         {
             get

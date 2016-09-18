@@ -40,12 +40,23 @@ namespace tkUI.Helper_Classes
             return Regex.IsMatch(email, pattern, RegexOptions.IgnoreCase);
         }
 
+        /// <summary>
+        /// Checks for an empty string.
+        /// </summary>
+        /// <param name="value">String to be checked.</param>
+        /// <returns>True if the string is null, empty, or contains only whitespaces. False otherwise.</returns>
         public static bool IsStringMissing(string value)
         {
             return String.IsNullOrEmpty(value) ||
                 value.Trim() == String.Empty;
         }
 
+        /// <summary>
+        /// Compares two SecureString values for string equality.
+        /// </summary>
+        /// <param name="sslh">Left hand SecureString</param>
+        /// <param name="ssrh">Right hand SecureString</param>
+        /// <returns>True if equals, false otherwise.</returns>
         public static bool IsEqualTo(this SecureString sslh, SecureString ssrh)
         {
             IntPtr bstr1 = IntPtr.Zero;

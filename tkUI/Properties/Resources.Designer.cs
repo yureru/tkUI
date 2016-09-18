@@ -525,6 +525,24 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No se reconoce el e-mail..
+        /// </summary>
+        internal static string LoginViewModel_Error_EmailWasntFound {
+            get {
+                return ResourceManager.GetString("LoginViewModel_Error_EmailWasntFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La contraseña es incorrecta..
+        /// </summary>
+        internal static string LoginViewModel_Error_WrongPassword {
+            get {
+                return ResourceManager.GetString("LoginViewModel_Error_WrongPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Logo1 {
