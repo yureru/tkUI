@@ -125,6 +125,13 @@ namespace tkUI.Login
         void Login()
         {
             // TODO: Check if mail exists.
+
+            if (!RangeChecker.IsValidEmailAddress(Email))
+            {
+                EmailError = Resources.Employee_Error_InvalidEmail;
+                return;
+            }
+
             if (Email != "test@gmail.com")
             {
                 EmailError = Resources.LoginViewModel_Error_EmailWasntFound;
@@ -164,7 +171,7 @@ namespace tkUI.Login
         {
             
             // Mail and Password fields are filled?
-            if (Email != null && !RangeChecker.IsStringMissing(Email) && RangeChecker.IsValidEmailAddress(Email))
+            if (Email != null && !RangeChecker.IsStringMissing(Email))
             {
                 if (LoginView.Pass != null && LoginView.Pass.Length != 0)
                 {
