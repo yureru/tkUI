@@ -123,6 +123,26 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Helper Classes\WChrome.cs" />
+    <Compile Include="Session\Models\ForgotPasswordModel.cs" />
+    <Compile Include="Session\Models\LoginModel.cs" />
+    <Compile Include="Session\Models\RegisterModel.cs" />
+    <Compile Include="Session\SessionModel.cs" />
+    <Compile Include="Session\SessionView.xaml.cs">
+      <DependentUpon>SessionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Session\SessionViewModel.cs" />
+    <Compile Include="Session\ViewModels\ForgotPasswordViewModel.cs" />
+    <Compile Include="Session\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Session\ViewModels\RegisterViewModel.cs" />
+    <Compile Include="Session\Views\ForgotPassword.xaml.cs">
+      <DependentUpon>ForgotPassword.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Session\Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Session\Views\RegisterView.xaml.cs">
+      <DependentUpon>RegisterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Subpages\EmployeesCRUD\Model\AddAdminModel.cs" />
     <Compile Include="Subpages\EmployeesCRUD\Model\AddEmployeeModel.cs" />
     <Compile Include="Subpages\EmployeesCRUD\Model\ListAdminModel.cs" />
@@ -221,6 +241,22 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Login\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Session\SessionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Session\Views\ForgotPassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Session\Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Session\Views\RegisterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -414,6 +450,7 @@
   <ItemGroup>
     <Resource Include="Resources\GeneralGlyphs\EyeSelectedIcon.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
