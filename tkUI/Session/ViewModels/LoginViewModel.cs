@@ -19,6 +19,7 @@ namespace tkUI.Session.ViewModels
         #region Fields
 
         RelayCommand _loginCommand;
+        RelayCommand _forgotPasswordCommand;
 
         string _email;
 
@@ -108,7 +109,22 @@ namespace tkUI.Session.ViewModels
 
         }
 
+        public ICommand ForgotPasswordCommand
+        {
+            get
+            {
+                if (_forgotPasswordCommand == null)
+                {
+                    _forgotPasswordCommand = new RelayCommand(
+                        p => GoToForgotPassword(),
+                        p => CanGoToForgotPassword()
+                        );
+                }
 
+                return _forgotPasswordCommand;
+            }
+
+        }
 
         #endregion // Commands
 
@@ -179,6 +195,16 @@ namespace tkUI.Session.ViewModels
             }
 
             return false;
+        }
+
+        void GoToForgotPassword()
+        {
+            throw new NotImplementedException("GoToForgotPassword()");
+        }
+
+        bool CanGoToForgotPassword()
+        {
+            return true;
         }
 
         #endregion // Private Helpers

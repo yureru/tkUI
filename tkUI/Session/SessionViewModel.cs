@@ -50,7 +50,7 @@ namespace tkUI.Session
             PageViewModels.Add(new RegisterViewModel());
             PageViewModels.Add(new ForgotPasswordViewModel());
 
-            CurrentPageViewModel = PageViewModels[2];
+            CurrentPageViewModel = PageViewModels[0];
 
         }
 

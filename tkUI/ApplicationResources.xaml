@@ -106,5 +106,14 @@
         <Setter Property="TextBlock.FontSize" Value="18"/>
         <Setter Property="TextBlock.Foreground" Value="#002c3d"/>
     </Style>
+
+    <Style x:Key="clickableText">
+        <Style.Triggers>
+            <Trigger Property="TextBlock.IsMouseOver" Value="True">
+                <Setter Property="TextBlock.Foreground" Value="#54a3e2"/>
+            </Trigger>
+                     
+        </Style.Triggers>
+    </Style>
     
 </ResourceDictionary>
