@@ -346,4 +346,12 @@
     <value>El teléfono solo puede contener números</value>
     <comment>Error when the Phone field contains characters that aren't digits.</comment>
   </data>
+  <data name="LoginViewModel_Error_EmailWasntFound" xml:space="preserve">
+    <value>No se reconoce el e-mail.</value>
+    <comment>Error message when the Email wasn't found when trying to login.</comment>
+  </data>
+  <data name="LoginViewModel_Error_WrongPassword" xml:space="preserve">
+    <value>La contraseña es incorrecta.</value>
+    <comment>Error message when the Password doesn't match.</comment>
+  </data>
 </root>

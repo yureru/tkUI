@@ -251,7 +251,7 @@ namespace tkUI.Models
 
         string ValidateFirstName()
         {
-            if (IsStringMissing(this.FirstName))
+            if (RangeChecker.IsStringMissing(this.FirstName))
             {
                 return "Ingrese nombre";
             }
@@ -260,7 +260,7 @@ namespace tkUI.Models
 
         string ValidateLastName()
         {
-            if (IsStringMissing(this.LastName))
+            if (RangeChecker.IsStringMissing(this.LastName))
             {
                 return "Ingrese apellido";
             }
@@ -269,11 +269,11 @@ namespace tkUI.Models
 
         string ValidateEmail()
         {
-            if (IsStringMissing(this.Email))
+            if (RangeChecker.IsStringMissing(this.Email))
             {
                 return Resources.Employee_Error_MissingEmail;
             }
-            else if (!IsValidEmailAddress(this.Email))
+            else if (!RangeChecker.IsValidEmailAddress(this.Email))
             {
                 return Resources.Employee_Error_InvalidEmail;
             }
@@ -283,7 +283,7 @@ namespace tkUI.Models
         // TODO: Validate properly: Format, digits only, length, etc.
         string ValidatePhone()
         {
-            if (IsStringMissing(this.Phone))
+            if (RangeChecker.IsStringMissing(this.Phone))
             {
                 return Resources.Employee_Error_MissingPhone;
             }
@@ -299,7 +299,7 @@ namespace tkUI.Models
         // TODO: Maybe use a decimal instead of an integer.
         string ValidatePay()
         {
-            if (IsStringMissing(this.Pay))
+            if (RangeChecker.IsStringMissing(this.Pay))
             {
                 return Resources.Employee_Error_MissingPay;
             }
@@ -332,7 +332,7 @@ namespace tkUI.Models
 
         string ValidateAddress()
         {
-            if (IsStringMissing(this.Address))
+            if (RangeChecker.IsStringMissing(this.Address))
             {
                 return Resources.Employee_Error_MissingAddress;
             }
@@ -340,13 +340,13 @@ namespace tkUI.Models
             return null;
         }
 
-        static bool IsStringMissing(string value)
+        /*static bool IsStringMissing(string value)
         {
             return String.IsNullOrEmpty(value) ||
                 value.Trim() == String.Empty;
-        }
+        }*/
 
-        static bool IsValidEmailAddress(string email)
+        /*static bool IsValidEmailAddress(string email)
         {
             if (IsStringMissing(email))
                 return false;
@@ -355,7 +355,7 @@ namespace tkUI.Models
             string pattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
 
             return Regex.IsMatch(email, pattern, RegexOptions.IgnoreCase);
-        }
+        }*/
 
         #endregion // Validation
 
