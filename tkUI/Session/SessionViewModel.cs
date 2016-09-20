@@ -16,6 +16,24 @@ namespace tkUI.Session
 
         // TODO: Abstract (DRY) the functionality needed to implement navigation in a MVVM way.
 
+        /*
+            Now that I think about it, there's some scenarios while login in the app.
+            1- The first admin user hasn't been registered. Therefore needs the following things to be made:
+                a) The first View showed is the Register one, after enter all the credentials and those being validated, this view is not
+                going to be used anymore. And the view will change to the "Login" one.
+
+            2- The admin or another user has been registered already, therefore logins normally. After login the App spawns.
+
+            3- The admon or another user has been registered already, but they have forgotten the password. So they click the "forgot password"
+            link, then that View is showed and they enter the email. After that, it shows a message of sent the new password set or w/e.
+
+            Therefore:
+            Register needs to show the Login view after creating the first user.
+            Login needs a link to allow changing the view to Forgot password.
+            And forgot password needs a button to go backwards to Login view, and to show the Login after sending the email.
+
+             */
+
         #region Fields
 
         ICommand _changePageCommand;

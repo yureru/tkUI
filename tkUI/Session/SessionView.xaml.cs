@@ -22,6 +22,7 @@ namespace tkUI.Session
         public SessionView()
         {
             InitializeComponent();
+            
         }
     }
 }
