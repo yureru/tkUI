@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using System.Windows.Input;
 using tkUI.Helper_Classes;
+using tkUI.Session.ViewModels;
+
 
 namespace tkUI.Session
 {
@@ -26,8 +28,17 @@ namespace tkUI.Session
 
         public SessionViewModel()
         {
+            PageViewModels.Add(new LoginViewModel());
+            PageViewModels.Add(new RegisterViewModel());
+            PageViewModels.Add(new ForgotPasswordViewModel());
+
+            CurrentPageViewModel = PageViewModels[0];
 
         }
+
+        /*
+         but what if you need several validations, and those validations are in a static class, they can't be passes as parameters
+             */
 
         #endregion // Constructors
 

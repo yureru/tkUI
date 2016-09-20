@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.Security;
+
 namespace tkUI.Session.Views
 {
     /// <summary>
@@ -20,9 +22,27 @@ namespace tkUI.Session.Views
     /// </summary>
     public partial class LoginView : UserControl
     {
+        static SecureString _pass;
+
         public LoginView()
         {
             InitializeComponent();
+        }
+
+        private void passwordTxt_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            _pass = passwordTxt.SecurePassword;
+        }
+
+        /// <summary>
+        /// Exposes Password obtained from the passwordTxt textbox.
+        /// </summary>
+        public static SecureString Pass
+        {
+            get
+            {
+                return _pass;
+            }
         }
     }
 }
