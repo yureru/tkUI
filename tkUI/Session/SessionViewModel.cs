@@ -32,6 +32,23 @@ namespace tkUI.Session
             Login needs a link to allow changing the view to Forgot password.
             And forgot password needs a button to go backwards to Login view, and to show the Login after sending the email.
 
+            My thought of tackling this is:
+            - Find a way to synchronize actions (commands of the views) so whenever one is clicked those are propagated via events,
+            therefore this ViewModel can know what and when it happened, that way we can change the ViewModels here.
+            So basically if we click the forgot password link in the Login, sessionviewModel will know this and change the ViewModel
+            to ForgotPassword.
+            I think all this is achievable using events.
+
+            Second Thought:
+            I think we were thinkging wrong about events: Events are great to keep synchronized a lot of classes and calling a
+            collection of methods (delegates) when something significant happens. In our case would imply having an event here,
+            then make that event (through an interface) public, then the Login and ohers views will subcribe with a method.
+            But that will cause to execute all the methods when the event happens. We don't want that.
+
+            So after give it a thought, I think it will be better to create a static method here that will change the view manually.
+            We can specify to which view change by creating an enum. The the Login, Register, and ForgotPassword will call this method
+            passing the enum parameter.
+
              */
 
         #region Fields
@@ -39,6 +56,22 @@ namespace tkUI.Session
         ICommand _changePageCommand;
         IPageViewModel _currentPageViewModel;
         List<IPageViewModel> _pageViewModels;
+
+        static IPageViewModel[] _mapPageViewModels;
+
+        public enum RequestedViewToGO
+        {
+            /*
+                The changes of view we can perform manually are:
+                - Login to forgot password.
+                - Forgot password to Login.
+                - Register to Login.
+                Those can be summarized to:
+                - Go to forgot password.
+                - Go to Login.
+             */
+             LoginVM, ForgotPasswordVM
+        };
 
         #endregion // Fields
 
@@ -52,6 +85,7 @@ namespace tkUI.Session
 
             CurrentPageViewModel = PageViewModels[0];
 
+            InitMapPageViewModels();
         }
 
         /*
@@ -111,6 +145,19 @@ namespace tkUI.Session
 
         #region Methods
 
+        public void GoToViewModel(RequestedViewToGO viewModel)
+        {
+            switch (viewModel)
+            {
+                case RequestedViewToGO.LoginVM:
+                    ChangeViewModel(_mapPageViewModels[0]);
+                    break;
+                case RequestedViewToGO.ForgotPasswordVM:
+                    ChangeViewModel(_mapPageViewModels[2]);
+                    break;
+            }
+        }
+
         private void ChangeViewModel(IPageViewModel viewModel)
         {
             if (!PageViewModels.Contains(viewModel))
@@ -120,6 +167,16 @@ namespace tkUI.Session
 
             CurrentPageViewModel = PageViewModels
                 .FirstOrDefault(vm => vm == viewModel);
+        }
+
+        private void InitMapPageViewModels()
+        {
+            _mapPageViewModels = new IPageViewModel[PageViewModels.Count];
+
+            for (int i = 0; i < PageViewModels.Count; ++i)
+            {
+                _mapPageViewModels[i] = PageViewModels[i];
+            }
         }
 
         #endregion // Methods

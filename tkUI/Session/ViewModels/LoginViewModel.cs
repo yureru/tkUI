@@ -28,6 +28,11 @@ namespace tkUI.Session.ViewModels
 
         #endregion // Fields
 
+        #region Constructors
+
+
+        #endregion // Constructors
+
         #region Properties
 
         public string Email
