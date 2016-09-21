@@ -13,7 +13,21 @@ namespace tkUI.Session.ViewModels
     class ForgotPasswordViewModel : IPageViewModel
     {
 
+        #region Fields
+
         RelayCommand _requestRemainderCommand;
+        Action<RequestedViewToGO> _changeViewModelManually;
+
+        #endregion // Fields
+
+        #region Constructors
+
+        public ForgotPasswordViewModel(Action<RequestedViewToGO> changeViewModelManually)
+        {
+            _changeViewModelManually = changeViewModelManually;
+        }
+
+        #endregion // Constructors
 
         #region Commands
 
