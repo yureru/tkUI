@@ -9,10 +9,13 @@ using System.Security;
 using tkUI.Helper_Classes;
 using tkUI.Properties;
 
+using tkUI.Session;
 using tkUI.Session.Views;
+
 
 namespace tkUI.Session.ViewModels
 {
+
     class LoginViewModel : ObservableObject, IPageViewModel
     {
 
@@ -26,10 +29,16 @@ namespace tkUI.Session.ViewModels
         string _emailError;
         string _passError;
 
+        Action<RequestedViewToGO> _changeViewModelManually;
+
         #endregion // Fields
 
         #region Constructors
 
+        public LoginViewModel(Action<RequestedViewToGO> changeViewModelManually)
+        {
+            _changeViewModelManually = changeViewModelManually;
+        }
 
         #endregion // Constructors
 
@@ -204,7 +213,8 @@ namespace tkUI.Session.ViewModels
 
         void GoToForgotPassword()
         {
-            throw new NotImplementedException("GoToForgotPassword()");
+            //throw new NotImplementedException("GoToForgotPassword()");
+            _changeViewModelManually(RequestedViewToGO.ForgotPasswordVM);
         }
 
         bool CanGoToForgotPassword()

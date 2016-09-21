@@ -11,6 +11,21 @@ using tkUI.Session.ViewModels;
 
 namespace tkUI.Session
 {
+
+    public enum RequestedViewToGO
+    {
+        /*
+            The changes of view we can perform manually are:
+            - Login to forgot password.
+            - Forgot password to Login.
+            - Register to Login.
+            Those can be summarized to:
+            - Go to forgot password.
+            - Go to Login.
+         */
+        LoginVM, ForgotPasswordVM
+    };
+
     class SessionViewModel : ObservableObject
     {
 
@@ -59,19 +74,7 @@ namespace tkUI.Session
 
         static IPageViewModel[] _mapPageViewModels;
 
-        public enum RequestedViewToGO
-        {
-            /*
-                The changes of view we can perform manually are:
-                - Login to forgot password.
-                - Forgot password to Login.
-                - Register to Login.
-                Those can be summarized to:
-                - Go to forgot password.
-                - Go to Login.
-             */
-             LoginVM, ForgotPasswordVM
-        };
+        
 
         #endregion // Fields
 
@@ -79,7 +82,7 @@ namespace tkUI.Session
 
         public SessionViewModel()
         {
-            PageViewModels.Add(new LoginViewModel());
+            PageViewModels.Add(new LoginViewModel(this.GoToViewModel));
             PageViewModels.Add(new RegisterViewModel());
             PageViewModels.Add(new ForgotPasswordViewModel());
 
