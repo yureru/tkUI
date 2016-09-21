@@ -17,9 +17,11 @@ namespace tkUI.Session.ViewModels
 
         #region Fields
 
-        RelayCommand _requestRemainderCommand;
+        RelayCommand _requestPasswordReminderCommand;
+        RelayCommand _loginCommand;
         Action<RequestedViewToGO> _changeViewModelManually;
 
+        string _email;
         string _emailMessage;
         string _colorMessage;
 
@@ -35,6 +37,21 @@ namespace tkUI.Session.ViewModels
         #endregion // Constructors
 
         #region Properties
+
+        public string Email
+        {
+            get { return _email; }
+            set
+            {
+                if (_email == value)
+                {
+                    return;
+                }
+
+                _email = value;
+                OnPropertyChanged("Email");
+            }
+        }
 
         // TODO: Here update the color message, error == red, Ok == green.
         public string EmailMessage
@@ -71,19 +88,35 @@ namespace tkUI.Session.ViewModels
 
         #region Commands
 
-        public ICommand RequestRemainderCommand
+        public ICommand RequestReminderCommand
         {
             get
             {
-                if (_requestRemainderCommand == null)
+                if (_requestPasswordReminderCommand == null)
                 {
-                    _requestRemainderCommand = new RelayCommand(
-                        param => RequestRemainder(),
-                        param => CanRequestRemainder()
+                    _requestPasswordReminderCommand = new RelayCommand(
+                        param => RequestReminder(),
+                        param => CanRequestReminder()
                         );
                 }
 
-                return _requestRemainderCommand;
+                return _requestPasswordReminderCommand;
+            }
+        }
+
+        public ICommand LoginCommand
+        {
+            get
+            {
+                if (_loginCommand == null)
+                {
+                    _loginCommand = new RelayCommand(
+                        param => GoToLogin(),
+                        param => CanGoToLogin()
+                        );
+                }
+
+                return _loginCommand;
             }
         }
 
@@ -91,12 +124,22 @@ namespace tkUI.Session.ViewModels
 
         #region Private Helpers
 
-        void RequestRemainder()
+        void RequestReminder()
         {
-            throw new NotImplementedException("RequestRemainder()");
+            throw new NotImplementedException("RequestReminder()");
         }
 
-        bool CanRequestRemainder()
+        bool CanRequestReminder()
+        {
+            return true;
+        }
+
+        void GoToLogin()
+        {
+            _changeViewModelManually(RequestedViewToGO.LoginVM);
+        }
+
+        bool CanGoToLogin()
         {
             return true;
         }
@@ -128,7 +171,7 @@ namespace tkUI.Session.ViewModels
         {
             get
             {
-                return "150";
+                return "430";
             }
 
             set { }
@@ -163,7 +206,7 @@ namespace tkUI.Session.ViewModels
         {
             get
             {
-                return "250";
+                return "530";
             }
             set { }
         }

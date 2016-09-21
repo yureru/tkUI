@@ -43,6 +43,7 @@ namespace tkUI.Session.ViewModels
 
         #region Properties
 
+        // TODO: DRY in ForgotPassword
         public string Email
         {
             get
