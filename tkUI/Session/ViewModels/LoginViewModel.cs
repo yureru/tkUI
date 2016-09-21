@@ -10,12 +10,12 @@ using tkUI.Helper_Classes;
 using tkUI.Properties;
 
 using tkUI.Session.Views;
-
+using tkUI.Session.Utils;
 
 namespace tkUI.Session.ViewModels
 {
 
-    class LoginViewModel : ObservableObject, IPageViewModel
+    class LoginViewModel : ObservableObject, IPageViewModel, IWindowViewSizes
     {
 
         #region Fields
@@ -230,6 +230,54 @@ namespace tkUI.Session.ViewModels
             get
             {
                 return "Iniciar Sesión - timekeeping";
+            }
+        }
+
+        public string Height
+        {
+            get
+            {
+                return "400";
+            }
+        }
+
+        public string Width
+        {
+            get
+            {
+                return "330";
+            }
+        }
+
+        public string MinHeight
+        {
+            get
+            {
+                return Height;
+            }
+        }
+
+        public string MinWidth
+        {
+            get
+            {
+                return Width;
+            }
+        }
+
+        public string MaxHeight
+        {
+            get
+            {
+                return "500";
+            }
+        }
+
+        public string MaxWidth
+        {
+            get
+            {
+                return "430";
             }
         }
 

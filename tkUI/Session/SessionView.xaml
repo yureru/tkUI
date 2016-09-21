@@ -8,7 +8,8 @@
         xmlns:ViewModels="clr-namespace:tkUI.Session.ViewModels"
         mc:Ignorable="d"
         UseLayoutRounding="True"
-        Title="{Binding CurrentPageViewModel.Name}" Height="300" Width="300">
+        Title="{Binding CurrentPageViewModel.Name}" 
+        Height="{Binding CurrentWindowSize.Height}" Width="{Binding CurrentWindowSize.Width}">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type ViewModels:LoginViewModel}">

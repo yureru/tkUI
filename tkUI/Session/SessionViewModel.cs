@@ -9,6 +9,8 @@ using tkUI.Helper_Classes;
 using tkUI.Session.ViewModels;
 
 
+using tkUI.Session.Utils;
+
 namespace tkUI.Session
 {
 
@@ -142,6 +144,11 @@ namespace tkUI.Session
                     OnPropertyChanged("CurrentPageViewModel");
                 }
             }
+        }
+
+        public IWindowViewSizes CurrentWindowSize
+        {
+            get { return CurrentPageViewModel as IWindowViewSizes; }
         }
 
         #endregion // Properties Commands

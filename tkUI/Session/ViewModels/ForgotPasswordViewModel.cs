@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 using tkUI.Helper_Classes;
+using tkUI.Session.Utils;
 
 namespace tkUI.Session.ViewModels
 {
-    class ForgotPasswordViewModel : IPageViewModel
+    class ForgotPasswordViewModel : IPageViewModel, IWindowViewSizes
     {
 
         #region Fields
@@ -71,6 +72,59 @@ namespace tkUI.Session.ViewModels
             {
                 return "¿Olvidaste tu contraseña? - timekeeping";
             }
+        }
+
+        public string Height
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string Width
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+        }
+
+        public string MinHeight
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+        }
+
+        public string MinWidth
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+        }
+
+        public string MaxHeight
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+        }
+
+        public string MaxWidth
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
         }
 
         #endregion // Interface Implementations

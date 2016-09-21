@@ -111,6 +111,7 @@
         <Style.Triggers>
             <Trigger Property="TextBlock.IsMouseOver" Value="True">
                 <Setter Property="TextBlock.Foreground" Value="#54a3e2"/>
+                <Setter Property="TextBlock.Cursor" Value="Hand"/>
             </Trigger>
                      
         </Style.Triggers>
