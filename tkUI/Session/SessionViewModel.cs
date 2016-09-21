@@ -74,7 +74,7 @@ namespace tkUI.Session
         IPageViewModelWithSizes _currentPageViewModel;
         List<IPageViewModelWithSizes> _pageViewModels;
 
-        static IPageViewModel[] _mapPageViewModels;
+        static IPageViewModelWithSizes[] _mapPageViewModels;
 
         
 
@@ -90,7 +90,7 @@ namespace tkUI.Session
 
             CurrentPageViewModel = PageViewModels[0];
 
-            //InitMapPageViewModels();
+            InitMapPageViewModels();
         }
 
         /*
@@ -146,6 +146,7 @@ namespace tkUI.Session
             }
         }
 
+        // Currently Unused
         public IWindowViewSizes CurrentWindowSize
         {
             get { return CurrentPageViewModel as IWindowViewSizes; }
@@ -159,12 +160,12 @@ namespace tkUI.Session
         {
             switch (viewModel)
             {
-                /*case RequestedViewToGO.LoginVM:
+                case RequestedViewToGO.LoginVM:
                     ChangeViewModel(_mapPageViewModels[0]);
                     break;
                 case RequestedViewToGO.ForgotPasswordVM:
                     ChangeViewModel(_mapPageViewModels[2]);
-                    break;*/
+                    break;
             }
         }
 
@@ -181,7 +182,7 @@ namespace tkUI.Session
 
         private void InitMapPageViewModels()
         {
-            _mapPageViewModels = new IPageViewModel[PageViewModels.Count];
+            _mapPageViewModels = new IPageViewModelWithSizes[PageViewModels.Count];
 
             for (int i = 0; i < PageViewModels.Count; ++i)
             {
