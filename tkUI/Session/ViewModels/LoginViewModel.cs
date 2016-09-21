@@ -229,7 +229,7 @@ namespace tkUI.Session.ViewModels
         {
             get
             {
-                return "Iniciar Sesión - timekeeping";
+                return Resources.Session_LoginViewModel_WindowTitle + Resources.App_Name;
             }
         }
 

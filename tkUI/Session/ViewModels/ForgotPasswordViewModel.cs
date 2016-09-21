@@ -8,6 +8,7 @@ using System.Windows.Input;
 
 using tkUI.Helper_Classes;
 using tkUI.Session.Utils;
+using tkUI.Properties;
 
 namespace tkUI.Session.ViewModels
 {
@@ -70,7 +71,8 @@ namespace tkUI.Session.ViewModels
         {
             get
             {
-                return "¿Olvidaste tu contraseña? - timekeeping";
+                //return "¿Olvidaste tu contraseña? - timekeeping";
+                return Resources.Session_ForgotPasswordViewModel_WindowTitle + Resources.App_Name;
             }
         }
 

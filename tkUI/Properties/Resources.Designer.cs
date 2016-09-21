@@ -61,6 +61,15 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to timekeeping.
+        /// </summary>
+        internal static string App_Name {
+            get {
+                return ResourceManager.GetString("App_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap ArrowIcon {
@@ -639,6 +648,33 @@ namespace tkUI.Properties {
             get {
                 object obj = ResourceManager.GetObject("PersonalIDSelectedIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Olvidaste tu contraseña? - .
+        /// </summary>
+        internal static string Session_ForgotPasswordViewModel_WindowTitle {
+            get {
+                return ResourceManager.GetString("Session_ForgotPasswordViewModel_WindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Iniciar sesión - .
+        /// </summary>
+        internal static string Session_LoginViewModel_WindowTitle {
+            get {
+                return ResourceManager.GetString("Session_LoginViewModel_WindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registrar Administrador - .
+        /// </summary>
+        internal static string Session_RegisterViewModel_WindowTitle {
+            get {
+                return ResourceManager.GetString("Session_RegisterViewModel_WindowTitle", resourceCulture);
             }
         }
         

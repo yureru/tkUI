@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using tkUI.Helper_Classes;
 using tkUI.Session.Utils;
+using tkUI.Properties;
 
 namespace tkUI.Session.ViewModels
 {
@@ -35,7 +36,7 @@ namespace tkUI.Session.ViewModels
         {
             get
             {
-                return "Registrar Administrador - timekeeping";
+                return Resources.Session_RegisterViewModel_WindowTitle + Resources.App_Name;
             }
         }
 

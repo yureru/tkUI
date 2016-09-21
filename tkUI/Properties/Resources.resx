@@ -354,4 +354,19 @@
     <value>La contraseña es incorrecta.</value>
     <comment>Error message when the Password doesn't match.</comment>
   </data>
+  <data name="App_Name" xml:space="preserve">
+    <value>timekeeping</value>
+    <comment>App's name.</comment>
+  </data>
+  <data name="Session_ForgotPasswordViewModel_WindowTitle" xml:space="preserve">
+    <value>¿Olvidaste tu contraseña? - </value>
+  </data>
+  <data name="Session_LoginViewModel_WindowTitle" xml:space="preserve">
+    <value>Iniciar sesión - </value>
+    <comment>Login's window title.</comment>
+  </data>
+  <data name="Session_RegisterViewModel_WindowTitle" xml:space="preserve">
+    <value>Registrar Administrador - </value>
+    <comment>Register's window title.</comment>
+  </data>
 </root>
