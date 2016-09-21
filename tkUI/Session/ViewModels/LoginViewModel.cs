@@ -159,11 +159,18 @@ namespace tkUI.Session.ViewModels
                 return;
             }
 
-            if (Email != "test@gmail.com")
+            if (!EmailExists(Email))
             {
                 EmailError = Resources.LoginViewModel_Error_EmailWasntFound;
                 return;
             }
+
+            /*if (Email != "test@gmail.com")
+            {
+                EmailError = Resources.LoginViewModel_Error_EmailWasntFound;
+                return;
+            }*/
+
             /*var passUnsecure = new StringBuilder("test");
             var pass = new SecureString(passUnsecure, 4);*/
             var passVisible = "test";
@@ -223,6 +230,21 @@ namespace tkUI.Session.ViewModels
         }
 
         #endregion // Private Helpers
+
+        #region Methods
+
+        public static bool EmailExists(string email)
+        {
+            // TODO: Add email checking here
+            if (email == "test@gmail.com")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion
 
         #region Interface Implementations
 

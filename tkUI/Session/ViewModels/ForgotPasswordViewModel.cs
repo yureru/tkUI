@@ -15,6 +15,14 @@ namespace tkUI.Session.ViewModels
     class ForgotPasswordViewModel : ObservableObject, IPageViewModelWithSizes
     {
 
+        /* TODO: Keep implementing new features.
+         * 1- EmailMessage
+         * 2- Check if Email exists
+         * 3- Color for the Message.
+         * 4- Better formatting for this view.
+         *  */
+
+
         #region Fields
 
         RelayCommand _requestPasswordReminderCommand;
@@ -88,7 +96,7 @@ namespace tkUI.Session.ViewModels
 
         #region Commands
 
-        public ICommand RequestReminderCommand
+        public ICommand RequestPasswordReminderCommand
         {
             get
             {
@@ -131,7 +139,12 @@ namespace tkUI.Session.ViewModels
 
         bool CanRequestReminder()
         {
-            return true;
+            if (Email != null && !RangeChecker.IsStringMissing(Email))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         void GoToLogin()
