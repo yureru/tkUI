@@ -12,13 +12,16 @@ using tkUI.Properties;
 
 namespace tkUI.Session.ViewModels
 {
-    class ForgotPasswordViewModel : IPageViewModelWithSizes
+    class ForgotPasswordViewModel : ObservableObject, IPageViewModelWithSizes
     {
 
         #region Fields
 
         RelayCommand _requestRemainderCommand;
         Action<RequestedViewToGO> _changeViewModelManually;
+
+        string _emailMessage;
+        string _colorMessage;
 
         #endregion // Fields
 
@@ -30,6 +33,41 @@ namespace tkUI.Session.ViewModels
         }
 
         #endregion // Constructors
+
+        #region Properties
+
+        // TODO: Here update the color message, error == red, Ok == green.
+        public string EmailMessage
+        {
+            get { return _emailMessage; }
+            set
+            {
+                if (_emailMessage == value)
+                {
+                    return;
+                }
+
+                _emailMessage = value;
+                OnPropertyChanged("EmailMessage");
+            }
+        }
+
+        public string ColorMessage
+        {
+            get { return _colorMessage; }
+            set
+            {
+                if (_colorMessage == value)
+                {
+                    return;
+                }
+
+                _colorMessage = value;
+                OnPropertyChanged("ColorMessage");
+            }
+        }
+
+        #endregion // Properties
 
         #region Commands
 
