@@ -240,10 +240,7 @@ namespace tkUI.Session.ViewModels
                 return "450";
             }
 
-            set
-            {
-                //_height = value;
-            }
+            set { }
         }
 
         public string Width
@@ -253,10 +250,7 @@ namespace tkUI.Session.ViewModels
                 return "430";
             }
 
-            set
-            {
-                
-            }
+            set { }
         }
 
         public string MinHeight
@@ -289,7 +283,7 @@ namespace tkUI.Session.ViewModels
         {
             get
             {
-                return "430";
+                return "530";
             }
 
             set { }

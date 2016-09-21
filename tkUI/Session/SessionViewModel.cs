@@ -85,8 +85,8 @@ namespace tkUI.Session
         public SessionViewModel()
         {
             PageViewModels.Add(new LoginViewModel(this.GoToViewModel));
-            /*PageViewModels.Add(new RegisterViewModel(this.GoToViewModel));
-            PageViewModels.Add(new ForgotPasswordViewModel(this.GoToViewModel));*/
+            PageViewModels.Add(new RegisterViewModel(this.GoToViewModel));
+            PageViewModels.Add(new ForgotPasswordViewModel(this.GoToViewModel));
 
             CurrentPageViewModel = PageViewModels[0];
 

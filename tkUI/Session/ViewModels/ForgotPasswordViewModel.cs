@@ -11,7 +11,7 @@ using tkUI.Session.Utils;
 
 namespace tkUI.Session.ViewModels
 {
-    class ForgotPasswordViewModel : IPageViewModel, IWindowViewSizes
+    class ForgotPasswordViewModel : IPageViewModelWithSizes
     {
 
         #region Fields
@@ -78,53 +78,54 @@ namespace tkUI.Session.ViewModels
         {
             get
             {
-                throw new NotImplementedException();
+                return "200";
             }
+
+            set { }
         }
 
         public string Width
         {
             get
             {
-                throw new NotImplementedException();
+                return "150";
             }
 
+            set { }
         }
 
         public string MinHeight
         {
             get
             {
-                throw new NotImplementedException();
+                return Height;
             }
-
         }
 
         public string MinWidth
         {
             get
             {
-                throw new NotImplementedException();
+                return Width;
             }
-
         }
 
         public string MaxHeight
         {
             get
             {
-                throw new NotImplementedException();
+                return "300";
             }
-
+            set { }
         }
 
         public string MaxWidth
         {
             get
             {
-                throw new NotImplementedException();
+                return "250";
             }
-
+            set { }
         }
 
         #endregion // Interface Implementations
