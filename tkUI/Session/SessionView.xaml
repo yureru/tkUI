@@ -9,7 +9,9 @@
         mc:Ignorable="d"
         UseLayoutRounding="True"
         Title="{Binding CurrentPageViewModel.Name}" 
-        Height="{Binding CurrentWindowSize.Height}" Width="{Binding CurrentWindowSize.Width}">
+        Height="{Binding CurrentPageViewModel.Height, Mode=TwoWay}" Width="{Binding CurrentPageViewModel.Width, Mode=TwoWay}"
+        MinHeight="{Binding CurrentPageViewModel.Height, Mode=TwoWay}" MinWidth="{Binding CurrentPageViewModel.Width, Mode=TwoWay}"
+        MaxHeight="{Binding CurrentPageViewModel.MaxHeight, Mode=TwoWay}" MaxWidth="{Binding CurrentPageViewModel.MaxWidth, Mode=TwoWay}">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type ViewModels:LoginViewModel}">

@@ -71,8 +71,8 @@ namespace tkUI.Session
         #region Fields
 
         ICommand _changePageCommand;
-        IPageViewModel _currentPageViewModel;
-        List<IPageViewModel> _pageViewModels;
+        IPageViewModelWithSizes _currentPageViewModel;
+        List<IPageViewModelWithSizes> _pageViewModels;
 
         static IPageViewModel[] _mapPageViewModels;
 
@@ -85,12 +85,12 @@ namespace tkUI.Session
         public SessionViewModel()
         {
             PageViewModels.Add(new LoginViewModel(this.GoToViewModel));
-            PageViewModels.Add(new RegisterViewModel(this.GoToViewModel));
-            PageViewModels.Add(new ForgotPasswordViewModel(this.GoToViewModel));
+            /*PageViewModels.Add(new RegisterViewModel(this.GoToViewModel));
+            PageViewModels.Add(new ForgotPasswordViewModel(this.GoToViewModel));*/
 
             CurrentPageViewModel = PageViewModels[0];
 
-            InitMapPageViewModels();
+            //InitMapPageViewModels();
         }
 
         /*
@@ -108,8 +108,8 @@ namespace tkUI.Session
                 if (_changePageCommand == null)
                 {
                     _changePageCommand = new RelayCommand(
-                        p => ChangeViewModel((IPageViewModel)p),
-                        p => p is IPageViewModel
+                        p => ChangeViewModel((IPageViewModelWithSizes)p),
+                        p => p is IPageViewModelWithSizes
                         );
                 }
 
@@ -117,19 +117,19 @@ namespace tkUI.Session
             }
         }
 
-        public List<IPageViewModel> PageViewModels
+        public List<IPageViewModelWithSizes> PageViewModels
         {
             get
             {
                 if (_pageViewModels == null)
                 {
-                    _pageViewModels = new List<IPageViewModel>();
+                    _pageViewModels = new List<IPageViewModelWithSizes>();
                 }
                 return _pageViewModels;
             }
         }
 
-        public IPageViewModel CurrentPageViewModel
+        public IPageViewModelWithSizes CurrentPageViewModel
         {
             get
             {
@@ -159,16 +159,16 @@ namespace tkUI.Session
         {
             switch (viewModel)
             {
-                case RequestedViewToGO.LoginVM:
+                /*case RequestedViewToGO.LoginVM:
                     ChangeViewModel(_mapPageViewModels[0]);
                     break;
                 case RequestedViewToGO.ForgotPasswordVM:
                     ChangeViewModel(_mapPageViewModels[2]);
-                    break;
+                    break;*/
             }
         }
 
-        private void ChangeViewModel(IPageViewModel viewModel)
+        private void ChangeViewModel(IPageViewModelWithSizes viewModel)
         {
             if (!PageViewModels.Contains(viewModel))
             {

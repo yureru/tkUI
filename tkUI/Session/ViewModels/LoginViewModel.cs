@@ -15,7 +15,7 @@ using tkUI.Session.Utils;
 namespace tkUI.Session.ViewModels
 {
 
-    class LoginViewModel : ObservableObject, IPageViewModel, IWindowViewSizes
+    class LoginViewModel : ObservableObject, IPageViewModelWithSizes
     {
 
         #region Fields
@@ -237,7 +237,12 @@ namespace tkUI.Session.ViewModels
         {
             get
             {
-                return "400";
+                return "450";
+            }
+
+            set
+            {
+                //_height = value;
             }
         }
 
@@ -245,7 +250,12 @@ namespace tkUI.Session.ViewModels
         {
             get
             {
-                return "330";
+                return "430";
+            }
+
+            set
+            {
+                
             }
         }
 
@@ -269,8 +279,10 @@ namespace tkUI.Session.ViewModels
         {
             get
             {
-                return "500";
+                return "550";
             }
+
+            set { }
         }
 
         public string MaxWidth
@@ -279,6 +291,8 @@ namespace tkUI.Session.ViewModels
             {
                 return "430";
             }
+
+            set { }
         }
 
         #endregion // Interface Implementations
