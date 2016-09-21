@@ -11,6 +11,21 @@ namespace tkUI.Session.ViewModels
     class RegisterViewModel : IPageViewModel
     {
 
+        #region Fields
+
+        Action<RequestedViewToGO> _changeViewModelManually;
+
+        #endregion // Fields
+
+        #region Constructors
+
+        public RegisterViewModel(Action<RequestedViewToGO> changeViewModelManually)
+        {
+            _changeViewModelManually = changeViewModelManually;
+        }
+
+        #endregion // Constructors
+
         #region Interface Implementations
 
         public string Name

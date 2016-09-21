@@ -9,7 +9,6 @@ using System.Security;
 using tkUI.Helper_Classes;
 using tkUI.Properties;
 
-using tkUI.Session;
 using tkUI.Session.Views;
 
 
