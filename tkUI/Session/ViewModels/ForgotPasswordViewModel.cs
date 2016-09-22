@@ -198,7 +198,7 @@ namespace tkUI.Session.ViewModels
         {
             get
             {
-                return "200";
+                return "300";
             }
 
             set { }
@@ -220,6 +220,7 @@ namespace tkUI.Session.ViewModels
             {
                 return Height;
             }
+            set { }
         }
 
         public string MinWidth
@@ -228,13 +229,15 @@ namespace tkUI.Session.ViewModels
             {
                 return Width;
             }
+
+            set { }
         }
 
         public string MaxHeight
         {
             get
             {
-                return "300";
+                return "400";
             }
             set { }
         }
