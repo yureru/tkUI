@@ -9,36 +9,31 @@ using tkUI.Helper_Classes;
 using tkUI.Session.ViewModels;
 
 
+using tkUI.Session.Utils;
+
 namespace tkUI.Session
 {
+
+    /// <summary>
+    /// Specifies to which view we desire to go.
+    /// </summary>
+    public enum RequestedViewToGO
+    {
+        LoginVM, ForgotPasswordVM
+    };
+
     class SessionViewModel : ObservableObject
     {
 
         // TODO: Abstract (DRY) the functionality needed to implement navigation in a MVVM way.
 
-        /*
-            Now that I think about it, there's some scenarios while login in the app.
-            1- The first admin user hasn't been registered. Therefore needs the following things to be made:
-                a) The first View showed is the Register one, after enter all the credentials and those being validated, this view is not
-                going to be used anymore. And the view will change to the "Login" one.
-
-            2- The admin or another user has been registered already, therefore logins normally. After login the App spawns.
-
-            3- The admon or another user has been registered already, but they have forgotten the password. So they click the "forgot password"
-            link, then that View is showed and they enter the email. After that, it shows a message of sent the new password set or w/e.
-
-            Therefore:
-            Register needs to show the Login view after creating the first user.
-            Login needs a link to allow changing the view to Forgot password.
-            And forgot password needs a button to go backwards to Login view, and to show the Login after sending the email.
-
-             */
-
         #region Fields
 
         ICommand _changePageCommand;
-        IPageViewModel _currentPageViewModel;
-        List<IPageViewModel> _pageViewModels;
+        IPageViewModelWithSizes _currentPageViewModel;
+        List<IPageViewModelWithSizes> _pageViewModels;
+
+        static IPageViewModelWithSizes[] _mapPageViewModels;
 
         #endregion // Fields
 
@@ -46,17 +41,15 @@ namespace tkUI.Session
 
         public SessionViewModel()
         {
-            PageViewModels.Add(new LoginViewModel());
-            PageViewModels.Add(new RegisterViewModel());
-            PageViewModels.Add(new ForgotPasswordViewModel());
+            PageViewModels.Add(new LoginViewModel(this.GoToViewModel));
+            PageViewModels.Add(new RegisterViewModel(this.GoToViewModel));
+            PageViewModels.Add(new ForgotPasswordViewModel(this.GoToViewModel));
 
+            // TODO: Has an admin been ever registered?, If not choose the RegisterViewModel as default.
             CurrentPageViewModel = PageViewModels[0];
 
+            InitMapPageViewModels();
         }
-
-        /*
-         but what if you need several validations, and those validations are in a static class, they can't be passes as parameters
-             */
 
         #endregion // Constructors
 
@@ -69,8 +62,8 @@ namespace tkUI.Session
                 if (_changePageCommand == null)
                 {
                     _changePageCommand = new RelayCommand(
-                        p => ChangeViewModel((IPageViewModel)p),
-                        p => p is IPageViewModel
+                        p => ChangeViewModel((IPageViewModelWithSizes)p),
+                        p => p is IPageViewModelWithSizes
                         );
                 }
 
@@ -78,19 +71,19 @@ namespace tkUI.Session
             }
         }
 
-        public List<IPageViewModel> PageViewModels
+        public List<IPageViewModelWithSizes> PageViewModels
         {
             get
             {
                 if (_pageViewModels == null)
                 {
-                    _pageViewModels = new List<IPageViewModel>();
+                    _pageViewModels = new List<IPageViewModelWithSizes>();
                 }
                 return _pageViewModels;
             }
         }
 
-        public IPageViewModel CurrentPageViewModel
+        public IPageViewModelWithSizes CurrentPageViewModel
         {
             get
             {
@@ -111,7 +104,28 @@ namespace tkUI.Session
 
         #region Methods
 
-        private void ChangeViewModel(IPageViewModel viewModel)
+        /// <summary>
+        /// Function to be passed as Action to the ViewModels that needs to change
+        /// the View manually.
+        /// Note that this assumes LoginVM case it's the LoginViewModel at index [0], 
+        /// and ForgotPasswordVM is at index [2].
+        /// </summary>
+        /// <param name="viewModel">ViewModel to go.</param>
+        public void GoToViewModel(RequestedViewToGO viewModel)
+        {
+            switch (viewModel)
+            {
+                case RequestedViewToGO.LoginVM:
+                    ChangeViewModel(_mapPageViewModels[0]);
+                    break;
+                case RequestedViewToGO.ForgotPasswordVM:
+                    ChangeViewModel(_mapPageViewModels[2]);
+                    break;
+            }
+        }
+
+        
+        private void ChangeViewModel(IPageViewModelWithSizes viewModel)
         {
             if (!PageViewModels.Contains(viewModel))
             {
@@ -120,6 +134,20 @@ namespace tkUI.Session
 
             CurrentPageViewModel = PageViewModels
                 .FirstOrDefault(vm => vm == viewModel);
+        }
+
+        /// <summary>
+        /// This maps the current ViewModels added to the PageViewModels so we can refer them
+        /// later when using GoToViewModel function.
+        /// </summary>
+        private void InitMapPageViewModels()
+        {
+            _mapPageViewModels = new IPageViewModelWithSizes[PageViewModels.Count];
+
+            for (int i = 0; i < PageViewModels.Count; ++i)
+            {
+                _mapPageViewModels[i] = PageViewModels[i];
+            }
         }
 
         #endregion // Methods

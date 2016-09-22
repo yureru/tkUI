@@ -131,6 +131,8 @@
       <DependentUpon>SessionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Session\SessionViewModel.cs" />
+    <Compile Include="Session\Utils\IPageViewModelWithSizes.cs" />
+    <Compile Include="Session\Utils\IWindowViewSizes.cs" />
     <Compile Include="Session\ViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="Session\ViewModels\LoginViewModel.cs" />
     <Compile Include="Session\ViewModels\RegisterViewModel.cs" />

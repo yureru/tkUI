@@ -10,25 +10,46 @@ using tkUI.Helper_Classes;
 using tkUI.Properties;
 
 using tkUI.Session.Views;
+using tkUI.Session.Utils;
 
 namespace tkUI.Session.ViewModels
 {
-    class LoginViewModel : ObservableObject, IPageViewModel
+
+    class LoginViewModel : ObservableObject, IPageViewModelWithSizes
     {
+
+        /* TODO: Implement message after registration.
+         * For example, let's say we're bootstraping the app, the user will ned to register.
+         * After doing it successfull, the view will need to change to be the Login one, and there
+         * we can set a Message saying the registration was correct.
+         */
 
         #region Fields
 
         RelayCommand _loginCommand;
+        RelayCommand _forgotPasswordCommand;
 
         string _email;
 
         string _emailError;
         string _passError;
 
+        Action<RequestedViewToGO> _changeViewModelManually;
+
         #endregion // Fields
+
+        #region Constructors
+
+        public LoginViewModel(Action<RequestedViewToGO> changeViewModelManually)
+        {
+            _changeViewModelManually = changeViewModelManually;
+        }
+
+        #endregion // Constructors
 
         #region Properties
 
+        // TODO: DRY in ForgotPassword
         public string Email
         {
             get
@@ -103,12 +124,26 @@ namespace tkUI.Session.ViewModels
                         param => this.CanLogin()
                         );
                 }
+
                 return _loginCommand;
             }
-
         }
 
+        public ICommand ForgotPasswordCommand
+        {
+            get
+            {
+                if (_forgotPasswordCommand == null)
+                {
+                    _forgotPasswordCommand = new RelayCommand(
+                        p => GoToForgotPassword(),
+                        p => CanGoToForgotPassword()
+                        );
+                }
 
+                return _forgotPasswordCommand;
+            }
+        }
 
         #endregion // Commands
 
@@ -129,13 +164,12 @@ namespace tkUI.Session.ViewModels
                 return;
             }
 
-            if (Email != "test@gmail.com")
+            if (!EmailExists(Email))
             {
                 EmailError = Resources.LoginViewModel_Error_EmailWasntFound;
                 return;
             }
-            /*var passUnsecure = new StringBuilder("test");
-            var pass = new SecureString(passUnsecure, 4);*/
+
             var passVisible = "test";
 
             SecureString pass;
@@ -154,7 +188,7 @@ namespace tkUI.Session.ViewModels
             if (!LoginView.Pass.IsEqualTo(pass))
             {
                 EmailError = "";
-                PassError = Properties.Resources.LoginViewModel_Error_WrongPassword;
+                PassError = Resources.LoginViewModel_Error_WrongPassword;
                 return;
             }
 
@@ -181,7 +215,40 @@ namespace tkUI.Session.ViewModels
             return false;
         }
 
+        /// <summary>
+        /// Go to the specified ViewModel.
+        /// </summary>
+        void GoToForgotPassword()
+        {
+            _changeViewModelManually(RequestedViewToGO.ForgotPasswordVM);
+        }
+
+        bool CanGoToForgotPassword()
+        {
+            return true;
+        }
+
         #endregion // Private Helpers
+
+        #region Methods
+
+        /// <summary>
+        /// Function that checks if given email exists in the DB.
+        /// </summary>
+        /// <param name="email">A valid email address.</param>
+        /// <returns>True if email was found, false otherwise.</returns>
+        public static bool EmailExists(string email)
+        {
+            // TODO: Add email checking here
+            if (email == "test@gmail.com")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion
 
         #region Interface Implementations
 
@@ -189,8 +256,68 @@ namespace tkUI.Session.ViewModels
         {
             get
             {
-                return "Iniciar Sesión - timekeeping";
+                return Resources.Session_LoginViewModel_WindowTitle + Resources.App_Name;
             }
+        }
+
+        public string Height
+        {
+            get
+            {
+                return "450";
+            }
+
+            set { }
+        }
+
+        public string Width
+        {
+            get
+            {
+                return "430";
+            }
+
+            set { }
+        }
+
+        public string MinHeight
+        {
+            get
+            {
+                return Height;
+            }
+
+            set { }
+        }
+
+        public string MinWidth
+        {
+            get
+            {
+                return Width;
+            }
+
+            set { }
+        }
+
+        public string MaxHeight
+        {
+            get
+            {
+                return "550";
+            }
+
+            set { }
+        }
+
+        public string MaxWidth
+        {
+            get
+            {
+                return "530";
+            }
+
+            set { }
         }
 
         #endregion // Interface Implementations

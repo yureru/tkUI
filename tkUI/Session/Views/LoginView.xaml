@@ -110,12 +110,25 @@
 
 
         <!-- Forgot Password -->
-        <TextBlock
+        <!--<TextBlock
             Grid.Row="8"
             Grid.ColumnSpan="4"
             HorizontalAlignment="Right" VerticalAlignment="Center"
             Margin="0,0,50,0"
-            >Olvide mi contraseña.</TextBlock>
+            >Olvide mi contraseña.</TextBlock>-->
+        <TextBlock
+            Style="{StaticResource clickableText}"
+            TextDecorations="Underline"
+            Grid.Row="8"
+            Grid.ColumnSpan="4"
+            HorizontalAlignment="Right" VerticalAlignment="Center"
+            Margin="0,0,50,0"
+            Text="Olvide mi contraseña."
+            >
+            <TextBlock.InputBindings>
+                <MouseBinding Command="{Binding ForgotPasswordCommand}" MouseAction="LeftClick"/>
+            </TextBlock.InputBindings>
+        </TextBlock>
 
     </Grid>
 </UserControl>
