@@ -61,7 +61,6 @@ namespace tkUI.Session.ViewModels
             }
         }
 
-        // TODO: Here update the color message, error == red, Ok == green.
         public string EmailMessage
         {
             get { return _emailMessage; }
@@ -132,6 +131,10 @@ namespace tkUI.Session.ViewModels
 
         #region Private Helpers
 
+        /// <summary>
+        /// Function that will send the email containing the password reminder instructions.
+        /// It also does validation to check if the email is valid and it exists in the DB.
+        /// </summary>
         void RequestReminder()
         {
             EmailMessage = "";
@@ -154,6 +157,8 @@ namespace tkUI.Session.ViewModels
             EmailMessage = "¡Un email conteniendo el restableecimiento de tu clave fue enviado!";
 
             // TODO: Send the reminder here
+            // TODO: We can use the redirection to the Login here too. After sending the reminder, we will
+            // pass the message to the Login and go to that view.
         }
 
         bool CanRequestReminder()
@@ -185,7 +190,6 @@ namespace tkUI.Session.ViewModels
         {
             get
             {
-                //return "¿Olvidaste tu contraseña? - timekeeping";
                 return Resources.Session_ForgotPasswordViewModel_WindowTitle + Resources.App_Name;
             }
         }

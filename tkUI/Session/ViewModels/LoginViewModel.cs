@@ -18,6 +18,12 @@ namespace tkUI.Session.ViewModels
     class LoginViewModel : ObservableObject, IPageViewModelWithSizes
     {
 
+        /* TODO: Implement message after registration.
+         * For example, let's say we're bootstraping the app, the user will ned to register.
+         * After doing it successfull, the view will need to change to be the Login one, and there
+         * we can set a Message saying the registration was correct.
+         */
+
         #region Fields
 
         RelayCommand _loginCommand;
@@ -118,9 +124,9 @@ namespace tkUI.Session.ViewModels
                         param => this.CanLogin()
                         );
                 }
+
                 return _loginCommand;
             }
-
         }
 
         public ICommand ForgotPasswordCommand
@@ -137,7 +143,6 @@ namespace tkUI.Session.ViewModels
 
                 return _forgotPasswordCommand;
             }
-
         }
 
         #endregion // Commands
@@ -165,14 +170,6 @@ namespace tkUI.Session.ViewModels
                 return;
             }
 
-            /*if (Email != "test@gmail.com")
-            {
-                EmailError = Resources.LoginViewModel_Error_EmailWasntFound;
-                return;
-            }*/
-
-            /*var passUnsecure = new StringBuilder("test");
-            var pass = new SecureString(passUnsecure, 4);*/
             var passVisible = "test";
 
             SecureString pass;
@@ -191,7 +188,7 @@ namespace tkUI.Session.ViewModels
             if (!LoginView.Pass.IsEqualTo(pass))
             {
                 EmailError = "";
-                PassError = Properties.Resources.LoginViewModel_Error_WrongPassword;
+                PassError = Resources.LoginViewModel_Error_WrongPassword;
                 return;
             }
 
@@ -218,9 +215,11 @@ namespace tkUI.Session.ViewModels
             return false;
         }
 
+        /// <summary>
+        /// Go to the specified ViewModel.
+        /// </summary>
         void GoToForgotPassword()
         {
-            //throw new NotImplementedException("GoToForgotPassword()");
             _changeViewModelManually(RequestedViewToGO.ForgotPasswordVM);
         }
 
@@ -233,6 +232,11 @@ namespace tkUI.Session.ViewModels
 
         #region Methods
 
+        /// <summary>
+        /// Function that checks if given email exists in the DB.
+        /// </summary>
+        /// <param name="email">A valid email address.</param>
+        /// <returns>True if email was found, false otherwise.</returns>
         public static bool EmailExists(string email)
         {
             // TODO: Add email checking here

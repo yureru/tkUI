@@ -14,17 +14,11 @@ using tkUI.Session.Utils;
 namespace tkUI.Session
 {
 
+    /// <summary>
+    /// Specifies to which view we desire to go.
+    /// </summary>
     public enum RequestedViewToGO
     {
-        /*
-            The changes of view we can perform manually are:
-            - Login to forgot password.
-            - Forgot password to Login.
-            - Register to Login.
-            Those can be summarized to:
-            - Go to forgot password.
-            - Go to Login.
-         */
         LoginVM, ForgotPasswordVM
     };
 
@@ -33,41 +27,6 @@ namespace tkUI.Session
 
         // TODO: Abstract (DRY) the functionality needed to implement navigation in a MVVM way.
 
-        /*
-            Now that I think about it, there's some scenarios while login in the app.
-            1- The first admin user hasn't been registered. Therefore needs the following things to be made:
-                a) The first View showed is the Register one, after enter all the credentials and those being validated, this view is not
-                going to be used anymore. And the view will change to the "Login" one.
-
-            2- The admin or another user has been registered already, therefore logins normally. After login the App spawns.
-
-            3- The admon or another user has been registered already, but they have forgotten the password. So they click the "forgot password"
-            link, then that View is showed and they enter the email. After that, it shows a message of sent the new password set or w/e.
-
-            Therefore:
-            Register needs to show the Login view after creating the first user.
-            Login needs a link to allow changing the view to Forgot password.
-            And forgot password needs a button to go backwards to Login view, and to show the Login after sending the email.
-
-            My thought of tackling this is:
-            - Find a way to synchronize actions (commands of the views) so whenever one is clicked those are propagated via events,
-            therefore this ViewModel can know what and when it happened, that way we can change the ViewModels here.
-            So basically if we click the forgot password link in the Login, sessionviewModel will know this and change the ViewModel
-            to ForgotPassword.
-            I think all this is achievable using events.
-
-            Second Thought:
-            I think we were thinkging wrong about events: Events are great to keep synchronized a lot of classes and calling a
-            collection of methods (delegates) when something significant happens. In our case would imply having an event here,
-            then make that event (through an interface) public, then the Login and ohers views will subcribe with a method.
-            But that will cause to execute all the methods when the event happens. We don't want that.
-
-            So after give it a thought, I think it will be better to create a static method here that will change the view manually.
-            We can specify to which view change by creating an enum. The the Login, Register, and ForgotPassword will call this method
-            passing the enum parameter.
-
-             */
-
         #region Fields
 
         ICommand _changePageCommand;
@@ -75,8 +34,6 @@ namespace tkUI.Session
         List<IPageViewModelWithSizes> _pageViewModels;
 
         static IPageViewModelWithSizes[] _mapPageViewModels;
-
-        
 
         #endregion // Fields
 
@@ -88,14 +45,11 @@ namespace tkUI.Session
             PageViewModels.Add(new RegisterViewModel(this.GoToViewModel));
             PageViewModels.Add(new ForgotPasswordViewModel(this.GoToViewModel));
 
+            // TODO: Has an admin been ever registered?, If not choose the RegisterViewModel as default.
             CurrentPageViewModel = PageViewModels[0];
 
             InitMapPageViewModels();
         }
-
-        /*
-         but what if you need several validations, and those validations are in a static class, they can't be passes as parameters
-             */
 
         #endregion // Constructors
 
@@ -146,16 +100,17 @@ namespace tkUI.Session
             }
         }
 
-        // Currently Unused
-        public IWindowViewSizes CurrentWindowSize
-        {
-            get { return CurrentPageViewModel as IWindowViewSizes; }
-        }
-
         #endregion // Properties Commands
 
         #region Methods
 
+        /// <summary>
+        /// Function to be passed as Action to the ViewModels that needs to change
+        /// the View manually.
+        /// Note that this assumes LoginVM case it's the LoginViewModel at index [0], 
+        /// and ForgotPasswordVM is at index [2].
+        /// </summary>
+        /// <param name="viewModel">ViewModel to go.</param>
         public void GoToViewModel(RequestedViewToGO viewModel)
         {
             switch (viewModel)
@@ -169,6 +124,7 @@ namespace tkUI.Session
             }
         }
 
+        
         private void ChangeViewModel(IPageViewModelWithSizes viewModel)
         {
             if (!PageViewModels.Contains(viewModel))
@@ -180,6 +136,10 @@ namespace tkUI.Session
                 .FirstOrDefault(vm => vm == viewModel);
         }
 
+        /// <summary>
+        /// This maps the current ViewModels added to the PageViewModels so we can refer them
+        /// later when using GoToViewModel function.
+        /// </summary>
         private void InitMapPageViewModels()
         {
             _mapPageViewModels = new IPageViewModelWithSizes[PageViewModels.Count];
