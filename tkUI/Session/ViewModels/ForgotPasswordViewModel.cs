@@ -16,9 +16,9 @@ namespace tkUI.Session.ViewModels
     {
 
         /* TODO: Keep implementing new features.
-         * 1- EmailMessage
-         * 2- Check if Email exists
-         * 3- Color for the Message.
+         * 1- EmailMessage OK
+         * 2- Check if Email exists OK
+         * 3- Color for the Message. OK
          * 4- Better formatting for this view.
          *  */
 
@@ -31,7 +31,7 @@ namespace tkUI.Session.ViewModels
 
         string _email;
         string _emailMessage;
-        string _colorMessage;
+        string _colorMessage = "White";
 
         #endregion // Fields
 
@@ -134,7 +134,26 @@ namespace tkUI.Session.ViewModels
 
         void RequestReminder()
         {
-            throw new NotImplementedException("RequestReminder()");
+            EmailMessage = "";
+
+            if (!RangeChecker.IsValidEmailAddress(Email))
+            {
+                ColorMessage = "Red";
+                EmailMessage = Resources.Employee_Error_InvalidEmail;
+                return;
+            }
+
+            if (!LoginViewModel.EmailExists(Email))
+            {
+                ColorMessage = "Red";
+                EmailMessage = Resources.LoginViewModel_Error_EmailWasntFound;
+                return;
+            }
+
+            ColorMessage = "Green";
+            EmailMessage = "¡Un email conteniendo el restableecimiento de tu clave fue enviado!";
+
+            // TODO: Send the reminder here
         }
 
         bool CanRequestReminder()
@@ -149,6 +168,7 @@ namespace tkUI.Session.ViewModels
 
         void GoToLogin()
         {
+            Email = "";
             _changeViewModelManually(RequestedViewToGO.LoginVM);
         }
 
