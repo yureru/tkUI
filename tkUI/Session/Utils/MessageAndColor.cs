@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace tkUI.Session.Utils
 {
+    /// <summary>
+    /// Class to wrap a text message and the color of that message. Used to show colored text.
+    /// We could use a SolidColorBrush but I don't wanna use all the properties.
+    /// </summary>
     class MessageAndColor
     {
         #region Fields
