@@ -298,8 +298,14 @@ namespace tkUI.Session.ViewModels
         {
             // TODO: Clean password error message
             // TODO: Fill email box with the same email that requested the reminder.
+            // Set success message
             ColorSuccessMessage = msg.Color;
             SuccessMessage = msg.Message;
+            Email = msg.Email;
+
+            // Clean message errors that could be seted earlier.
+            EmailError = "";
+            PassError = "";
         }
 
         #endregion

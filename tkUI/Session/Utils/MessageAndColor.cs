@@ -8,6 +8,7 @@ namespace tkUI.Session.Utils
 {
     /// <summary>
     /// Class to wrap a text message and the color of that message. Used to show colored text.
+    /// It also includes an Email field to allow fill the textbox.
     /// We could use a SolidColorBrush but I don't wanna use all the properties.
     /// </summary>
     class MessageAndColor
@@ -57,6 +58,8 @@ namespace tkUI.Session.Utils
             }
             
         }
+
+        public string Email { get; set; }
 
         #endregion // Properties
     }

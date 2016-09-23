@@ -158,7 +158,11 @@ namespace tkUI.Session.ViewModels
             // Refactor, DRY.
 
             var successMessage = new MessageAndColor()
-                { Color = "Green", Message = "¡Un email conteniendo el restableecimiento de tu clave fue enviado!" };
+                {
+                    Color = "Green",
+                    Message = "¡Un email conteniendo el restableecimiento de tu clave fue enviado!",
+                    Email = this.Email
+                };
 
             ColorMessage = "Green";
             EmailMessage = "¡Un email conteniendo el restableecimiento de tu clave fue enviado!";
