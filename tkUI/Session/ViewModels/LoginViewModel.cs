@@ -46,7 +46,7 @@ namespace tkUI.Session.ViewModels
         public LoginViewModel(Action<RequestedViewToGO> changeViewModelManually)
         {
             _changeViewModelManually = changeViewModelManually;
-            //_successMessage = new MessageAndColor();
+            _successMessage = new MessageAndColor();
         }
 
         #endregion // Constructors
@@ -297,6 +297,7 @@ namespace tkUI.Session.ViewModels
         public void SetSuccessMessage(MessageAndColor msg)
         {
             ColorSuccessMessage = msg.Color;
+            SuccessMessage = msg.Message;
         }
 
         #endregion

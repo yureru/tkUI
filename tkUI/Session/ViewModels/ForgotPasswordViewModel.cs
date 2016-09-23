@@ -28,6 +28,7 @@ namespace tkUI.Session.ViewModels
         RelayCommand _requestPasswordReminderCommand;
         RelayCommand _loginCommand;
         Action<RequestedViewToGO> _changeViewModelManually;
+        Action<MessageAndColor> _setSuccessMessage;
 
         string _email;
         string _emailMessage;
@@ -37,9 +38,10 @@ namespace tkUI.Session.ViewModels
 
         #region Constructors
 
-        public ForgotPasswordViewModel(Action<RequestedViewToGO> changeViewModelManually)
+        public ForgotPasswordViewModel(Action<RequestedViewToGO> changeViewModelManually, Action<MessageAndColor> setSuccessMessage)
         {
             _changeViewModelManually = changeViewModelManually;
+            _setSuccessMessage = setSuccessMessage;
         }
 
         #endregion // Constructors
@@ -153,8 +155,17 @@ namespace tkUI.Session.ViewModels
                 return;
             }
 
+            // Refactor, DRY.
+
+            var successMessage = new MessageAndColor()
+                { Color = "Green", Message = "¡Un email conteniendo el restableecimiento de tu clave fue enviado!" };
+
             ColorMessage = "Green";
             EmailMessage = "¡Un email conteniendo el restableecimiento de tu clave fue enviado!";
+
+            _setSuccessMessage(successMessage);
+
+            GoToLogin();
 
             // TODO: Send the reminder here
             // TODO: We can use the redirection to the Login here too. After sending the reminder, we will
