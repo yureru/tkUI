@@ -468,6 +468,42 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to White.
+        /// </summary>
+        internal static string ForgotPasswordViewModel_Color_Blank {
+            get {
+                return ResourceManager.GetString("ForgotPasswordViewModel_Color_Blank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red.
+        /// </summary>
+        internal static string ForgotPasswordViewModel_Color_Error {
+            get {
+                return ResourceManager.GetString("ForgotPasswordViewModel_Color_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green.
+        /// </summary>
+        internal static string ForgotPasswordViewModel_Color_Success {
+            get {
+                return ResourceManager.GetString("ForgotPasswordViewModel_Color_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¡Un email conteniendo el restablecimiento de tu clave fue enviado!.
+        /// </summary>
+        internal static string ForgotPasswordViewModel_Message_RecoveredPasswordMessage {
+            get {
+                return ResourceManager.GetString("ForgotPasswordViewModel_Message_RecoveredPasswordMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Header_bg_bar {

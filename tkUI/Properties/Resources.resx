@@ -369,4 +369,20 @@
     <value>Registrar Administrador - </value>
     <comment>Register's window title.</comment>
   </data>
+  <data name="ForgotPasswordViewModel_Color_Blank" xml:space="preserve">
+    <value>White</value>
+    <comment>Default color of message (setted to avoid a null color binding).</comment>
+  </data>
+  <data name="ForgotPasswordViewModel_Color_Error" xml:space="preserve">
+    <value>Red</value>
+    <comment>Color of error message used to set a MessageAndColor's property.</comment>
+  </data>
+  <data name="ForgotPasswordViewModel_Color_Success" xml:space="preserve">
+    <value>Green</value>
+    <comment>Color of success message used to set a MessageAndColor's property.</comment>
+  </data>
+  <data name="ForgotPasswordViewModel_Message_RecoveredPasswordMessage" xml:space="preserve">
+    <value>¡Un email conteniendo el restablecimiento de tu clave fue enviado!</value>
+    <comment>Success message when a reminder of the password was sent.</comment>
+  </data>
 </root>
