@@ -19,16 +19,17 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -37,11 +38,11 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <!-- Change for the image -->
-        <Image Source="..\..\Resources\Header\Logo.png"
+        <!--<Image Source="..\..\Resources\Header\Logo.png"
                Grid.ColumnSpan="4"
                Height="15" Width="93"
                
-               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+               HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
         <!--<TextBlock
             Grid.ColumnSpan="4"
             HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -50,12 +51,11 @@
         <!-- Email -->
         <TextBlock
             Style="{StaticResource loginText}"
-            Grid.Row="1"
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center" VerticalAlignment="Center">Email</TextBlock>
         <TextBox
             Name="emailTxt"
-            Grid.Row="2"
+            Grid.Row="1"
             Grid.ColumnSpan="4"
             HorizontalAlignment="Center" VerticalAlignment="Center"
             Width="250"
@@ -64,7 +64,7 @@
             />
         <TextBlock
             Text="{Binding Path=EmailError}"
-            Grid.Row="3"
+            Grid.Row="2"
             Grid.Column="1"
             Grid.ColumnSpan="3"
             Foreground="Red"
@@ -73,13 +73,13 @@
         <!-- Password -->
         <TextBlock
             Style="{StaticResource loginText}"
-            Grid.Row="4"
+            Grid.Row="3"
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center" VerticalAlignment="Center">Password</TextBlock>
         <PasswordBox
             Name="passwordTxt"
             PasswordChar="•"
-            Grid.Row="5"
+            Grid.Row="4"
             Grid.ColumnSpan="4"
             HorizontalAlignment="Center" VerticalAlignment="Center"
             Width="250"
@@ -88,14 +88,14 @@
 
         <TextBlock
             Text="{Binding Path=PassError}"
-            Grid.Row="6"
+            Grid.Row="5"
             Grid.Column="1"
             Grid.ColumnSpan="3"
             Foreground="Red"
             />
         <!-- Success Message after a forgot password, or register of the first admin -->
         <TextBlock
-            Grid.Row="7"
+            Grid.Row="6"
             Grid.Column="1"
             Grid.ColumnSpan="2"
             TextWrapping="WrapWithOverflow"
@@ -108,7 +108,7 @@
         <Button
             Command="{Binding Path=LoginCommand}"
             Template="{StaticResource buttonLarge}"
-            Grid.Row="8"
+            Grid.Row="7"
             Grid.Column="2"
             Grid.ColumnSpan="4"
             HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -131,7 +131,7 @@
         <TextBlock
             Style="{StaticResource clickableText}"
             TextDecorations="Underline"
-            Grid.Row="9"
+            Grid.Row="8"
             Grid.ColumnSpan="4"
             HorizontalAlignment="Right" VerticalAlignment="Center"
             Margin="0,0,50,0"

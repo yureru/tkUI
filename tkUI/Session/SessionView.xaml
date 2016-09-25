@@ -32,6 +32,16 @@
         </DataTemplate>
     </Window.Resources>
     <Grid>
-        <ContentControl Content="{Binding CurrentPageViewModel}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Image Source="..\Resources\Header\Logo.png"
+               Grid.ColumnSpan="4"
+               Height="15" Width="93"
+               Margin="30"
+               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        
+        <ContentControl Grid.Row="1" Content="{Binding CurrentPageViewModel}"/>
     </Grid>
 </Window>
