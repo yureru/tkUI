@@ -136,6 +136,7 @@
     <Compile Include="Session\Utils\MessageAndColor.cs" />
     <Compile Include="Session\ViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="Session\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Session\ViewModels\RegisterFirstAdminViewModel.cs" />
     <Compile Include="Session\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Session\Views\ForgotPassword.xaml.cs">
       <DependentUpon>ForgotPassword.xaml</DependentUpon>

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:tkUI.Session"
         xmlns:Views="clr-namespace:tkUI.Session.Views"
         xmlns:ViewModels="clr-namespace:tkUI.Session.ViewModels"
+        xmlns:RegisterAdminView="clr-namespace:tkUI.Subpages.EmployeesCRUD.Views"
         mc:Ignorable="d"
         UseLayoutRounding="True"
         Title="{Binding CurrentPageViewModel.Name}" 
@@ -20,6 +21,10 @@
 
         <DataTemplate DataType="{x:Type ViewModels:RegisterViewModel}">
             <Views:RegisterView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type ViewModels:RegisterFirstAdminViewModel}">
+            <RegisterAdminView:AddEmployeeView/>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type ViewModels:ForgotPasswordViewModel}">
