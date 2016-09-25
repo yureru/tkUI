@@ -15,14 +15,28 @@ namespace tkUI.Session.ViewModels
     {
 
         #region Fields
+
+        Action<RequestedViewToGO> _changeViewManually;
+        Action<MessageAndColor> _setSuccessMessage;
+
         #endregion // Fields
 
         #region Constructors
+
+        public RegisterFirstAdminViewModel(Action<RequestedViewToGO> changeViewManually, Action<MessageAndColor> setSuccessMessage)
+        {
+            _changeViewManually = changeViewManually;
+            _setSuccessMessage = setSuccessMessage;
+        }
+
         #endregion // Constructors
 
         #region Properties
         #endregion // Properties
 
+
+        #region Private Helpers
+        #endregion // Private Helpers
 
         #region Interface Implementations
 

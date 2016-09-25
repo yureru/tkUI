@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-using tkUI.Login;
 using tkUI.Session;
 
 namespace tkUI

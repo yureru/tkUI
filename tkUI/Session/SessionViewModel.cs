@@ -45,11 +45,11 @@ namespace tkUI.Session
 
             PageViewModels.Add(LoginVM);
             //PageViewModels.Add(new RegisterViewModel(this.GoToViewModel));
-            PageViewModels.Add(new RegisterFirstAdminViewModel());
+            PageViewModels.Add(new RegisterFirstAdminViewModel(this.GoToViewModel, LoginVM.SetSuccessMessage));
             PageViewModels.Add(new ForgotPasswordViewModel(this.GoToViewModel, LoginVM.SetSuccessMessage));
 
             // TODO: Has an admin been ever registered?, If not choose the RegisterViewModel as default.
-            CurrentPageViewModel = PageViewModels[1];
+            CurrentPageViewModel = PageViewModels[0];
 
             InitMapPageViewModels();
         }
