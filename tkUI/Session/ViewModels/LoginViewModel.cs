@@ -34,6 +34,9 @@ namespace tkUI.Session.ViewModels
         string _emailError;
         string _passError;
 
+        MessageAndColor _successMessage;
+
+        //Action<RequestedViewToGO, MessageAndColor> _changeViewModelManually;
         Action<RequestedViewToGO> _changeViewModelManually;
 
         #endregion // Fields
@@ -43,6 +46,7 @@ namespace tkUI.Session.ViewModels
         public LoginViewModel(Action<RequestedViewToGO> changeViewModelManually)
         {
             _changeViewModelManually = changeViewModelManually;
+            _successMessage = new MessageAndColor();
         }
 
         #endregion // Constructors
@@ -108,6 +112,48 @@ namespace tkUI.Session.ViewModels
                 OnPropertyChanged("PassError");
             }
         }
+
+        // Wrappers to allow binding for MessageAndColor
+        public string SuccessMessage
+        {
+            get
+            {
+                return _successMessage.Message;
+            }
+
+            set
+            {
+                if (_successMessage.Message == value)
+                {
+                    return;
+                }
+
+                _successMessage.Message = value;
+
+                OnPropertyChanged("SuccessMessage");
+            }
+        }
+
+        public string ColorSuccessMessage
+        {
+            get
+            {
+                return _successMessage.Color;
+            }
+
+            set
+            {
+                if (_successMessage.Color == value)
+                {
+                    return;
+                }
+
+                _successMessage.Color = value;
+
+                OnPropertyChanged("ColorSuccessMessage");
+            }
+        }
+
 
         #endregion // Properties
 
@@ -246,6 +292,18 @@ namespace tkUI.Session.ViewModels
             }
 
             return false;
+        }
+
+        public void SetSuccessMessage(MessageAndColor msg)
+        {
+            // Set success message
+            ColorSuccessMessage = msg.Color;
+            SuccessMessage = msg.Message;
+            Email = msg.Email;
+
+            // Clean message errors that could be setted earlier.
+            EmailError = "";
+            PassError = "";
         }
 
         #endregion

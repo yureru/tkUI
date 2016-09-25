@@ -15,31 +15,25 @@ namespace tkUI.Session.ViewModels
     class ForgotPasswordViewModel : ObservableObject, IPageViewModelWithSizes
     {
 
-        /* TODO: Keep implementing new features.
-         * 1- EmailMessage OK
-         * 2- Check if Email exists OK
-         * 3- Color for the Message. OK
-         * 4- Better formatting for this view.
-         *  */
-
-
         #region Fields
 
         RelayCommand _requestPasswordReminderCommand;
         RelayCommand _loginCommand;
         Action<RequestedViewToGO> _changeViewModelManually;
+        Action<MessageAndColor> _setSuccessMessage;
 
         string _email;
         string _emailMessage;
-        string _colorMessage = "White";
+        string _colorMessage = Resources.ForgotPasswordViewModel_Color_Blank;
 
         #endregion // Fields
 
         #region Constructors
 
-        public ForgotPasswordViewModel(Action<RequestedViewToGO> changeViewModelManually)
+        public ForgotPasswordViewModel(Action<RequestedViewToGO> changeViewModelManually, Action<MessageAndColor> setSuccessMessage)
         {
             _changeViewModelManually = changeViewModelManually;
+            _setSuccessMessage = setSuccessMessage;
         }
 
         #endregion // Constructors
@@ -141,24 +135,34 @@ namespace tkUI.Session.ViewModels
 
             if (!RangeChecker.IsValidEmailAddress(Email))
             {
-                ColorMessage = "Red";
+                ColorMessage = Resources.ForgotPasswordViewModel_Color_Error;
                 EmailMessage = Resources.Employee_Error_InvalidEmail;
                 return;
             }
 
             if (!LoginViewModel.EmailExists(Email))
             {
-                ColorMessage = "Red";
+                ColorMessage = Resources.ForgotPasswordViewModel_Color_Error;
                 EmailMessage = Resources.LoginViewModel_Error_EmailWasntFound;
                 return;
             }
 
-            ColorMessage = "Green";
-            EmailMessage = "¡Un email conteniendo el restableecimiento de tu clave fue enviado!";
+            var successMessage = new MessageAndColor()
+            {
+                    Color = Resources.ForgotPasswordViewModel_Color_Success,
+                    Message = Resources.ForgotPasswordViewModel_Message_RecoveredPasswordMessage,
+                    Email = this.Email
+                };
+
+            ColorMessage = Resources.ForgotPasswordViewModel_Color_Success;
+            EmailMessage = Resources.ForgotPasswordViewModel_Message_RecoveredPasswordMessage;
+
+            _setSuccessMessage(successMessage);
 
             // TODO: Send the reminder here
-            // TODO: We can use the redirection to the Login here too. After sending the reminder, we will
-            // pass the message to the Login and go to that view.
+
+            GoToLogin();
+
         }
 
         bool CanRequestReminder()
