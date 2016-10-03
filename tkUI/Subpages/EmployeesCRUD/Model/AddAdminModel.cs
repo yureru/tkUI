@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace tkUI.Subpages.EmployeesCRUD.Model
 {
+    // TODO: Delete this in the future, it will not be used anymore.
     class AddAdminModel
     {
     }

@@ -8,6 +8,7 @@ using tkUI.Subpages.EmployeesCRUD.Utils;
 
 namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 {
+    // TODO: Delete in the future, it will not be used anymore.
     class ListAdminViewModel : PageFromCRUD
     {
 
