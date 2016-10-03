@@ -36,7 +36,8 @@ namespace tkUI.DataAccess
                 "id", "firstName", "lastName",
                 "gender", "birthdate", "email",
                 "phone", "pay", "workTime",
-                "address", "startedWorking"
+                "address", "startedWorking", "isAdmin",
+                "currentlyEmployed"
             };
 
         static string[] _baseXMLOriginalPath;
@@ -192,7 +193,9 @@ namespace tkUI.DataAccess
                             (string)employeeElem.Attribute(_xmlAttributes[7]),
                             (string)employeeElem.Attribute(_xmlAttributes[8]),
                             (string)employeeElem.Attribute(_xmlAttributes[9]),
-                            (string)employeeElem.Attribute(_xmlAttributes[10]))).ToList();
+                            (string)employeeElem.Attribute(_xmlAttributes[10]),
+                            (bool)employeeElem.Attribute(_xmlAttributes[11]),
+                            (bool)employeeElem.Attribute(_xmlAttributes[12]))).ToList();
         }
 
         /// <summary>
@@ -228,6 +231,9 @@ namespace tkUI.DataAccess
                     writer.WriteAttributeString(_xmlAttributes[8], employee.WorkTime);
                     writer.WriteAttributeString(_xmlAttributes[9], employee.Address);
                     writer.WriteAttributeString(_xmlAttributes[10], employee.StartedWorking);
+                    writer.WriteAttributeString(_xmlAttributes[11], employee.IsAdmin.ToString());
+                    writer.WriteAttributeString(_xmlAttributes[12], employee.CurrentlyEmployed.ToString());
+
                     writer.WriteEndElement();
                 }
                 writer.Flush();

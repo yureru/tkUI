@@ -56,6 +56,10 @@ namespace tkUI.Models
 
         public string StartedWorking { get; set; }
 
+        public bool IsAdmin { get; set; }
+        
+        public bool CurrentlyEmployed { get; set; }
+
         #endregion // Fields
 
 
@@ -90,15 +94,17 @@ namespace tkUI.Models
 
         #endregion // Presentation Properties
 
-        #region Creation
+        #region Constructors
 
         public static Employee CreateNewEmployee()
         {
             return new Employee();
         }
 
-        public static Employee CreateEmployee(int id, string firstName, string lastName, bool gender, string birthdate,
-            string email, string phone, string pay, string workTime, string address, string startedWorking)
+        public static Employee CreateEmployee(int id, string firstName, string lastName, bool gender,
+            string birthdate, string email, string phone, string pay,
+            string workTime, string address, string startedWorking, bool isAdmin,
+            bool currentlyEmployed)
         {
             return new Employee
             {
@@ -112,7 +118,9 @@ namespace tkUI.Models
                 Pay = pay,
                 WorkTime = workTime,
                 Address = address,
-                StartedWorking = startedWorking
+                StartedWorking = startedWorking,
+                IsAdmin = isAdmin,
+                CurrentlyEmployed = currentlyEmployed
             };
         }
 
@@ -127,11 +135,13 @@ namespace tkUI.Models
         /// <returns></returns>
         public static Employee CreateEmployee(Employee employee)
         {
-            return CreateEmployee(employee.ID, employee.FirstName, employee.LastName, employee.Gender, (string)employee.Birthdate,
-            employee.Email, employee.Phone, employee.Pay, employee.WorkTime, employee.Address, Employee.StartedDate());
+            return CreateEmployee(employee.ID, employee.FirstName, employee.LastName, employee.Gender,
+                (string)employee.Birthdate, employee.Email, employee.Phone, employee.Pay,
+                employee.WorkTime, employee.Address, Employee.StartedDate(), employee.IsAdmin,
+                employee.CurrentlyEmployed);
         }
 
-        #endregion // Creation
+        #endregion // Constructors
 
         #region Helper Methods
 
@@ -367,7 +377,7 @@ namespace tkUI.Models
         /// <returns></returns>
         public override string ToString()
         {
-            return  "Name: " + this.FirstName + "\n"
+            return "Name: " + this.FirstName + "\n"
                   + "SecondName: " + this.LastName + "\n"
                   + "ID: " + this.ID + "\n"
                   + "Gender: " + this.Gender + "\n"
@@ -377,7 +387,9 @@ namespace tkUI.Models
                   + "Pay: " + this.Pay + "\n"
                   + "Worktime: " + this.WorkTime + "\n"
                   + "Address: " + this.Address + "\n"
-                  + "StartedWorking: " + this.StartedWorking + "\n";
+                  + "StartedWorking: " + this.StartedWorking + "\n"
+                  + "IsAdmin: " + this.IsAdmin + "\n"
+                  + "CurrentlyEmployed: " + this.CurrentlyEmployed + "\n";
         }
 
         #endregion // Overrides
