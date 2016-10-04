@@ -136,6 +136,7 @@ namespace tkUI.DataAccess
         /// containing that ID. It raises the EmployeeDeletedEventArgs.
         /// </summary>
         /// <param name="id"></param>
+        /// <exception cref="ArgumentOutOfRangeException">"Inherited" from ExistsById function.</exception>
         public void DeleteByID(int id)
         {
             if (ExistsByID(id))
@@ -155,21 +156,20 @@ namespace tkUI.DataAccess
             }
         }
 
-        /// <summary>
-        /// Checks if an employee exists in with the given ID.
-        /// </summary>
-        /// <param name="id">Employee's ID. A non-zero, positive integer.</param>
-        /// <returns></returns>
-        public bool ExistsByID(int id)
+        public bool ExistsAtLeastOneAdmin()
         {
-            var elem = (from item in _employees where String.Equals(item.ID, id) select item).ToList();
+            bool foundAdmin = false;
 
-            if (elem.Count > 0)
+            foreach (var employee in _employees)
             {
-                return true;
+                if (employee.IsAdmin)
+                {
+                    foundAdmin = true;
+                    break;
+                }
             }
 
-            return false;
+            return foundAdmin;
         }
 
         #endregion // Public Interface
@@ -358,6 +358,30 @@ namespace tkUI.DataAccess
             // TODO: Handle exceptions, if exceptions occurs keep the original file. Delete newFile.
             File.Delete(originalFile);
             File.Move(newFile, originalFile);
+        }
+
+        /// <summary>
+        /// Checks if an employee exists in with the given ID.
+        /// </summary>
+        /// <param name="id">Employee's ID. A non-zero, positive integer.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        private bool ExistsByID(int id)
+        {
+            if (id <= 0)
+            {
+                var msg = String.Format("The employee can't exist since the ID ({0}) is equal or less than zero.", id);
+                throw new ArgumentOutOfRangeException(msg);
+            }
+
+            var elem = (from item in _employees where String.Equals(item.ID, id) select item).ToList();
+
+            if (elem.Count > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         #endregion // Private Helpers

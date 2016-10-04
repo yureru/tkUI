@@ -385,4 +385,12 @@
     <value>¡Un email conteniendo el restablecimiento de tu clave fue enviado!</value>
     <comment>Success message when a reminder of the password was sent.</comment>
   </data>
+  <data name="App_Messages_Fault_Error" xml:space="preserve">
+    <value>Error</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="App_Messages_Fault_Warning" xml:space="preserve">
+    <value>Advertencia</value>
+    <comment>Warning message.</comment>
+  </data>
 </root>

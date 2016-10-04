@@ -254,7 +254,14 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
             foreach (var emp in selectedEmps)
             {
-                _employeeRepository.DeleteByID(emp);
+                try
+                {
+                    _employeeRepository.DeleteByID(emp);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+
+                }
             }
         }
 

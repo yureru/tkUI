@@ -61,6 +61,24 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string App_Messages_Fault_Error {
+            get {
+                return ResourceManager.GetString("App_Messages_Fault_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advertencia.
+        /// </summary>
+        internal static string App_Messages_Fault_Warning {
+            get {
+                return ResourceManager.GetString("App_Messages_Fault_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to timekeeping.
         /// </summary>
         internal static string App_Name {

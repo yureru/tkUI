@@ -610,10 +610,20 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             if (!(id is int))
             {
-                throw new ArgumentException(Resources.EmployeeWrapperViewModel_Exception_DeleteWrongParam);
+                MessageBox.Show(Resources.EmployeeWrapperViewModel_Exception_DeleteWrongParam,
+                    Resources.App_Messages_Fault_Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
-            _employeeRepository.DeleteByID((int) id);
+            try
+            {
+                _employeeRepository.DeleteByID((int)id);
+            }
+
+            catch (ArgumentOutOfRangeException err)
+            {
+                MessageBox.Show(err.Message, Resources.App_Messages_Fault_Error, MessageBoxButton.OK, MessageBoxImage.Error);
+            }   
         }
 
         /// <summary>
