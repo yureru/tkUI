@@ -234,12 +234,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             // Show error message
             if (isEditModalOpen.Count() > 0)
             {
-                var warningResult = MessageBox.Show(Resources.ListEmployeesViewModel_Warning_InvalidRange, Resources.ListEmployeesViewModel_Warning_Self,
+                MessageBox.Show(Resources.ListEmployeesViewModel_Warning_InvalidRange, Resources.ListEmployeesViewModel_Warning_Self,
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // Ok, we can delete a range.
+            // Ask for confirmation of range delete.
             var result = MessageBox.Show(String.Format(Resources.ListEmployeesViewModel_Format_ConfirmationRange, TotalSelectedEmployees), 
                 Resources.ListEmployeesViewModel_Confirmation_Self, MessageBoxButton.YesNo, MessageBoxImage.None);
 
@@ -250,7 +250,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 return;
             }
 
+            // Ok, delete the range of employees.
             var selectedEmps = (from emp in this.AllEmployees where emp.IsSelected select emp.ID).ToList();
+
+            var idsNotFound = new List<int>();
 
             foreach (var emp in selectedEmps)
             {
@@ -260,9 +263,25 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-
+                    idsNotFound.Add(emp);
                 }
             }
+
+            if (idsNotFound.Count != 0)
+            {
+                var msg = Resources.App_Messages_Fault_FollowingIDsWerentFound;
+
+                for (int i = 0; i < idsNotFound.Count - 1; ++i)
+                {
+                    msg += idsNotFound[i].ToString() + ", ";
+                }
+
+                // Append last item
+                msg += idsNotFound.Last() + ".";
+
+                MessageBox.Show(msg, Resources.App_Messages_Fault_Warning, MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
         }
 
         /// <summary>

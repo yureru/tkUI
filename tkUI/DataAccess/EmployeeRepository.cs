@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using System.Windows;
 using System.Windows.Resources;
 
+using tkUI.Properties;
 using tkUI.Models;
 using System.Diagnostics;
 using System.Collections.Specialized;
@@ -137,6 +138,7 @@ namespace tkUI.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <exception cref="ArgumentOutOfRangeException">"Inherited" from ExistsById function.</exception>
+        /// /// <exception cref="ArgumentOutOfRangeException">When the ID is positive but wasn't found in the collection.</exception>
         public void DeleteByID(int id)
         {
             if (ExistsByID(id))
@@ -153,6 +155,11 @@ namespace tkUI.DataAccess
                         break;
                     }
                 }
+            }
+            else
+            {
+                var msg = String.Format(Resources.App_Exceptions_IDSearchNotFound, id);
+                throw new ArgumentOutOfRangeException(msg);
             }
         }
 
@@ -370,7 +377,7 @@ namespace tkUI.DataAccess
         {
             if (id <= 0)
             {
-                var msg = String.Format("The employee can't exist since the ID ({0}) is equal or less than zero.", id);
+                var msg = String.Format(Resources.App_Exceptions_NegativeIDSearchEmployee, id);
                 throw new ArgumentOutOfRangeException(msg);
             }
 

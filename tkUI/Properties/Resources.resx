@@ -389,8 +389,20 @@
     <value>Error</value>
     <comment>Error message.</comment>
   </data>
+  <data name="App_Messages_Fault_FollowingIDsWerentFound" xml:space="preserve">
+    <value>Los siguientes IDs no fueron encontrados: </value>
+    <comment>Message when the list of employees doesn't contains those IDs.</comment>
+  </data>
   <data name="App_Messages_Fault_Warning" xml:space="preserve">
     <value>Advertencia</value>
     <comment>Warning message.</comment>
+  </data>
+  <data name="App_Exceptions_IDSearchNotFound" xml:space="preserve">
+    <value>Employee with the ID {0} wasn't found.</value>
+    <comment>Exception's message when the employee wasn't found for the given ID.</comment>
+  </data>
+  <data name="App_Exceptions_NegativeIDSearchEmployee" xml:space="preserve">
+    <value>The employee can't exist since the ID ({0}) is equal or less than zero.</value>
+    <comment>Exception's message when a negative ID is used to search for an employee.</comment>
   </data>
 </root>

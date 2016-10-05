@@ -161,6 +161,9 @@ namespace tkUI.Helper_Classes
                 && month != Resources.BirthDate_Combobox_Month
                 && year != Resources.BirthDate_Combobox_Year)
             {
+                // TODO: Add exception comment in the function
+                // TODO: Handle it in the caller
+                // TODO: Handle ArgumentNUllException.
                 try
                 {
                     var date = new DateTime(int.Parse(year), BirthDate.ParseMonth(month), int.Parse(day));

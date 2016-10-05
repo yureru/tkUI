@@ -61,11 +61,38 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Employee with the ID {0} wasn&apos;t found..
+        /// </summary>
+        internal static string App_Exceptions_IDSearchNotFound {
+            get {
+                return ResourceManager.GetString("App_Exceptions_IDSearchNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The employee can&apos;t exist since the ID ({0}) is equal or less than zero..
+        /// </summary>
+        internal static string App_Exceptions_NegativeIDSearchEmployee {
+            get {
+                return ResourceManager.GetString("App_Exceptions_NegativeIDSearchEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         internal static string App_Messages_Fault_Error {
             get {
                 return ResourceManager.GetString("App_Messages_Fault_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Los siguientes IDs no fueron encontrados: .
+        /// </summary>
+        internal static string App_Messages_Fault_FollowingIDsWerentFound {
+            get {
+                return ResourceManager.GetString("App_Messages_Fault_FollowingIDsWerentFound", resourceCulture);
             }
         }
         
