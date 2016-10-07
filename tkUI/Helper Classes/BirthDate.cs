@@ -163,7 +163,7 @@ namespace tkUI.Helper_Classes
             {
                 // TODO: Add exception comment in the function
                 // TODO: Handle it in the caller
-                // TODO: Handle ArgumentNUllException.
+                // TODO: Handle ArgumentNUllException. OK.
                 try
                 {
                     var date = new DateTime(int.Parse(year), BirthDate.ParseMonth(month), int.Parse(day));
@@ -171,6 +171,10 @@ namespace tkUI.Helper_Classes
                 catch (ArgumentOutOfRangeException)
                 {
                     return Resources.EmployeeWrapperViewModel_Error_InvalidBirthDate;
+                }
+                catch (ArgumentNullException)
+                {
+                    return Resources.EmployeeWrapperViewModel_Error_MissingBirthDate;
                 }
 
                 return null;

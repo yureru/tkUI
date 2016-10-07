@@ -64,7 +64,7 @@ namespace tkUI.Models
 
 
         /* Properties that aren't needed to save as part of Employee object
-         * therefore they shouldn't be saved in a DB or in the repository. */
+         * therefore they shouldn't be saved in a DB nor in the repository. */
         #region Presentation Properties
 
         /// <summary>
