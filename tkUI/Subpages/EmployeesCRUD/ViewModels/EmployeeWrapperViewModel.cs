@@ -29,9 +29,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     {
         // TODO: Add a string resources that should be used only for the XAML and not for code-behind files.
         /* TODO:
-         * 1: Birthdate combobox in edit view aren't binded to the default values if an ArgumentNullException happens
-         *      because the user doesn't had a birthdate selected.
-         * 2: Jornada Laboral sin't binded to the default value in the combobox from the edit view, because the value pulled was null.    
+         * 1- Give default values and validate the IsAdmin, and ISFired comboboxes.
          * 3- Re-design the SingleEmployeeView.
          * 4- What if an employee being edited has all the fields null?. Make sure all the exceptions are handled, and the warnings (error
          *  messages), all the comboboxes are setted to default, and when saving the corresponding objects are allocated 
@@ -48,8 +46,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         string _genderType;
         string _selectedWorkTime;
         string _selectedDay, _selectedMonth, _selectedYear;
+        string _selectedUserType;
         string[] _genderTypeOptions;
         string[] _workTimeOptions;
+        string[] _userTypeOptions;
         string _lastUserSaved;
         bool _isSelected;
 
@@ -57,8 +57,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         RelayCommand _deleteCommand;
         RelayCommand _editCommand;
         RelayCommand _viewCommand;
-        
-
 
         static EmployeeWrapperViewModel _editingCurrentEmployee;
         static bool _editingCurrentEmployeeIsInitialized;
@@ -84,8 +82,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
             _employee = employee;
             _employeeRepository = employeeRepository;
+
             _genderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
             _selectedWorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+
             this.Day = Resources.BirthDate_Combobox_Day;
             this.Month = Resources.BirthDate_Combobox_Month;
             this.Year = Resources.BirthDate_Combobox_Year;
@@ -304,7 +304,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         /// <summary>
         /// Checks if there's an edit modal open for a given employee instance.
-        /// Note: EditModalOpen actually returns false (we're negatin ModalOpen) when
+        /// Note: EditModalOpen actually returns false (we're negating ModalOpen) when
         /// the edit modal is open. That's cause we're binding this property to the
         /// ListEmployeeView and that needs the property IsEnabled="False" to know
         /// when the modal is open.
@@ -409,6 +409,48 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     };
                 }
                 return _workTimeOptions;
+            }
+        }
+
+        public string UserType
+        {
+            get { return _selectedUserType; }
+
+            set
+            {
+                if (_selectedUserType == value || String.IsNullOrEmpty(value))
+                {
+                    return;
+                }
+
+                _selectedUserType = value;
+
+                if (_selectedUserType != Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified)
+                {
+                    _employee.UserType = _selectedUserType;
+                }
+
+                this.OnPropertyChanged("UserType");
+
+            }
+        }
+
+        public string[] UserTypeOptions
+        {
+            get
+            {
+                if (_userTypeOptions == null)
+                {
+                    _userTypeOptions = new string[]
+                    {
+                        Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified,
+                        Resources.EmployeeWrapperViewModel_UserTypeOptions_StandardUser,
+                        Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator,
+                        Resources.EmployeeWrapperViewModel_UserTypeOptions_Developer
+                    };
+                }
+
+                return _userTypeOptions;
             }
         }
 
@@ -539,10 +581,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 return _viewCommand;
             }
         }
-
-        
-
-        
 
         #endregion // Presentations Properties
 

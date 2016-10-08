@@ -24,7 +24,7 @@ namespace tkUI.Models
 
         static int MinimumWage = 74;
         static int MaximumWage = 10000;
-        
+
         enum Wage
         {
             BelowMinimum, Ok, AboveMaximum
@@ -56,7 +56,7 @@ namespace tkUI.Models
 
         public string StartedWorking { get; set; }
 
-        public bool IsAdmin { get; set; }
+        public string UserType { get; set; }
         
         public bool CurrentlyEmployed { get; set; }
 
@@ -103,7 +103,7 @@ namespace tkUI.Models
 
         public static Employee CreateEmployee(int id, string firstName, string lastName, bool gender,
             string birthdate, string email, string phone, string pay,
-            string workTime, string address, string startedWorking, bool isAdmin,
+            string workTime, string address, string startedWorking, string userType,
             bool currentlyEmployed)
         {
             return new Employee
@@ -119,7 +119,7 @@ namespace tkUI.Models
                 WorkTime = workTime,
                 Address = address,
                 StartedWorking = startedWorking,
-                IsAdmin = isAdmin,
+                UserType = userType,
                 CurrentlyEmployed = currentlyEmployed
             };
         }
@@ -137,7 +137,7 @@ namespace tkUI.Models
         {
             return CreateEmployee(employee.ID, employee.FirstName, employee.LastName, employee.Gender,
                 (string)employee.Birthdate, employee.Email, employee.Phone, employee.Pay,
-                employee.WorkTime, employee.Address, Employee.StartedDate(), employee.IsAdmin,
+                employee.WorkTime, employee.Address, Employee.StartedDate(), employee.UserType,
                 employee.CurrentlyEmployed);
         }
 
@@ -388,7 +388,7 @@ namespace tkUI.Models
                   + "Worktime: " + this.WorkTime + "\n"
                   + "Address: " + this.Address + "\n"
                   + "StartedWorking: " + this.StartedWorking + "\n"
-                  + "IsAdmin: " + this.IsAdmin + "\n"
+                  + "UserType: " + this.UserType + "\n"
                   + "CurrentlyEmployed: " + this.CurrentlyEmployed + "\n";
         }
 

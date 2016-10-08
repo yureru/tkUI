@@ -255,31 +255,25 @@
                 />
         <!-- IsAdmin -->
             <Label Grid.Row="18" Grid.Column="0"
-               Content="_¿Es Administrador?: "
+               Content="_Tipo de Usuario: "
                HorizontalAlignment="Right"
                />
             <ComboBox Grid.Row="18" Grid.Column="2"
-                      Name="isAdminCombo"
-                >
-                <TextBlock>Si</TextBlock>
-                <TextBlock>No</TextBlock>
-            </ComboBox>
+                      Name="userCombo"
+                      ItemsSource="{Binding Path=UserTypeOptions, Mode=OneTime}"
+                      SelectedItem="{Binding Path=UserType, ValidatesOnDataErrors=True}"
+                />
             <!-- CurrentlyEmployed -->
             <Label Grid.Row="20" Grid.Column="0"
                 HorizontalAlignment="Right"
                 >
-                <TextBlock>
-                    ¿Es empleado actualmente?<LineBreak/>
-                    (no está despedido):
-                </TextBlock>
+                Seleccione para despedir:
             </Label>
-            <ComboBox Grid.Row="20" Grid.Column="2"
-                Height="{Binding ElementName=isAdminCombo, Path=ActualHeight}"
-                Name="currentlyEmployedCombo"
-                >
-                <TextBlock>Si</TextBlock>
-                <TextBlock>No</TextBlock>
-            </ComboBox>
+            
+            <CheckBox Grid.Row="20" Grid.Column="2"
+                      Name="fireEmployeeCheckbox"
+                      VerticalAlignment="Center"
+                />
             <!-- Save Button -->
         <Button
             Grid.Row="22" Grid.Column="2"

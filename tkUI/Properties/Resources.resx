@@ -405,4 +405,16 @@
     <value>The employee can't exist since the ID ({0}) is equal or less than zero.</value>
     <comment>Exception's message when a negative ID is used to search for an employee.</comment>
   </data>
+  <data name="EmployeeWrapperViewModel_UserTypeOptions_Administrator" xml:space="preserve">
+    <value>Administrador</value>
+    <comment>User role of an administrator.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_UserTypeOptions_Developer" xml:space="preserve">
+    <value>Desarrollador</value>
+    <comment>User role of an developer.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_UserTypeOptions_StandardUser" xml:space="preserve">
+    <value>Empleado</value>
+    <comment>User role of an employee.</comment>
+  </data>
 </root>

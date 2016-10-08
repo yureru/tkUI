@@ -475,6 +475,33 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Administrador.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_UserTypeOptions_Administrator {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_UserTypeOptions_Administrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desarrollador.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_UserTypeOptions_Developer {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_UserTypeOptions_Developer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empleado.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_UserTypeOptions_StandardUser {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_UserTypeOptions_StandardUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tiempo Completo.
         /// </summary>
         internal static string EmployeeWrapperViewModel_WorkingTimeOptions_FullTime {
