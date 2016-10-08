@@ -53,7 +53,7 @@
             <!-- Address -->
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="30"/>
-            <!-- IsAdmin -->
+            <!-- UserType -->
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="30"/>
             <!-- CurrentlyEmployed -->
@@ -253,7 +253,7 @@
                 Grid.Row="17" Grid.Column="2"
                 Content="{Binding ElementName=addressTxt, Path=(Validation.Errors).CurrentItem}"
                 />
-        <!-- IsAdmin -->
+        <!-- UserType -->
             <Label Grid.Row="18" Grid.Column="0"
                Content="_Tipo de Usuario: "
                HorizontalAlignment="Right"
@@ -262,6 +262,11 @@
                       Name="userCombo"
                       ItemsSource="{Binding Path=UserTypeOptions, Mode=OneTime}"
                       SelectedItem="{Binding Path=UserType, ValidatesOnDataErrors=True}"
+                      Validation.ErrorTemplate="{x:Null}"
+                />
+            <ContentPresenter
+                Grid.Row="19" Grid.Column="2"
+                Content="{Binding ElementName=userCombo, Path=(Validation.Errors).CurrentItem}"
                 />
             <!-- CurrentlyEmployed -->
             <Label Grid.Row="20" Grid.Column="0"

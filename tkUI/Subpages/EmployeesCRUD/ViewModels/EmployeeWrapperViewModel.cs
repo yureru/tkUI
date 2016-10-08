@@ -89,6 +89,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             this.Day = Resources.BirthDate_Combobox_Day;
             this.Month = Resources.BirthDate_Combobox_Month;
             this.Year = Resources.BirthDate_Combobox_Year;
+
+            _selectedUserType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
         }
 
         #endregion // Constructors
@@ -679,10 +681,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// <returns>True if the fields are valid, false otherwise.</returns>
         bool FieldsAreValid()
         {
-            return String.IsNullOrEmpty(this.ValidateGenderType())
-                && _employee.IsValid
-                && String.IsNullOrEmpty(this.ValidateWorkTime())
-                && String.IsNullOrEmpty(BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year));
+            return String.IsNullOrEmpty(this.ValidateGenderType()) &&
+                _employee.IsValid &&
+                String.IsNullOrEmpty(this.ValidateWorkTime()) &&
+                String.IsNullOrEmpty(BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year)) &&
+                String.IsNullOrEmpty(this.ValidateUserType());
         }
 
         /// <summary>
@@ -853,6 +856,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             this.Day = Resources.BirthDate_Combobox_Day;
             this.Month = Resources.BirthDate_Combobox_Month;
             this.Year = Resources.BirthDate_Combobox_Year;
+            this.UserType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
         }
 
         /// <summary>
@@ -957,9 +961,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             temp._employee.WorkTime = employee.WorkTime;
             temp.Address = employee.Address;
             temp.WorkTimeType = employee.WorkTime;
+            temp.UserType = employee.UserType;
 
             // TODO: Here put default values for the comboboxes Birthdate and Jornada if null.
-
+            // TODO: I think they're some validate functions that repeats this functionality?
             // Gender == true means Female
             if (employee.Gender)
             {
@@ -985,6 +990,15 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 temp._selectedWorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
             }
 
+            if (String.IsNullOrEmpty(employee.UserType) ||
+                employee.UserType != Resources.EmployeeWrapperViewModel_UserTypeOptions_StandardUser &&
+                employee.UserType != Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator &&
+                employee.UserType != Resources.EmployeeWrapperViewModel_UserTypeOptions_Developer
+                )
+            {
+                temp._selectedUserType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            }
+
         }
 
         /// <summary>
@@ -1006,6 +1020,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             employee.Pay = newData.Pay;
             employee.WorkTime = newData.WorkTime;
             employee.Address = newData.Address;
+            employee.UserType = newData.UserType;
             //original.OnPropertyChanged("FirstName");
             original.OnPropertyChanged("DisplayName");
             original.OnPropertyChanged("Gender");
@@ -1015,6 +1030,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             original.OnPropertyChanged("PrettyPay");
             original.OnPropertyChanged("WorkTime");
             original.OnPropertyChanged("Address");
+            original.OnPropertyChanged("UserType");
             // TODO: Do a thorough testing of the app.
             //newData.CleanForm();
         }
@@ -1093,6 +1109,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     case "Day":
                         error = BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year);
                         break;
+                    case "UserType":
+                        error = this.ValidateUserType();
+                        break;
                     default:
                         error = (_employee as IDataErrorInfo)[propertyName];
                         break;
@@ -1106,8 +1125,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         string ValidateGenderType()
         {
-            if (this.GenderType == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female
-                || this.GenderType == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male)
+            if (this.GenderType == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female ||
+                this.GenderType == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male)
             {
                 return null;
             }
@@ -1117,13 +1136,25 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         string ValidateWorkTime()
         {
-            if (this.WorkTimeType == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime
-                || this.WorkTimeType == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime)
+            if (this.WorkTimeType == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime ||
+                this.WorkTimeType == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime)
             {
                 return null;
             }
 
             return Resources.EmployeeWrapperViewModel_Error_MissingWorkTime;
+        }
+
+        string ValidateUserType()
+        {
+            if (this.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_StandardUser ||
+                this.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator ||
+                this.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Developer)
+            {
+                return null;
+            }
+
+            return Resources.EmployeeWrapperViewModel_Error_MissingUserType;
         }
 
         #endregion // Interface Implementations

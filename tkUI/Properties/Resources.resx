@@ -405,6 +405,10 @@
     <value>The employee can't exist since the ID ({0}) is equal or less than zero.</value>
     <comment>Exception's message when a negative ID is used to search for an employee.</comment>
   </data>
+  <data name="EmployeeWrapperViewModel_Error_MissingUserType" xml:space="preserve">
+    <value>El tipo de usuario debe seleccionarse</value>
+    <comment>The validation error message returned if the UserType property has an invalid value.</comment>
+  </data>
   <data name="EmployeeWrapperViewModel_UserTypeOptions_Administrator" xml:space="preserve">
     <value>Administrador</value>
     <comment>User role of an administrator.</comment>

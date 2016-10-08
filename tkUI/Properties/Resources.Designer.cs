@@ -358,6 +358,15 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to El tipo de usuario debe seleccionarse.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Error_MissingUserType {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Error_MissingUserType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El tipo de jornada debe seleccionarse.
         /// </summary>
         internal static string EmployeeWrapperViewModel_Error_MissingWorkTime {
