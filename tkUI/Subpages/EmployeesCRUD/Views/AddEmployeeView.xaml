@@ -272,12 +272,13 @@
             <Label Grid.Row="20" Grid.Column="0"
                 HorizontalAlignment="Right"
                 >
-                Seleccione para despedir:
+                ¿Empleado Activo?:
             </Label>
             
             <CheckBox Grid.Row="20" Grid.Column="2"
                       Name="fireEmployeeCheckbox"
                       VerticalAlignment="Center"
+                      IsChecked="{Binding Path=CurrentlyEmployed}"
                 />
             <!-- Save Button -->
         <Button

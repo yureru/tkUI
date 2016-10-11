@@ -36,6 +36,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
          *  (like birthdate, for example) and check when editing again if the changes are persistent.
          *  And not only that, what if the fields contain unvalid data?. Like for a combobox having true (or other data), where the accepted values are
          *  "Tiempo completo" or "Tiempo parcial".
+         *  5- Put an (?) icon at the side of the "Active" checkbox, that will inform with a tooltip something like:
+         *  "Si se quita la selección significa que el empleado está inactivo (despedido)."
              */
 
         #region Fields
@@ -89,6 +91,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             this.Day = Resources.BirthDate_Combobox_Day;
             this.Month = Resources.BirthDate_Combobox_Month;
             this.Year = Resources.BirthDate_Combobox_Year;
+
+            //this.CurrentlyEmployed = false;
 
             _selectedUserType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
         }
@@ -302,6 +306,22 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             get { return _employee.StartedWorking; }
             set { }
+        }
+
+        public bool CurrentlyEmployed
+        { 
+            get { return _employee.CurrentlyEmployed; }
+            set
+            {
+                if (_employee.CurrentlyEmployed == value)
+                {
+                    return;
+                }
+
+                _employee.CurrentlyEmployed = value;
+                OnPropertyChanged("CurrentlyEmployed");
+
+            }
         }
 
         /// <summary>
@@ -720,6 +740,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             _employeeBeingEdited = employeeEdited[0];
             _orignalData = this;
 
+            Debug.Print("Actual employee before editing");
             PrintEmployeeFields(employeeEdited[0]);
 
             // Initialize the Employee object that's going to be used as a temporal.
@@ -730,6 +751,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
 
             CopyEmployeeFields(employeeEdited[0], _editingCurrentEmployee);
+            Debug.Print("Editing Current Employee");
             PrintEmployeeFields(_editingCurrentEmployee._employee);
             modal.DataContext = _editingCurrentEmployee;
 
@@ -857,6 +879,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             this.Month = Resources.BirthDate_Combobox_Month;
             this.Year = Resources.BirthDate_Combobox_Year;
             this.UserType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            this.CurrentlyEmployed = false;
+            // TODO: Make invisible the checkbox that fires an employee when creating a new employee.
         }
 
         /// <summary>
@@ -962,6 +986,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             temp.Address = employee.Address;
             temp.WorkTimeType = employee.WorkTime;
             temp.UserType = employee.UserType;
+            temp.CurrentlyEmployed = employee.CurrentlyEmployed;
 
             // TODO: Here put default values for the comboboxes Birthdate and Jornada if null.
             // TODO: I think they're some validate functions that repeats this functionality?
@@ -1021,6 +1046,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             employee.WorkTime = newData.WorkTime;
             employee.Address = newData.Address;
             employee.UserType = newData.UserType;
+            employee.CurrentlyEmployed = newData.CurrentlyEmployed;
             //original.OnPropertyChanged("FirstName");
             original.OnPropertyChanged("DisplayName");
             original.OnPropertyChanged("Gender");
@@ -1031,6 +1057,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             original.OnPropertyChanged("WorkTime");
             original.OnPropertyChanged("Address");
             original.OnPropertyChanged("UserType");
+            original.OnPropertyChanged("CurrentlyEmployed");
             // TODO: Do a thorough testing of the app.
             //newData.CleanForm();
         }
