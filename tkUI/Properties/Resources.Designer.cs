@@ -164,6 +164,16 @@ namespace tkUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CircleInformationIcon {
+            get {
+                object obj = ResourceManager.GetObject("CircleInformationIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ClipBoardIcon {
             get {
                 object obj = ResourceManager.GetObject("ClipBoardIcon", resourceCulture);

@@ -271,15 +271,23 @@
             <!-- CurrentlyEmployed -->
             <Label Grid.Row="20" Grid.Column="0"
                 HorizontalAlignment="Right"
+                   Visibility="{Binding Path=AdminRightsCanFire}"
                 >
                 ¿Empleado Activo?:
             </Label>
-            
-            <CheckBox Grid.Row="20" Grid.Column="2"
-                      Name="fireEmployeeCheckbox"
-                      VerticalAlignment="Center"
-                      IsChecked="{Binding Path=CurrentlyEmployed}"
-                />
+            <StackPanel Grid.Row="20" Grid.Column="2" Orientation="Horizontal" Visibility="{Binding Path=AdminRightsCanFire}">
+                <CheckBox Name="fireEmployeeCheckbox"
+                          VerticalAlignment="Center"
+                        IsChecked="{Binding Path=CurrentlyEmployed}"
+                    />
+                <Image Source="..\..\..\Resources\GeneralGlyphs\CircleInformationIcon.png"
+                       Width="16"
+                       Height="16"
+                       RenderOptions.BitmapScalingMode="Fant"
+                       ToolTip="Si se quita la selección significa que el empleado está inactivo (despedido)."
+                       Margin="15,0,0,0"
+                    />
+            </StackPanel>
             <!-- Save Button -->
         <Button
             Grid.Row="22" Grid.Column="2"

@@ -29,7 +29,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     {
         // TODO: Add a string resources that should be used only for the XAML and not for code-behind files.
         /* TODO:
-         * 1- Give default values and validate the IsAdmin, and ISFired comboboxes.
+         * 2- While creating a new employee, make the checkbox true. And keep the original from the employee in the editing view.
          * 3- Re-design the SingleEmployeeView.
          * 4- What if an employee being edited has all the fields null?. Make sure all the exceptions are handled, and the warnings (error
          *  messages), all the comboboxes are setted to default, and when saving the corresponding objects are allocated 
@@ -54,6 +54,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         string[] _userTypeOptions;
         string _lastUserSaved;
         bool _isSelected;
+
+        string _adminRightsCanFire;
 
         RelayCommand _saveCommand;
         RelayCommand _deleteCommand;
@@ -95,6 +97,18 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             //this.CurrentlyEmployed = false;
 
             _selectedUserType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+
+            this.AdminRightsCanFire = "Collapsed";
+        }
+
+        public EmployeeWrapperViewModel(Employee employee, EmployeeRepository employeeRepository, bool isNewUser)
+            : this(employee, employeeRepository)
+        {
+            
+            if (!isNewUser)
+            {
+                this.AdminRightsCanFire = "Visible";
+            }
         }
 
         #endregion // Constructors
@@ -351,6 +365,34 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         }
 
         #endregion // Employee Properties
+
+        #region Admin Priviledges
+
+        /// <summary>
+        /// Determines if the user can use the control Checkbox that fires employees.
+        /// Currently, only an Administrator or a Developer can have these rights.
+        /// </summary>
+        public string AdminRightsCanFire
+        {
+            get
+            {
+                return _adminRightsCanFire;
+            }
+
+            set
+            {
+                if (String.IsNullOrEmpty(value) || _adminRightsCanFire == value)
+                {
+                    return;
+                }
+
+                _adminRightsCanFire = value;
+
+                OnPropertyChanged("AdminRightsCanFire");
+            }
+        }
+
+        #endregion // Admin Priviledges
 
         #region Presentation Properties
 
@@ -746,7 +788,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             // Initialize the Employee object that's going to be used as a temporal.
             if (!_editingCurrentEmployeeIsInitialized)
             {
-                _editingCurrentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository);
+                _editingCurrentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository, false);
                 _editingCurrentEmployeeIsInitialized = true;
             }
 
