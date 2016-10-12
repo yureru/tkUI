@@ -29,7 +29,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     {
         // TODO: Add a string resources that should be used only for the XAML and not for code-behind files.
         /* TODO:
-         * 2- While creating a new employee, make the checkbox true. And keep the original from the employee in the editing view.
          * 3- Re-design the SingleEmployeeView.
          * 4- What if an employee being edited has all the fields null?. Make sure all the exceptions are handled, and the warnings (error
          *  messages), all the comboboxes are setted to default, and when saving the corresponding objects are allocated 
@@ -39,6 +38,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
          *  5- Put an (?) icon at the side of the "Active" checkbox, that will inform with a tooltip something like:
          *  "Si se quita la selección significa que el empleado está inactivo (despedido)."
          *  6- Validate Name, and LastName so it can't contain digits.
+         *  7- If the data from StartedWorking field isn't valid, it will remain that way because that data is setted when we
+         *  create an user. So it might be a good idea to check if it contains a valid date, if it doesn't pull current date
+         *  and set it to the employee. A nicer approach would be to: A) Warn the user that it doesn't contains valid data,
+         *  and let them select a date.
              */
 
         #region Fields
@@ -746,6 +749,20 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 MessageBox.Show(Resources.EmployeeWrapperViewModel_Exception_DeleteWrongParam,
                     Resources.App_Messages_Fault_Error, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
+            }
+
+            // If asked element to delete is admin
+            // AND if there's only one admin in the collection
+            // Create a messagebox showing the error.
+
+            // TODO: DRY Cast in next statement
+            if (_employeeRepository.IsAdmin((int)id))
+            {
+                if (_employeeRepository.TotalActiveAdmins() <= 1)
+                {
+                    MessageBox.Show("No se puede borrar al administrador porque es el último que queda.", "Error al borrar", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
             }
 
             try

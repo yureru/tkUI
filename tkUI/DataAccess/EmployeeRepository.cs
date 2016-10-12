@@ -179,6 +179,57 @@ namespace tkUI.DataAccess
             return foundAdmin;
         }
 
+        public int TotalActiveAdmins()
+        {
+            return _employees.Count(p => p.CurrentlyEmployed == true &&
+                p.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator);
+        }
+
+        public int TotalAdmins()
+        {
+            return _employees.Count(p => p.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator);
+        }
+
+        public bool IsAdmin(int id)
+        {
+            // TODO: DRY in ExistsByID
+            var elem = (from item in _employees where String.Equals(item.ID, id) select item).ToList();
+
+            if (elem.Count > 0)
+            {
+                if (elem[0].UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if an employee exists in with the given ID.
+        /// </summary>
+        /// <param name="id">Employee's ID. A non-zero, positive integer.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public bool ExistsByID(int id)
+        {
+            if (id <= 0)
+            {
+                var msg = String.Format(Resources.App_Exceptions_NegativeIDSearchEmployee, id);
+                throw new ArgumentOutOfRangeException(msg);
+            }
+
+            var elem = (from item in _employees where String.Equals(item.ID, id) select item).ToList();
+
+            if (elem.Count > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         #endregion // Public Interface
 
         #region Private Helpers
@@ -367,29 +418,7 @@ namespace tkUI.DataAccess
             File.Move(newFile, originalFile);
         }
 
-        /// <summary>
-        /// Checks if an employee exists in with the given ID.
-        /// </summary>
-        /// <param name="id">Employee's ID. A non-zero, positive integer.</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        private bool ExistsByID(int id)
-        {
-            if (id <= 0)
-            {
-                var msg = String.Format(Resources.App_Exceptions_NegativeIDSearchEmployee, id);
-                throw new ArgumentOutOfRangeException(msg);
-            }
-
-            var elem = (from item in _employees where String.Equals(item.ID, id) select item).ToList();
-
-            if (elem.Count > 0)
-            {
-                return true;
-            }
-
-            return false;
-        }
+        
 
         #endregion // Private Helpers
 

@@ -233,6 +233,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             //var isEditModalOpen = from emp in this.AllEmployees where emp.EditModalOpen == false select emp;
             var isEditModalOpen = from emp in this.AllEmployees where emp.EditModalOpen == false where emp.IsSelected select emp;
 
+            // Test Purposes
+            Debug.Print("Current admin quantity: {0}", _employeeRepository.TotalActiveAdmins());
+
+            // UPDATE COMMENT
             // Show error message
             if (isEditModalOpen.Count() > 0)
             {
@@ -240,6 +244,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+
+            // Make sure there's at least one admin active before deletion.
+            // Check first if existsById, but find a way to not repeat this operation in DeleteById
+            //if ()
 
             // Ask for confirmation of range delete.
             var result = MessageBox.Show(String.Format(Resources.ListEmployeesViewModel_Format_ConfirmationRange, TotalSelectedEmployees), 
