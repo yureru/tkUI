@@ -38,6 +38,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
          *  "Tiempo completo" or "Tiempo parcial".
          *  5- Put an (?) icon at the side of the "Active" checkbox, that will inform with a tooltip something like:
          *  "Si se quita la selección significa que el empleado está inactivo (despedido)."
+         *  6- Validate Name, and LastName so it can't contain digits.
              */
 
         #region Fields
@@ -72,7 +73,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         #region Constructors
 
-        public EmployeeWrapperViewModel(Employee employee, EmployeeRepository employeeRepository)
+        public EmployeeWrapperViewModel(Employee employee, EmployeeRepository employeeRepository, bool isNewUser)
         {
             if (employee == null)
             {
@@ -99,17 +100,39 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             _selectedUserType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
 
             this.AdminRightsCanFire = "Collapsed";
+            Debug.Print("Normal EmployeeWrapper Constructor");
+            if (isNewUser)
+            {
+                this.AdminRightsCanFire = "Collapsed";
+                this.CurrentlyEmployed = true;
+            }
+            else
+            {
+                this.AdminRightsCanFire = "Visible";
+            }
+            //this.CurrentlyEmployed = true;
         }
-
-        public EmployeeWrapperViewModel(Employee employee, EmployeeRepository employeeRepository, bool isNewUser)
+        // What if we create a sole constructor, that has this signature and the proper code for the isNewUser?
+        /*public EmployeeWrapperViewModel(Employee employee, EmployeeRepository employeeRepository, bool isNewUser)
             : this(employee, employeeRepository)
         {
             
             if (!isNewUser)
             {
+                // I think I've got this, since it's calling the other constructor, passing employee
+                // we're (I think) modifying that employee var and setting it to true
+                // so it doesn't matters if here we do something like this.CurrentlyEmployed = employee.Currentlyemployed
+                // But stills, why doesn't this.CurrentlyEmployed = false works?
+                Debug.Print("!isNewUser");
                 this.AdminRightsCanFire = "Visible";
+                // For some reason, doesn't works
+                this.CurrentlyEmployed = false;
+
+                // Doesn't works either.
+                employee.CurrentlyEmployed = false;
+                this._employee.CurrentlyEmployed = false;
             }
-        }
+        }*/
 
         #endregion // Constructors
 
@@ -800,6 +823,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             modal.Content = view;
             modal.Title = "Edit Employee";
             //modal.ShowDialog();
+
+            // TEST; DELETE
+            //_editingCurrentEmployee.CurrentlyEmployed = employeeEdited[0].CurrentlyEmployed;
+
             modal.Show();
 
             // Check if the fields are different to the original Employee element, if so:
@@ -824,7 +851,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 throw new ArgumentNullException(String.Format(Resources.EmployeeWrapperViewModel_Exception_EmployeeIDNotFound, (int)id));
             }
 
-            var currentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository);
+            var currentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository, false);
             CopyEmployeeFields(employeeToShow, currentEmployee);
 
             // Modal's chrome properties
@@ -1028,6 +1055,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             temp.Address = employee.Address;
             temp.WorkTimeType = employee.WorkTime;
             temp.UserType = employee.UserType;
+            Debug.Print("CopyEmployeeFields() employee.CurrentlyEmployed: {0}", employee.CurrentlyEmployed);
+            temp._employee.CurrentlyEmployed = employee.CurrentlyEmployed;
             temp.CurrentlyEmployed = employee.CurrentlyEmployed;
 
             // TODO: Here put default values for the comboboxes Birthdate and Jornada if null.

@@ -59,9 +59,10 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         void CreateAllEmployees()
         {
+            // TODO: IDK if we should pass true or false as the third param
             List<EmployeeWrapperViewModel> all =
                 (from emp in _employeeRepository.GetEmployees()
-                 select new EmployeeWrapperViewModel(emp, _employeeRepository)).ToList();
+                 select new EmployeeWrapperViewModel(emp, _employeeRepository, false)).ToList();
 
             foreach (EmployeeWrapperViewModel evm in all)
             {
@@ -188,7 +189,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         void OnEmployeeAddedToRepository(object sender, EmployeeAddedEventArgs e)
         {
-            var viewModel = new EmployeeWrapperViewModel(e.NewEmployee, _employeeRepository);
+            // TODO: IDK if we should pass true or false as the third param.
+            var viewModel = new EmployeeWrapperViewModel(e.NewEmployee, _employeeRepository, false);
             this.AllEmployees.Add(viewModel);
         }
 
