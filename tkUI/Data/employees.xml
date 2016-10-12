@@ -6,5 +6,5 @@
   <employee id="4" firstName="Yukihiro" lastName="Matsumoto" gender="False" birthdate="//" email="true" phone="true" pay="10" workTime="true" address="true" startedWorking="true" userType="false" currentlyEmployed="False" />
   <employee id="5" firstName="Simon" lastName="Le Bon" gender="False" birthdate="//" email="true" phone="true" pay="10" workTime="true" address="true" startedWorking="true" userType="false" currentlyEmployed="False" />
   <employee id="6" firstName="Yan" lastName="Shiba" gender="True" birthdate="18/Junio/1992" email="asd@gmail.com" phone="123" pay="100" workTime="Tiempo Completo" address="Tokyo" startedWorking="14/9/2016" userType="false" currentlyEmployed="False" />
-  <employee id="7" firstName="Edward" lastName="Elrik" gender="False" birthdate="2/Enero/2001" email="edw@gmail.com" phone="123" pay="100" workTime="Tiempo Parcial" address="London" startedWorking="11/10/2016" userType="Empleado" currentlyEmployed="False" />
+  <employee id="7" firstName="Edward" lastName="Elrik" gender="False" birthdate="2/Enero/2001" email="edw@gmail.com" phone="123" pay="100" workTime="Tiempo Parcial" address="London" startedWorking="11/10/2016" userType="Empleado" currentlyEmployed="True" />
 </employees>

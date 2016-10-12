@@ -35,13 +35,12 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
          *  (like birthdate, for example) and check when editing again if the changes are persistent.
          *  And not only that, what if the fields contain unvalid data?. Like for a combobox having true (or other data), where the accepted values are
          *  "Tiempo completo" or "Tiempo parcial".
-         *  5- Put an (?) icon at the side of the "Active" checkbox, that will inform with a tooltip something like:
-         *  "Si se quita la selección significa que el empleado está inactivo (despedido)."
          *  6- Validate Name, and LastName so it can't contain digits.
          *  7- If the data from StartedWorking field isn't valid, it will remain that way because that data is setted when we
          *  create an user. So it might be a good idea to check if it contains a valid date, if it doesn't pull current date
          *  and set it to the employee. A nicer approach would be to: A) Warn the user that it doesn't contains valid data,
          *  and let them select a date.
+         *  8- Use an "MessageBox" substring in the name of the messages that are used in messagebox.
              */
 
         #region Fields
@@ -115,27 +114,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
             //this.CurrentlyEmployed = true;
         }
-        // What if we create a sole constructor, that has this signature and the proper code for the isNewUser?
-        /*public EmployeeWrapperViewModel(Employee employee, EmployeeRepository employeeRepository, bool isNewUser)
-            : this(employee, employeeRepository)
-        {
-            
-            if (!isNewUser)
-            {
-                // I think I've got this, since it's calling the other constructor, passing employee
-                // we're (I think) modifying that employee var and setting it to true
-                // so it doesn't matters if here we do something like this.CurrentlyEmployed = employee.Currentlyemployed
-                // But stills, why doesn't this.CurrentlyEmployed = false works?
-                Debug.Print("!isNewUser");
-                this.AdminRightsCanFire = "Visible";
-                // For some reason, doesn't works
-                this.CurrentlyEmployed = false;
-
-                // Doesn't works either.
-                employee.CurrentlyEmployed = false;
-                this._employee.CurrentlyEmployed = false;
-            }
-        }*/
 
         #endregion // Constructors
 
@@ -751,23 +729,24 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 return;
             }
 
-            // If asked element to delete is admin
-            // AND if there's only one admin in the collection
-            // Create a messagebox showing the error.
+            int castedID = (int)id;
 
-            // TODO: DRY Cast in next statement
-            if (_employeeRepository.IsAdmin((int)id))
+            // TODO: IsAdmin searchs for an ID (goes through the list) therefore is a nice Idea to avoid this
+            // on DeleteById (that method has the same functionality that check's if the employee exists).
+            // Error if the employee to delete is an Admin, and he's the last Admin in the collection.
+            if (_employeeRepository.IsAdmin(castedID))
             {
                 if (_employeeRepository.TotalActiveAdmins() <= 1)
                 {
-                    MessageBox.Show("No se puede borrar al administrador porque es el último que queda.", "Error al borrar", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(Resources.EmployeeWrapperViewModel_MsgBox_CantDeleteLastAdmin,
+                        Resources.App_Messages_Fault_Error, MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
             }
 
             try
             {
-                _employeeRepository.DeleteByID((int)id);
+                _employeeRepository.DeleteByID(castedID);
             }
 
             catch (ArgumentOutOfRangeException err)
@@ -810,7 +789,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             modal.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             _isModalSpawned = true; // States a modal is currently being used.
-            //OnPropertyChanged("EditToolTip");
             OnPropertyChanged("DeleteToolTip");
             modal.Activated += Modal_Activated;
             modal.Deactivated += Modal_Deactivated;
@@ -840,9 +818,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             modal.Content = view;
             modal.Title = "Edit Employee";
             //modal.ShowDialog();
-
-            // TEST; DELETE
-            //_editingCurrentEmployee.CurrentlyEmployed = employeeEdited[0].CurrentlyEmployed;
 
             modal.Show();
 
@@ -966,7 +941,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             this.Year = Resources.BirthDate_Combobox_Year;
             this.UserType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
             this.CurrentlyEmployed = false;
-            // TODO: Make invisible the checkbox that fires an employee when creating a new employee.
         }
 
         /// <summary>
@@ -1072,8 +1046,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             temp.Address = employee.Address;
             temp.WorkTimeType = employee.WorkTime;
             temp.UserType = employee.UserType;
-            Debug.Print("CopyEmployeeFields() employee.CurrentlyEmployed: {0}", employee.CurrentlyEmployed);
-            temp._employee.CurrentlyEmployed = employee.CurrentlyEmployed;
             temp.CurrentlyEmployed = employee.CurrentlyEmployed;
 
             // TODO: Here put default values for the comboboxes Birthdate and Jornada if null.

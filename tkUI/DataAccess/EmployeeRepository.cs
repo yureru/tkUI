@@ -179,17 +179,30 @@ namespace tkUI.DataAccess
             return foundAdmin;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Quantity of Active (CurrentlyEmployed) Administrators</returns>
         public int TotalActiveAdmins()
         {
             return _employees.Count(p => p.CurrentlyEmployed == true &&
                 p.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator);
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>Quantity of Administrators (active and inactive).</returns>
         public int TotalAdmins()
         {
             return _employees.Count(p => p.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator);
         }
 
+        /// <summary>
+        /// Checks if the given employee at the given id is an Administrator.
+        /// </summary>
+        /// <param name="id">ID, a non zero positive number.</param>
+        /// <returns>True if the id is an admin, false otherwise.</returns>
         public bool IsAdmin(int id)
         {
             // TODO: DRY in ExistsByID
