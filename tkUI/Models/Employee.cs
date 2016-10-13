@@ -19,7 +19,7 @@ namespace tkUI.Models
     /// </summary>
     class Employee : IDataErrorInfo
     {
-
+        // TODO: Make use of Resources strings, avoid repeating field strings.
         #region Constants
 
         static int MinimumWage = 74;
@@ -265,6 +265,14 @@ namespace tkUI.Models
             {
                 return "Ingrese nombre";
             }
+
+            var errorFound = RangeChecker.ContainsProperName(this.FirstName);
+
+            if (errorFound != null)
+            {
+                return errorFound;
+            }
+
             return null;
         }
 
@@ -274,6 +282,14 @@ namespace tkUI.Models
             {
                 return "Ingrese apellido";
             }
+
+            var errorFound = RangeChecker.ContainsProperName(this.LastName);
+
+            if (errorFound != null)
+            {
+                return errorFound;
+            }
+
             return null;
         }
 

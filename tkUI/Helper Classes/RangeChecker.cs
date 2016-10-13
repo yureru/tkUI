@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using System.Security;
+using tkUI.Properties;
 
 namespace tkUI.Helper_Classes
 {
@@ -27,6 +28,68 @@ namespace tkUI.Helper_Classes
                     return false;
             }
             return true;
+        }
+
+        public static bool IsLettersOnly(string str)
+        {
+            foreach (var c in str)
+            {
+                if (!char.IsLetter(c))
+                    return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Checks if the given string contains a proper Name. Meaning it can only
+        /// contain: Letters, apostrophes, or spaces. Spaces at the beggining, end, and double spaces, and
+        /// double apostrophes are marked as errors.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns>Null if there's no errors, a string containing the proper error if invalid.</returns>
+        public static string ContainsProperName(string str)
+        {
+            if (str != str.Trim())
+            {
+                return Resources.Employee_Error_SpacesAtEndsInName;
+            }
+
+            char prevc;
+            for (int i = 0; i < str.Length; ++i)
+            {
+
+                if (!char.IsLetter(str[i]) && str[i] != '\'' && str[i] != ' ')
+                {
+                    return Resources.Employee_Error_InvalidCharInName;
+                }
+
+                if (i > 0)
+                {
+                    prevc = str[i - 1];
+                    // prev character and current are repeated?
+                    if (prevc == str[i])
+                    {
+                        /*
+                         * Valid Input:
+                         * "one' two"
+                         *
+                         * Invalid Input:
+                         * "one'  two", "one  two", "one''two", "one' 'two", "one ' two", "one  two"
+                         */
+                        if (prevc == ' ')
+                        {
+                            return Resources.Employee_Error_InvalidDoubleSpaces;
+                        }
+
+                        if (prevc == '\'')
+                        {
+                            return Resources.Employee_Error_InvalidDoubleApostrophes;
+                        }
+                        
+                    }
+                }
+            }
+            return null;
         }
 
         public static bool IsValidEmailAddress(string email)

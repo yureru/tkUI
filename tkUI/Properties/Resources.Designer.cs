@@ -242,6 +242,33 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Solamente se aceptan letras, espacios, y apóstrofes.
+        /// </summary>
+        internal static string Employee_Error_InvalidCharInName {
+            get {
+                return ResourceManager.GetString("Employee_Error_InvalidCharInName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se admiten apóstrofes dobles.
+        /// </summary>
+        internal static string Employee_Error_InvalidDoubleApostrophes {
+            get {
+                return ResourceManager.GetString("Employee_Error_InvalidDoubleApostrophes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se admiten espacios dobles.
+        /// </summary>
+        internal static string Employee_Error_InvalidDoubleSpaces {
+            get {
+                return ResourceManager.GetString("Employee_Error_InvalidDoubleSpaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to La dirección e-mail es inválida.
         /// </summary>
         internal static string Employee_Error_InvalidEmail {
@@ -319,6 +346,15 @@ namespace tkUI.Properties {
         internal static string Employee_Error_PhoneContainsNonDigits {
             get {
                 return ResourceManager.GetString("Employee_Error_PhoneContainsNonDigits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se permiten espacios antes del nombre o al final.
+        /// </summary>
+        internal static string Employee_Error_SpacesAtEndsInName {
+            get {
+                return ResourceManager.GetString("Employee_Error_SpacesAtEndsInName", resourceCulture);
             }
         }
         

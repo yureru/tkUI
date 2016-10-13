@@ -428,4 +428,20 @@
     <value>No se puede borrar al administrador porque es el último que queda</value>
     <comment>Error message when the users wants to delete an Employee but that's the last admin in the collection.</comment>
   </data>
+  <data name="Employee_Error_InvalidCharInName" xml:space="preserve">
+    <value>Solamente se aceptan letras, espacios, y apóstrofes</value>
+    <comment>Error message when the Name contains unvalid characters.</comment>
+  </data>
+  <data name="Employee_Error_InvalidDoubleApostrophes" xml:space="preserve">
+    <value>No se admiten apóstrofes dobles</value>
+    <comment>Error message when the Name contains double apostrophes.</comment>
+  </data>
+  <data name="Employee_Error_InvalidDoubleSpaces" xml:space="preserve">
+    <value>No se admiten espacios dobles</value>
+    <comment>Error message when the Name contains double spaces.</comment>
+  </data>
+  <data name="Employee_Error_SpacesAtEndsInName" xml:space="preserve">
+    <value>No se permiten espacios antes del nombre o al final</value>
+    <comment>Error message when the Name contains space(s) at the beginning or end.</comment>
+  </data>
 </root>
