@@ -163,6 +163,21 @@ namespace tkUI.DataAccess
             }
         }
 
+        // Repeated functionality in IsAdmin
+        /*public bool IsAdminAtId(int id)
+        {
+            if (ExistsByID(id))
+            {
+                var qt =_employees.Count(p => p.ID == id &&
+                    p.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator);
+                if (qt == 1)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }*/
+
         public bool ExistsAtLeastOneAdmin()
         {
             bool foundAdmin = false;

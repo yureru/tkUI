@@ -706,6 +706,15 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No se puede eliminar el rango porque contiene un Administrador.
+        /// </summary>
+        internal static string ListEmployeeViewModel_Warning_RangeHasAdministrator {
+            get {
+                return ResourceManager.GetString("ListEmployeeViewModel_Warning_RangeHasAdministrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No se reconoce el e-mail..
         /// </summary>
         internal static string LoginViewModel_Error_EmailWasntFound {

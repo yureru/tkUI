@@ -444,4 +444,8 @@
     <value>No se permiten espacios antes del nombre o al final</value>
     <comment>Error message when the Name contains space(s) at the beginning or end.</comment>
   </data>
+  <data name="ListEmployeeViewModel_Warning_RangeHasAdministrator" xml:space="preserve">
+    <value>No se puede eliminar el rango porque contiene un Administrador</value>
+    <comment>Warning when a range to be deleted contains an employee with priviledges of Administrator.</comment>
+  </data>
 </root>

@@ -241,18 +241,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 return;
             }
 
-            /*
-                There's several scenerrios on how to develop functionality in deletion of range of users that contains
-                one or several Administrator.
-                a) The easiest one: If the range contains an adminsitrator, forbid the operation.
-                b) The hardest: Start deleting the range, and checking if they're still remaining at least one Admin, if it's the last admin
-                and we're asking to delete it, skip that and warns the user, but keep going for normal users.
-                c) Warn the user it can't delete the admins from the range, but ask if he stills want's to delete those normal ones.
-             */
-
-            // Make sure there's at least one admin active before deletion.
-            // Check first if existsById, but find a way to not repeat this operation in DeleteById
-
             // Ask for confirmation of range delete.
             var result = MessageBox.Show(String.Format(Resources.ListEmployeesViewModel_Format_ConfirmationRange, TotalSelectedEmployees), 
                 Resources.ListEmployeesViewModel_Confirmation_Self, MessageBoxButton.YesNo, MessageBoxImage.None);
@@ -264,9 +252,37 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 return;
             }
 
-            // Ok, delete the range of employees.
+            /*
+                There's several scenarios on how to develop functionality in deletion of range of users that contains
+                one or several Administrator.
+                a) The easiest one: If the range contains an adminsitrator, forbid the operation.
+                b) The hardest: Start deleting the range, and checking if they're still remaining at least one Admin, if it's the last admin
+                and we're asking to delete it, skip that and warns the user, but keep going for normal users.
+                c) Warn the user it can't delete the admins from the range, but ask if he stills want's to delete those normal ones.
+
+                Make sure there's at least one admin active before deletion.
+                Check first if existsById, but find a way to not repeat this operation in DeleteById
+             */
+
+            // Currently implementing a) option from above
+            
+
+            // Get range of ids.
             var selectedEmps = (from emp in this.AllEmployees where emp.IsSelected select emp.ID).ToList();
 
+            // The range contains an administrator?
+            foreach (var emp in selectedEmps)
+            {
+                if (_employeeRepository.IsAdmin(emp))
+                {
+                    MessageBox.Show(Resources.ListEmployeeViewModel_Warning_RangeHasAdministrator, Resources.ListEmployeesViewModel_Warning_Self,
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+            }
+
+
+            //Ok, delete the range of employees.
             var idsNotFound = new List<int>();
 
             foreach (var emp in selectedEmps)
@@ -321,7 +337,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         bool CanSaveChanges()
         {
-            // TODO: Can't save if an employee is being edited.
             return true;
         }
 
