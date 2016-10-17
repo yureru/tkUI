@@ -491,6 +491,20 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     return;
                 }
 
+                if (!CanChangeUserType())
+                {
+                    // TODO: Find a way to go back to the Administrator item, since changing it when it's the last
+                    // administrator, it does shows the Error messageBox, but the combobox element is changed to the
+                    // selected. Stills, even when we save, the Combobox changes aren't saved so we're "safe".
+                    // But it is bad UX since it shows the change in the Combobox.
+                    // The following lines doesn't works to keep the Administrator item selected.
+                    /*_editingCurrentEmployee._selectedUserType = Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator;
+                    _selectedUserType = Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator;*/
+                    // Now, I've thinked about this and we can simply deactive the Combobox element, and show a tooltip
+                    // warning the user that we can't do the changes in the Combobox since it's the last administrator.
+                    return;
+                }
+
                 _selectedUserType = value;
 
                 if (_selectedUserType != Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified)
@@ -1147,6 +1161,17 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             _isModalSpawned = false;
             EditModalOpen = false;
             OnPropertyChanged("DeleteToolTip");
+        }
+
+        bool CanChangeUserType()
+        {
+            if (this.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator &&
+                _employeeRepository.TotalActiveAdmins() <= 1)
+            {
+                MessageBox.Show("No se puede cambiar de tipo de usuario porque es el último administrador", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            return true;
         }
 
         /// <summary>
