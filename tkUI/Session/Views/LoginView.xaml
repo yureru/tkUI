@@ -15,7 +15,19 @@
                 <ResourceDictionary Source="..\..\ApplicationResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <Style x:Key="blankButton">
+                <Setter Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="Transparent">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
+        
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -76,7 +88,47 @@
             Grid.Row="3"
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center" VerticalAlignment="Center">Password</TextBlock>
-        <PasswordBox
+        <!-- Approach with Style -->
+        <Button
+            PreviewKeyDown="Button_PreviewKeyDown"
+            Grid.Row="4"
+            Grid.ColumnSpan="4"
+            Background="Transparent"
+            BorderThickness="0"
+            IsTabStop="False"
+            Style="{StaticResource blankButton}"
+            >
+            <PasswordBox
+                Name="passwordTxt"
+                PasswordChar="•"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Width="250"
+                PasswordChanged="passwordTxt_PasswordChanged"
+            />
+        </Button>
+        <!-- Trying to bind the size of the button -->
+        <!--<Button
+            PreviewKeyDown="Button_PreviewKeyDown"
+            Grid.Row="4"
+            Grid.ColumnSpan="4"
+            Background="Transparent"
+            BorderThickness="0"
+            MinHeight="{Binding ElementName=passwordTxt, Path=Height}"
+            MinWidth="{Binding ElementName=passwordTxt, Path=Width}"
+            MaxHeight="{Binding ElementName=passwordTxt, Path=ActualHeight}"
+            MaxWidth="{Binding ElementName=passwordTxt, Path=ActualWidth}"
+            >
+            <PasswordBox
+            Name="passwordTxt"
+            PasswordChar="•"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            Height="15"
+            Width="250"
+            PasswordChanged="passwordTxt_PasswordChanged"
+            />
+        </Button>-->
+        <!-- Original PaswwordBox -->
+        <!--<PasswordBox
             Name="passwordTxt"
             PasswordChar="•"
             Grid.Row="4"
@@ -84,7 +136,7 @@
             HorizontalAlignment="Center" VerticalAlignment="Center"
             Width="250"
             PasswordChanged="passwordTxt_PasswordChanged"
-            />
+            />-->
 
         <TextBlock
             Text="{Binding Path=PassError}"
@@ -142,5 +194,10 @@
             </TextBlock.InputBindings>
         </TextBlock>
 
+        <!--<Button
+            Command="{Binding Path=EnterKeyDownLoginCommand}"
+            Grid.Row="9"
+            >Test</Button>-->
+        
     </Grid>
 </UserControl>
