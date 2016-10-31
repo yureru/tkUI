@@ -448,4 +448,8 @@
     <value>No se puede eliminar el rango porque contiene un Administrador</value>
     <comment>Warning when a range to be deleted contains an employee with priviledges of Administrator.</comment>
   </data>
+  <data name="EmployeeWrapperViewModel_MsgBox_CantChangeAdminUserType" xml:space="preserve">
+    <value>No se puede cambiar el tipo de usuario porque es el último administrador</value>
+    <comment>Error message when the user wants to edit the UserType combobox on the last admin.</comment>
+  </data>
 </root>

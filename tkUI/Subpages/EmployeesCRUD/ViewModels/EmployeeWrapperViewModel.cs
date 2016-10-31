@@ -1059,6 +1059,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             temp._employee.WorkTime = employee.WorkTime;
             temp.Address = employee.Address;
             temp.WorkTimeType = employee.WorkTime;
+            /* _selectedUserType assignment to bypass the set accessor of UserType property and therefore
+             * the CanChangeUser validation. This caused to show the modal: "Can't edit User type because it's the last admin".
+             * Happened when we open the edit view of the last admin, closed it, and then open any other user.
+            */
+            temp._selectedUserType = employee.UserType;
             temp.UserType = employee.UserType;
             temp.CurrentlyEmployed = employee.CurrentlyEmployed;
 
@@ -1168,7 +1173,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             if (this.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator &&
                 _employeeRepository.TotalActiveAdmins() <= 1)
             {
-                MessageBox.Show("No se puede cambiar de tipo de usuario porque es el último administrador", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Resources.EmployeeWrapperViewModel_MsgBox_CantChangeAdminUserType, Resources.ListEmployeesViewModel_Warning_Self,
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
             return true;

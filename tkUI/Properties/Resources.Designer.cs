@@ -494,6 +494,15 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No se puede cambiar el tipo de usuario porque es el último administrador.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_MsgBox_CantChangeAdminUserType {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_MsgBox_CantChangeAdminUserType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No se puede borrar al administrador porque es el último que queda.
         /// </summary>
         internal static string EmployeeWrapperViewModel_MsgBox_CantDeleteLastAdmin {
