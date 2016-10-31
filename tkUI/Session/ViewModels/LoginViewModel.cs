@@ -12,6 +12,9 @@ using tkUI.Properties;
 using tkUI.Session.Views;
 using tkUI.Session.Utils;
 
+// test
+using System.Windows;
+
 namespace tkUI.Session.ViewModels
 {
 
@@ -28,6 +31,7 @@ namespace tkUI.Session.ViewModels
 
         RelayCommand _loginCommand;
         RelayCommand _forgotPasswordCommand;
+        RelayCommand _enterKeyDownLogginCommand;
 
         string _email;
 
@@ -47,6 +51,7 @@ namespace tkUI.Session.ViewModels
         {
             _changeViewModelManually = changeViewModelManually;
             _successMessage = new MessageAndColor();
+            LoginView.RequestLoginEvent += LoginEvent;
         }
 
         #endregion // Constructors
@@ -191,6 +196,22 @@ namespace tkUI.Session.ViewModels
             }
         }
 
+        public ICommand EnterKeyDownLoginCommand
+        {
+            get
+            {
+                if (_enterKeyDownLogginCommand == null)
+                {
+                    _enterKeyDownLogginCommand = new RelayCommand(
+                        param => this.Login(),
+                        param => this.CanLogin()
+                        );
+                }
+
+                return _enterKeyDownLogginCommand;
+            }
+        }
+
         #endregion // Commands
 
         #region Private Helpers
@@ -272,6 +293,17 @@ namespace tkUI.Session.ViewModels
         bool CanGoToForgotPassword()
         {
             return true;
+        }
+
+        /// <summary>
+        /// Helper to subscribe to the LoginView.RequestLoginEvent.
+        /// </summary>
+        void LoginEvent()
+        {
+            if (CanLogin())
+            {
+                Login();
+            }
         }
 
         #endregion // Private Helpers

@@ -22,7 +22,13 @@ namespace tkUI.Session.Views
     /// </summary>
     public partial class LoginView : UserControl
     {
+        #region Fields
+
         static SecureString _pass;
+        public delegate void LoginFromPasswordBox();
+        public static event LoginFromPasswordBox RequestLoginEvent; 
+
+        #endregion // Fields
 
         public LoginView()
         {
@@ -42,6 +48,20 @@ namespace tkUI.Session.Views
             get
             {
                 return _pass;
+            }
+        }
+
+        /// <summary>
+        /// Handler to allow login from the PasswordBox when we hit enter.
+        /// As you can see it's due the routed bubbling event (Preview).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                LoginView.RequestLoginEvent();
             }
         }
     }

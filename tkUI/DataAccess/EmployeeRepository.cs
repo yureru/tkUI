@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using System.Windows;
 using System.Windows.Resources;
 
+using tkUI.Properties;
 using tkUI.Models;
 using System.Diagnostics;
 using System.Collections.Specialized;
@@ -36,7 +37,8 @@ namespace tkUI.DataAccess
                 "id", "firstName", "lastName",
                 "gender", "birthdate", "email",
                 "phone", "pay", "workTime",
-                "address", "startedWorking"
+                "address", "startedWorking", "userType",
+                "currentlyEmployed"
             };
 
         static string[] _baseXMLOriginalPath;
@@ -135,6 +137,8 @@ namespace tkUI.DataAccess
         /// containing that ID. It raises the EmployeeDeletedEventArgs.
         /// </summary>
         /// <param name="id"></param>
+        /// <exception cref="ArgumentOutOfRangeException">"Inherited" from ExistsById function.</exception>
+        /// /// <exception cref="ArgumentOutOfRangeException">When the ID is positive but wasn't found in the collection.</exception>
         public void DeleteByID(int id)
         {
             if (ExistsByID(id))
@@ -152,6 +156,82 @@ namespace tkUI.DataAccess
                     }
                 }
             }
+            else
+            {
+                var msg = String.Format(Resources.App_Exceptions_IDSearchNotFound, id);
+                throw new ArgumentOutOfRangeException(msg);
+            }
+        }
+
+        // Repeated functionality in IsAdmin
+        /*public bool IsAdminAtId(int id)
+        {
+            if (ExistsByID(id))
+            {
+                var qt =_employees.Count(p => p.ID == id &&
+                    p.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator);
+                if (qt == 1)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }*/
+
+        public bool ExistsAtLeastOneAdmin()
+        {
+            bool foundAdmin = false;
+
+            foreach (var employee in _employees)
+            {
+                if (employee.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator)
+                {
+                    foundAdmin = true;
+                    break;
+                }
+            }
+
+            return foundAdmin;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Quantity of Active (CurrentlyEmployed) Administrators</returns>
+        public int TotalActiveAdmins()
+        {
+            return _employees.Count(p => p.CurrentlyEmployed == true &&
+                p.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>Quantity of Administrators (active and inactive).</returns>
+        public int TotalAdmins()
+        {
+            return _employees.Count(p => p.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator);
+        }
+
+        /// <summary>
+        /// Checks if the given employee at the given id is an Administrator.
+        /// </summary>
+        /// <param name="id">ID, a non zero positive number.</param>
+        /// <returns>True if the id is an admin, false otherwise.</returns>
+        public bool IsAdmin(int id)
+        {
+            // TODO: DRY in ExistsByID
+            var elem = (from item in _employees where String.Equals(item.ID, id) select item).ToList();
+
+            if (elem.Count > 0)
+            {
+                if (elem[0].UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -159,8 +239,15 @@ namespace tkUI.DataAccess
         /// </summary>
         /// <param name="id">Employee's ID. A non-zero, positive integer.</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public bool ExistsByID(int id)
         {
+            if (id <= 0)
+            {
+                var msg = String.Format(Resources.App_Exceptions_NegativeIDSearchEmployee, id);
+                throw new ArgumentOutOfRangeException(msg);
+            }
+
             var elem = (from item in _employees where String.Equals(item.ID, id) select item).ToList();
 
             if (elem.Count > 0)
@@ -192,7 +279,9 @@ namespace tkUI.DataAccess
                             (string)employeeElem.Attribute(_xmlAttributes[7]),
                             (string)employeeElem.Attribute(_xmlAttributes[8]),
                             (string)employeeElem.Attribute(_xmlAttributes[9]),
-                            (string)employeeElem.Attribute(_xmlAttributes[10]))).ToList();
+                            (string)employeeElem.Attribute(_xmlAttributes[10]),
+                            (string)employeeElem.Attribute(_xmlAttributes[11]),
+                            (bool)employeeElem.Attribute(_xmlAttributes[12]))).ToList();
         }
 
         /// <summary>
@@ -228,6 +317,9 @@ namespace tkUI.DataAccess
                     writer.WriteAttributeString(_xmlAttributes[8], employee.WorkTime);
                     writer.WriteAttributeString(_xmlAttributes[9], employee.Address);
                     writer.WriteAttributeString(_xmlAttributes[10], employee.StartedWorking);
+                    writer.WriteAttributeString(_xmlAttributes[11], employee.UserType);
+                    writer.WriteAttributeString(_xmlAttributes[12], employee.CurrentlyEmployed.ToString());
+
                     writer.WriteEndElement();
                 }
                 writer.Flush();
@@ -353,6 +445,8 @@ namespace tkUI.DataAccess
             File.Delete(originalFile);
             File.Move(newFile, originalFile);
         }
+
+        
 
         #endregion // Private Helpers
 

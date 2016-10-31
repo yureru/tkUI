@@ -385,4 +385,71 @@
     <value>¡Un email conteniendo el restablecimiento de tu clave fue enviado!</value>
     <comment>Success message when a reminder of the password was sent.</comment>
   </data>
+  <data name="App_Messages_Fault_Error" xml:space="preserve">
+    <value>Error</value>
+    <comment>Error message.</comment>
+  </data>
+  <data name="App_Messages_Fault_FollowingIDsWerentFound" xml:space="preserve">
+    <value>Los siguientes IDs no fueron encontrados: </value>
+    <comment>Message when the list of employees doesn't contains those IDs.</comment>
+  </data>
+  <data name="App_Messages_Fault_Warning" xml:space="preserve">
+    <value>Advertencia</value>
+    <comment>Warning message.</comment>
+  </data>
+  <data name="App_Exceptions_IDSearchNotFound" xml:space="preserve">
+    <value>Employee with the ID {0} wasn't found.</value>
+    <comment>Exception's message when the employee wasn't found for the given ID.</comment>
+  </data>
+  <data name="App_Exceptions_NegativeIDSearchEmployee" xml:space="preserve">
+    <value>The employee can't exist since the ID ({0}) is equal or less than zero.</value>
+    <comment>Exception's message when a negative ID is used to search for an employee.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_Error_MissingUserType" xml:space="preserve">
+    <value>El tipo de usuario debe seleccionarse</value>
+    <comment>The validation error message returned if the UserType property has an invalid value.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_UserTypeOptions_Administrator" xml:space="preserve">
+    <value>Administrador</value>
+    <comment>User role of an administrator.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_UserTypeOptions_Developer" xml:space="preserve">
+    <value>Desarrollador</value>
+    <comment>User role of an developer.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_UserTypeOptions_StandardUser" xml:space="preserve">
+    <value>Empleado</value>
+    <comment>User role of an employee.</comment>
+  </data>
+  <data name="CircleInformationIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GeneralGlyphs\CircleInformationIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EmployeeWrapperViewModel_MsgBox_CantDeleteLastAdmin" xml:space="preserve">
+    <value>No se puede borrar al administrador porque es el último que queda</value>
+    <comment>Error message when the users wants to delete an Employee but that's the last admin in the collection.</comment>
+  </data>
+  <data name="Employee_Error_InvalidCharInName" xml:space="preserve">
+    <value>Solamente se aceptan letras, espacios, y apóstrofes</value>
+    <comment>Error message when the Name contains unvalid characters.</comment>
+  </data>
+  <data name="Employee_Error_InvalidDoubleApostrophes" xml:space="preserve">
+    <value>No se admiten apóstrofes dobles</value>
+    <comment>Error message when the Name contains double apostrophes.</comment>
+  </data>
+  <data name="Employee_Error_InvalidDoubleSpaces" xml:space="preserve">
+    <value>No se admiten espacios dobles</value>
+    <comment>Error message when the Name contains double spaces.</comment>
+  </data>
+  <data name="Employee_Error_SpacesAtEndsInName" xml:space="preserve">
+    <value>No se permiten espacios antes del nombre o al final</value>
+    <comment>Error message when the Name contains space(s) at the beginning or end.</comment>
+  </data>
+  <data name="ListEmployeeViewModel_Warning_RangeHasAdministrator" xml:space="preserve">
+    <value>No se puede eliminar el rango porque contiene un Administrador</value>
+    <comment>Warning when a range to be deleted contains an employee with priviledges of Administrator.</comment>
+  </data>
+  <data name="EmployeeWrapperViewModel_MsgBox_CantChangeAdminUserType" xml:space="preserve">
+    <value>No se puede cambiar el tipo de usuario porque es el último administrador</value>
+    <comment>Error message when the user wants to edit the UserType combobox on the last admin.</comment>
+  </data>
 </root>

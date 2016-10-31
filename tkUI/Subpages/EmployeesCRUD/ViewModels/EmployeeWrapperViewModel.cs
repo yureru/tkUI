@@ -29,7 +29,18 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
     {
         // TODO: Add a string resources that should be used only for the XAML and not for code-behind files.
         /* TODO:
-         * 1- Re-design the SingleEmployeeView
+         * 3- Re-design the SingleEmployeeView.
+         * 4- What if an employee being edited has all the fields null?. Make sure all the exceptions are handled, and the warnings (error
+         *  messages), all the comboboxes are setted to default, and when saving the corresponding objects are allocated 
+         *  (like birthdate, for example) and check when editing again if the changes are persistent.
+         *  And not only that, what if the fields contain unvalid data?. Like for a combobox having true (or other data), where the accepted values are
+         *  "Tiempo completo" or "Tiempo parcial".
+         *  6- Validate Name, and LastName so it can't contain digits.
+         *  7- If the data from StartedWorking field isn't valid, it will remain that way because that data is setted when we
+         *  create an user. So it might be a good idea to check if it contains a valid date, if it doesn't pull current date
+         *  and set it to the employee. A nicer approach would be to: A) Warn the user that it doesn't contains valid data,
+         *  and let them select a date.
+         *  8- Use an "MessageBox" substring in the name of the messages that are used in messagebox.
              */
 
         #region Fields
@@ -40,17 +51,19 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         string _genderType;
         string _selectedWorkTime;
         string _selectedDay, _selectedMonth, _selectedYear;
+        string _selectedUserType;
         string[] _genderTypeOptions;
         string[] _workTimeOptions;
+        string[] _userTypeOptions;
         string _lastUserSaved;
         bool _isSelected;
+
+        string _adminRightsCanFire;
 
         RelayCommand _saveCommand;
         RelayCommand _deleteCommand;
         RelayCommand _editCommand;
         RelayCommand _viewCommand;
-        
-
 
         static EmployeeWrapperViewModel _editingCurrentEmployee;
         static bool _editingCurrentEmployeeIsInitialized;
@@ -62,7 +75,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         #region Constructors
 
-        public EmployeeWrapperViewModel(Employee employee, EmployeeRepository employeeRepository)
+        public EmployeeWrapperViewModel(Employee employee, EmployeeRepository employeeRepository, bool isNewUser)
         {
             if (employee == null)
             {
@@ -76,11 +89,30 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
             _employee = employee;
             _employeeRepository = employeeRepository;
+
             _genderType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
             _selectedWorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+
             this.Day = Resources.BirthDate_Combobox_Day;
             this.Month = Resources.BirthDate_Combobox_Month;
             this.Year = Resources.BirthDate_Combobox_Year;
+
+            //this.CurrentlyEmployed = false;
+
+            _selectedUserType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+
+            this.AdminRightsCanFire = "Collapsed";
+            Debug.Print("Normal EmployeeWrapper Constructor");
+            if (isNewUser)
+            {
+                this.AdminRightsCanFire = "Collapsed";
+                this.CurrentlyEmployed = true;
+            }
+            else
+            {
+                this.AdminRightsCanFire = "Visible";
+            }
+            //this.CurrentlyEmployed = true;
         }
 
         #endregion // Constructors
@@ -294,9 +326,25 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             set { }
         }
 
+        public bool CurrentlyEmployed
+        { 
+            get { return _employee.CurrentlyEmployed; }
+            set
+            {
+                if (_employee.CurrentlyEmployed == value)
+                {
+                    return;
+                }
+
+                _employee.CurrentlyEmployed = value;
+                OnPropertyChanged("CurrentlyEmployed");
+
+            }
+        }
+
         /// <summary>
         /// Checks if there's an edit modal open for a given employee instance.
-        /// Note: EditModalOpen actually returns false (we're negatin ModalOpen) when
+        /// Note: EditModalOpen actually returns false (we're negating ModalOpen) when
         /// the edit modal is open. That's cause we're binding this property to the
         /// ListEmployeeView and that needs the property IsEnabled="False" to know
         /// when the modal is open.
@@ -321,6 +369,34 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         }
 
         #endregion // Employee Properties
+
+        #region Admin Priviledges
+
+        /// <summary>
+        /// Determines if the user can use the control Checkbox that fires employees.
+        /// Currently, only an Administrator or a Developer can have these rights.
+        /// </summary>
+        public string AdminRightsCanFire
+        {
+            get
+            {
+                return _adminRightsCanFire;
+            }
+
+            set
+            {
+                if (String.IsNullOrEmpty(value) || _adminRightsCanFire == value)
+                {
+                    return;
+                }
+
+                _adminRightsCanFire = value;
+
+                OnPropertyChanged("AdminRightsCanFire");
+            }
+        }
+
+        #endregion // Admin Priviledges
 
         #region Presentation Properties
 
@@ -401,6 +477,62 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     };
                 }
                 return _workTimeOptions;
+            }
+        }
+
+        public string UserType
+        {
+            get { return _selectedUserType; }
+
+            set
+            {
+                if (_selectedUserType == value || String.IsNullOrEmpty(value))
+                {
+                    return;
+                }
+
+                if (!CanChangeUserType())
+                {
+                    // TODO: Find a way to go back to the Administrator item, since changing it when it's the last
+                    // administrator, it does shows the Error messageBox, but the combobox element is changed to the
+                    // selected. Stills, even when we save, the Combobox changes aren't saved so we're "safe".
+                    // But it is bad UX since it shows the change in the Combobox.
+                    // The following lines doesn't works to keep the Administrator item selected.
+                    /*_editingCurrentEmployee._selectedUserType = Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator;
+                    _selectedUserType = Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator;*/
+                    // Now, I've thinked about this and we can simply deactive the Combobox element, and show a tooltip
+                    // warning the user that we can't do the changes in the Combobox since it's the last administrator.
+                    return;
+                }
+
+                _selectedUserType = value;
+
+                if (_selectedUserType != Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified)
+                {
+                    _employee.UserType = _selectedUserType;
+                }
+
+                this.OnPropertyChanged("UserType");
+
+            }
+        }
+
+        public string[] UserTypeOptions
+        {
+            get
+            {
+                if (_userTypeOptions == null)
+                {
+                    _userTypeOptions = new string[]
+                    {
+                        Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified,
+                        Resources.EmployeeWrapperViewModel_UserTypeOptions_StandardUser,
+                        Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator,
+                        Resources.EmployeeWrapperViewModel_UserTypeOptions_Developer
+                    };
+                }
+
+                return _userTypeOptions;
             }
         }
 
@@ -532,10 +664,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             }
         }
 
-        
-
-        
-
         #endregion // Presentations Properties
 
         #region ToolTips
@@ -610,10 +738,35 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         {
             if (!(id is int))
             {
-                throw new ArgumentException(Resources.EmployeeWrapperViewModel_Exception_DeleteWrongParam);
+                MessageBox.Show(Resources.EmployeeWrapperViewModel_Exception_DeleteWrongParam,
+                    Resources.App_Messages_Fault_Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
-            _employeeRepository.DeleteByID((int) id);
+            int castedID = (int)id;
+
+            // TODO: IsAdmin searchs for an ID (goes through the list) therefore is a nice Idea to avoid this
+            // on DeleteById (that method has the same functionality that check's if the employee exists).
+            // Error if the employee to delete is an Admin, and he's the last Admin in the collection.
+            if (_employeeRepository.IsAdmin(castedID))
+            {
+                if (_employeeRepository.TotalActiveAdmins() <= 1)
+                {
+                    MessageBox.Show(Resources.EmployeeWrapperViewModel_MsgBox_CantDeleteLastAdmin,
+                        Resources.App_Messages_Fault_Error, MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
+
+            try
+            {
+                _employeeRepository.DeleteByID(castedID);
+            }
+
+            catch (ArgumentOutOfRangeException err)
+            {
+                MessageBox.Show(err.Message, Resources.App_Messages_Fault_Error, MessageBoxButton.OK, MessageBoxImage.Error);
+            }   
         }
 
         /// <summary>
@@ -623,10 +776,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         /// <returns>True if the fields are valid, false otherwise.</returns>
         bool FieldsAreValid()
         {
-            return String.IsNullOrEmpty(this.ValidateGenderType())
-                && _employee.IsValid
-                && String.IsNullOrEmpty(this.ValidateWorkTime())
-                && String.IsNullOrEmpty(BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year));
+            return String.IsNullOrEmpty(this.ValidateGenderType()) &&
+                _employee.IsValid &&
+                String.IsNullOrEmpty(this.ValidateWorkTime()) &&
+                String.IsNullOrEmpty(BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year)) &&
+                String.IsNullOrEmpty(this.ValidateUserType());
         }
 
         /// <summary>
@@ -649,7 +803,6 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             modal.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             _isModalSpawned = true; // States a modal is currently being used.
-            //OnPropertyChanged("EditToolTip");
             OnPropertyChanged("DeleteToolTip");
             modal.Activated += Modal_Activated;
             modal.Deactivated += Modal_Deactivated;
@@ -661,22 +814,25 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             _employeeBeingEdited = employeeEdited[0];
             _orignalData = this;
 
+            Debug.Print("Actual employee before editing");
             PrintEmployeeFields(employeeEdited[0]);
 
             // Initialize the Employee object that's going to be used as a temporal.
             if (!_editingCurrentEmployeeIsInitialized)
             {
-                _editingCurrentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository);
+                _editingCurrentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository, false);
                 _editingCurrentEmployeeIsInitialized = true;
             }
 
             CopyEmployeeFields(employeeEdited[0], _editingCurrentEmployee);
+            Debug.Print("Editing Current Employee");
             PrintEmployeeFields(_editingCurrentEmployee._employee);
             modal.DataContext = _editingCurrentEmployee;
 
             modal.Content = view;
             modal.Title = "Edit Employee";
             //modal.ShowDialog();
+
             modal.Show();
 
             // Check if the fields are different to the original Employee element, if so:
@@ -701,7 +857,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 throw new ArgumentNullException(String.Format(Resources.EmployeeWrapperViewModel_Exception_EmployeeIDNotFound, (int)id));
             }
 
-            var currentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository);
+            var currentEmployee = new EmployeeWrapperViewModel(Employee.CreateNewEmployee(), _employeeRepository, false);
             CopyEmployeeFields(employeeToShow, currentEmployee);
 
             // Modal's chrome properties
@@ -797,6 +953,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             this.Day = Resources.BirthDate_Combobox_Day;
             this.Month = Resources.BirthDate_Combobox_Month;
             this.Year = Resources.BirthDate_Combobox_Year;
+            this.UserType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            this.CurrentlyEmployed = false;
         }
 
         /// <summary>
@@ -901,7 +1059,16 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             temp._employee.WorkTime = employee.WorkTime;
             temp.Address = employee.Address;
             temp.WorkTimeType = employee.WorkTime;
+            /* _selectedUserType assignment to bypass the set accessor of UserType property and therefore
+             * the CanChangeUser validation. This caused to show the modal: "Can't edit User type because it's the last admin".
+             * Happened when we open the edit view of the last admin, closed it, and then open any other user.
+            */
+            temp._selectedUserType = employee.UserType;
+            temp.UserType = employee.UserType;
+            temp.CurrentlyEmployed = employee.CurrentlyEmployed;
 
+            // TODO: Here put default values for the comboboxes Birthdate and Jornada if null.
+            // TODO: I think they're some validate functions that repeats this functionality?
             // Gender == true means Female
             if (employee.Gender)
             {
@@ -911,6 +1078,31 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             {
                 temp.GenderType = Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male;
             }
+
+            if (String.IsNullOrEmpty(temp.Day) || String.IsNullOrEmpty(temp.Month) || String.IsNullOrEmpty(temp.Year))
+            {
+                temp.Day = Resources.BirthDate_Combobox_Day;
+                temp.Month = Resources.BirthDate_Combobox_Month;
+                temp.Year = Resources.BirthDate_Combobox_Year;
+            }
+
+            // TODO: The following statement can be wrapped into a IsValid function for a WorkTime value.
+            if (String.IsNullOrEmpty(employee.WorkTime) ||
+                employee.WorkTime != Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime &&
+                employee.WorkTime != Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime)
+            {
+                temp._selectedWorkTime = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            }
+
+            if (String.IsNullOrEmpty(employee.UserType) ||
+                employee.UserType != Resources.EmployeeWrapperViewModel_UserTypeOptions_StandardUser &&
+                employee.UserType != Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator &&
+                employee.UserType != Resources.EmployeeWrapperViewModel_UserTypeOptions_Developer
+                )
+            {
+                temp._selectedUserType = Resources.EmployeeWrapperViewModel_ComboboxValue_NotSpecified;
+            }
+
         }
 
         /// <summary>
@@ -932,6 +1124,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             employee.Pay = newData.Pay;
             employee.WorkTime = newData.WorkTime;
             employee.Address = newData.Address;
+            employee.UserType = newData.UserType;
+            employee.CurrentlyEmployed = newData.CurrentlyEmployed;
             //original.OnPropertyChanged("FirstName");
             original.OnPropertyChanged("DisplayName");
             original.OnPropertyChanged("Gender");
@@ -941,6 +1135,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             original.OnPropertyChanged("PrettyPay");
             original.OnPropertyChanged("WorkTime");
             original.OnPropertyChanged("Address");
+            original.OnPropertyChanged("UserType");
+            original.OnPropertyChanged("CurrentlyEmployed");
             // TODO: Do a thorough testing of the app.
             //newData.CleanForm();
         }
@@ -970,6 +1166,18 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             _isModalSpawned = false;
             EditModalOpen = false;
             OnPropertyChanged("DeleteToolTip");
+        }
+
+        bool CanChangeUserType()
+        {
+            if (this.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator &&
+                _employeeRepository.TotalActiveAdmins() <= 1)
+            {
+                MessageBox.Show(Resources.EmployeeWrapperViewModel_MsgBox_CantChangeAdminUserType, Resources.ListEmployeesViewModel_Warning_Self,
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            return true;
         }
 
         /// <summary>
@@ -1019,6 +1227,9 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     case "Day":
                         error = BirthDate.ValidateBirthdate(this.Day, this.Month, this.Year);
                         break;
+                    case "UserType":
+                        error = this.ValidateUserType();
+                        break;
                     default:
                         error = (_employee as IDataErrorInfo)[propertyName];
                         break;
@@ -1032,8 +1243,8 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         string ValidateGenderType()
         {
-            if (this.GenderType == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female
-                || this.GenderType == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male)
+            if (this.GenderType == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Female ||
+                this.GenderType == Resources.EmployeeWrapperViewModel_GenderTypeOptions_Male)
             {
                 return null;
             }
@@ -1043,13 +1254,25 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
 
         string ValidateWorkTime()
         {
-            if (this.WorkTimeType == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime
-                || this.WorkTimeType == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime)
+            if (this.WorkTimeType == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_FullTime ||
+                this.WorkTimeType == Resources.EmployeeWrapperViewModel_WorkingTimeOptions_PartTime)
             {
                 return null;
             }
 
             return Resources.EmployeeWrapperViewModel_Error_MissingWorkTime;
+        }
+
+        string ValidateUserType()
+        {
+            if (this.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_StandardUser ||
+                this.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator ||
+                this.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Developer)
+            {
+                return null;
+            }
+
+            return Resources.EmployeeWrapperViewModel_Error_MissingUserType;
         }
 
         #endregion // Interface Implementations

@@ -19,12 +19,12 @@ namespace tkUI.Models
     /// </summary>
     class Employee : IDataErrorInfo
     {
-
+        // TODO: Make use of Resources strings, avoid repeating field strings.
         #region Constants
 
         static int MinimumWage = 74;
         static int MaximumWage = 10000;
-        
+
         enum Wage
         {
             BelowMinimum, Ok, AboveMaximum
@@ -56,11 +56,15 @@ namespace tkUI.Models
 
         public string StartedWorking { get; set; }
 
+        public string UserType { get; set; }
+        
+        public bool CurrentlyEmployed { get; set; }
+
         #endregion // Fields
 
 
         /* Properties that aren't needed to save as part of Employee object
-         * therefore they shouldn't be saved in a DB or in the repository. */
+         * therefore they shouldn't be saved in a DB nor in the repository. */
         #region Presentation Properties
 
         /// <summary>
@@ -90,15 +94,17 @@ namespace tkUI.Models
 
         #endregion // Presentation Properties
 
-        #region Creation
+        #region Constructors
 
         public static Employee CreateNewEmployee()
         {
             return new Employee();
         }
 
-        public static Employee CreateEmployee(int id, string firstName, string lastName, bool gender, string birthdate,
-            string email, string phone, string pay, string workTime, string address, string startedWorking)
+        public static Employee CreateEmployee(int id, string firstName, string lastName, bool gender,
+            string birthdate, string email, string phone, string pay,
+            string workTime, string address, string startedWorking, string userType,
+            bool currentlyEmployed)
         {
             return new Employee
             {
@@ -112,7 +118,9 @@ namespace tkUI.Models
                 Pay = pay,
                 WorkTime = workTime,
                 Address = address,
-                StartedWorking = startedWorking
+                StartedWorking = startedWorking,
+                UserType = userType,
+                CurrentlyEmployed = currentlyEmployed
             };
         }
 
@@ -127,11 +135,13 @@ namespace tkUI.Models
         /// <returns></returns>
         public static Employee CreateEmployee(Employee employee)
         {
-            return CreateEmployee(employee.ID, employee.FirstName, employee.LastName, employee.Gender, (string)employee.Birthdate,
-            employee.Email, employee.Phone, employee.Pay, employee.WorkTime, employee.Address, Employee.StartedDate());
+            return CreateEmployee(employee.ID, employee.FirstName, employee.LastName, employee.Gender,
+                (string)employee.Birthdate, employee.Email, employee.Phone, employee.Pay,
+                employee.WorkTime, employee.Address, Employee.StartedDate(), employee.UserType,
+                employee.CurrentlyEmployed);
         }
 
-        #endregion // Creation
+        #endregion // Constructors
 
         #region Helper Methods
 
@@ -255,6 +265,14 @@ namespace tkUI.Models
             {
                 return "Ingrese nombre";
             }
+
+            var errorFound = RangeChecker.ContainsProperName(this.FirstName);
+
+            if (errorFound != null)
+            {
+                return errorFound;
+            }
+
             return null;
         }
 
@@ -264,6 +282,14 @@ namespace tkUI.Models
             {
                 return "Ingrese apellido";
             }
+
+            var errorFound = RangeChecker.ContainsProperName(this.LastName);
+
+            if (errorFound != null)
+            {
+                return errorFound;
+            }
+
             return null;
         }
 
@@ -367,7 +393,7 @@ namespace tkUI.Models
         /// <returns></returns>
         public override string ToString()
         {
-            return  "Name: " + this.FirstName + "\n"
+            return "Name: " + this.FirstName + "\n"
                   + "SecondName: " + this.LastName + "\n"
                   + "ID: " + this.ID + "\n"
                   + "Gender: " + this.Gender + "\n"
@@ -377,7 +403,9 @@ namespace tkUI.Models
                   + "Pay: " + this.Pay + "\n"
                   + "Worktime: " + this.WorkTime + "\n"
                   + "Address: " + this.Address + "\n"
-                  + "StartedWorking: " + this.StartedWorking + "\n";
+                  + "StartedWorking: " + this.StartedWorking + "\n"
+                  + "UserType: " + this.UserType + "\n"
+                  + "CurrentlyEmployed: " + this.CurrentlyEmployed + "\n";
         }
 
         #endregion // Overrides

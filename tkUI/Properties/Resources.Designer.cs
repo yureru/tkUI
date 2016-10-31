@@ -61,6 +61,51 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Employee with the ID {0} wasn&apos;t found..
+        /// </summary>
+        internal static string App_Exceptions_IDSearchNotFound {
+            get {
+                return ResourceManager.GetString("App_Exceptions_IDSearchNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The employee can&apos;t exist since the ID ({0}) is equal or less than zero..
+        /// </summary>
+        internal static string App_Exceptions_NegativeIDSearchEmployee {
+            get {
+                return ResourceManager.GetString("App_Exceptions_NegativeIDSearchEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string App_Messages_Fault_Error {
+            get {
+                return ResourceManager.GetString("App_Messages_Fault_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Los siguientes IDs no fueron encontrados: .
+        /// </summary>
+        internal static string App_Messages_Fault_FollowingIDsWerentFound {
+            get {
+                return ResourceManager.GetString("App_Messages_Fault_FollowingIDsWerentFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advertencia.
+        /// </summary>
+        internal static string App_Messages_Fault_Warning {
+            get {
+                return ResourceManager.GetString("App_Messages_Fault_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to timekeeping.
         /// </summary>
         internal static string App_Name {
@@ -113,6 +158,16 @@ namespace tkUI.Properties {
         internal static string BirthDate_Combobox_Year {
             get {
                 return ResourceManager.GetString("BirthDate_Combobox_Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CircleInformationIcon {
+            get {
+                object obj = ResourceManager.GetObject("CircleInformationIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -183,6 +238,33 @@ namespace tkUI.Properties {
             get {
                 object obj = ResourceManager.GetObject("DashboardSelectedIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solamente se aceptan letras, espacios, y apóstrofes.
+        /// </summary>
+        internal static string Employee_Error_InvalidCharInName {
+            get {
+                return ResourceManager.GetString("Employee_Error_InvalidCharInName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se admiten apóstrofes dobles.
+        /// </summary>
+        internal static string Employee_Error_InvalidDoubleApostrophes {
+            get {
+                return ResourceManager.GetString("Employee_Error_InvalidDoubleApostrophes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se admiten espacios dobles.
+        /// </summary>
+        internal static string Employee_Error_InvalidDoubleSpaces {
+            get {
+                return ResourceManager.GetString("Employee_Error_InvalidDoubleSpaces", resourceCulture);
             }
         }
         
@@ -268,6 +350,15 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No se permiten espacios antes del nombre o al final.
+        /// </summary>
+        internal static string Employee_Error_SpacesAtEndsInName {
+            get {
+                return ResourceManager.GetString("Employee_Error_SpacesAtEndsInName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Añadir Empleado.
         /// </summary>
         internal static string EmployeeWrapperViewModel_AddEmployee {
@@ -309,6 +400,15 @@ namespace tkUI.Properties {
         internal static string EmployeeWrapperViewModel_Error_MissingGenderType {
             get {
                 return ResourceManager.GetString("EmployeeWrapperViewModel_Error_MissingGenderType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El tipo de usuario debe seleccionarse.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_Error_MissingUserType {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_Error_MissingUserType", resourceCulture);
             }
         }
         
@@ -394,6 +494,24 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No se puede cambiar el tipo de usuario porque es el último administrador.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_MsgBox_CantChangeAdminUserType {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_MsgBox_CantChangeAdminUserType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se puede borrar al administrador porque es el último que queda.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_MsgBox_CantDeleteLastAdmin {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_MsgBox_CantDeleteLastAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No se puede borrar un usuario siendo editado.
         /// </summary>
         internal static string EmployeeWrapperViewModel_ToolTip_DeleteButton_Disabled {
@@ -426,6 +544,33 @@ namespace tkUI.Properties {
         internal static string EmployeeWrapperViewModel_ToolTip_EditButton_Enabled {
             get {
                 return ResourceManager.GetString("EmployeeWrapperViewModel_ToolTip_EditButton_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Administrador.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_UserTypeOptions_Administrator {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_UserTypeOptions_Administrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desarrollador.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_UserTypeOptions_Developer {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_UserTypeOptions_Developer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empleado.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_UserTypeOptions_StandardUser {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_UserTypeOptions_StandardUser", resourceCulture);
             }
         }
         
@@ -566,6 +711,15 @@ namespace tkUI.Properties {
         internal static string ListEmployeesViewModel_Warning_Self {
             get {
                 return ResourceManager.GetString("ListEmployeesViewModel_Warning_Self", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se puede eliminar el rango porque contiene un Administrador.
+        /// </summary>
+        internal static string ListEmployeeViewModel_Warning_RangeHasAdministrator {
+            get {
+                return ResourceManager.GetString("ListEmployeeViewModel_Warning_RangeHasAdministrator", resourceCulture);
             }
         }
         

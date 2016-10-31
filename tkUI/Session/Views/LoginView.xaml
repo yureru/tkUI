@@ -15,20 +15,33 @@
                 <ResourceDictionary Source="..\..\ApplicationResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <Style x:Key="blankButton">
+                <Setter Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="Transparent">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
+        
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -37,11 +50,11 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <!-- Change for the image -->
-        <Image Source="..\..\Resources\Header\Logo.png"
+        <!--<Image Source="..\..\Resources\Header\Logo.png"
                Grid.ColumnSpan="4"
                Height="15" Width="93"
                
-               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+               HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
         <!--<TextBlock
             Grid.ColumnSpan="4"
             HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -50,12 +63,11 @@
         <!-- Email -->
         <TextBlock
             Style="{StaticResource loginText}"
-            Grid.Row="1"
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center" VerticalAlignment="Center">Email</TextBlock>
         <TextBox
             Name="emailTxt"
-            Grid.Row="2"
+            Grid.Row="1"
             Grid.ColumnSpan="4"
             HorizontalAlignment="Center" VerticalAlignment="Center"
             Width="250"
@@ -64,7 +76,7 @@
             />
         <TextBlock
             Text="{Binding Path=EmailError}"
-            Grid.Row="3"
+            Grid.Row="2"
             Grid.Column="1"
             Grid.ColumnSpan="3"
             Foreground="Red"
@@ -73,29 +85,69 @@
         <!-- Password -->
         <TextBlock
             Style="{StaticResource loginText}"
-            Grid.Row="4"
+            Grid.Row="3"
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center" VerticalAlignment="Center">Password</TextBlock>
-        <PasswordBox
+        <!-- Approach with Style -->
+        <Button
+            PreviewKeyDown="Button_PreviewKeyDown"
+            Grid.Row="4"
+            Grid.ColumnSpan="4"
+            Background="Transparent"
+            BorderThickness="0"
+            IsTabStop="False"
+            Style="{StaticResource blankButton}"
+            >
+            <PasswordBox
+                Name="passwordTxt"
+                PasswordChar="•"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Width="250"
+                PasswordChanged="passwordTxt_PasswordChanged"
+            />
+        </Button>
+        <!-- Trying to bind the size of the button -->
+        <!--<Button
+            PreviewKeyDown="Button_PreviewKeyDown"
+            Grid.Row="4"
+            Grid.ColumnSpan="4"
+            Background="Transparent"
+            BorderThickness="0"
+            MinHeight="{Binding ElementName=passwordTxt, Path=Height}"
+            MinWidth="{Binding ElementName=passwordTxt, Path=Width}"
+            MaxHeight="{Binding ElementName=passwordTxt, Path=ActualHeight}"
+            MaxWidth="{Binding ElementName=passwordTxt, Path=ActualWidth}"
+            >
+            <PasswordBox
             Name="passwordTxt"
             PasswordChar="•"
-            Grid.Row="5"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            Height="15"
+            Width="250"
+            PasswordChanged="passwordTxt_PasswordChanged"
+            />
+        </Button>-->
+        <!-- Original PaswwordBox -->
+        <!--<PasswordBox
+            Name="passwordTxt"
+            PasswordChar="•"
+            Grid.Row="4"
             Grid.ColumnSpan="4"
             HorizontalAlignment="Center" VerticalAlignment="Center"
             Width="250"
             PasswordChanged="passwordTxt_PasswordChanged"
-            />
+            />-->
 
         <TextBlock
             Text="{Binding Path=PassError}"
-            Grid.Row="6"
+            Grid.Row="5"
             Grid.Column="1"
             Grid.ColumnSpan="3"
             Foreground="Red"
             />
         <!-- Success Message after a forgot password, or register of the first admin -->
         <TextBlock
-            Grid.Row="7"
+            Grid.Row="6"
             Grid.Column="1"
             Grid.ColumnSpan="2"
             TextWrapping="WrapWithOverflow"
@@ -108,7 +160,7 @@
         <Button
             Command="{Binding Path=LoginCommand}"
             Template="{StaticResource buttonLarge}"
-            Grid.Row="8"
+            Grid.Row="7"
             Grid.Column="2"
             Grid.ColumnSpan="4"
             HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -131,7 +183,7 @@
         <TextBlock
             Style="{StaticResource clickableText}"
             TextDecorations="Underline"
-            Grid.Row="9"
+            Grid.Row="8"
             Grid.ColumnSpan="4"
             HorizontalAlignment="Right" VerticalAlignment="Center"
             Margin="0,0,50,0"
@@ -142,5 +194,10 @@
             </TextBlock.InputBindings>
         </TextBlock>
 
+        <!--<Button
+            Command="{Binding Path=EnterKeyDownLoginCommand}"
+            Grid.Row="9"
+            >Test</Button>-->
+        
     </Grid>
 </UserControl>
