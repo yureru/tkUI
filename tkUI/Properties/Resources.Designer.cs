@@ -503,11 +503,20 @@ namespace tkUI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No se puede borrar al administrador porque es el último que queda.
+        ///   Looks up a localized string similar to No se puede borrar al administrador porque es el único que queda.
         /// </summary>
         internal static string EmployeeWrapperViewModel_MsgBox_CantDeleteLastAdmin {
             get {
                 return ResourceManager.GetString("EmployeeWrapperViewModel_MsgBox_CantDeleteLastAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se puede despedir al administrador por que es el único que queda.
+        /// </summary>
+        internal static string EmployeeWrapperViewModel_MsgBox_CantFireLastAdmin {
+            get {
+                return ResourceManager.GetString("EmployeeWrapperViewModel_MsgBox_CantFireLastAdmin", resourceCulture);
             }
         }
         
