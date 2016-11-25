@@ -336,6 +336,19 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     return;
                 }
 
+                /*if (!CanChangePropertyOfLastAdmin("No se puede despedir al último administrador"))
+                {
+                    return;
+                }*/
+
+                if (!value) // validation only happens when the checkbox is false (fired)
+                {
+                    if (!CanChangePropertyOfLastAdmin(Resources.EmployeeWrapperViewModel_MsgBox_CantFireLastAdmin))
+                    {
+                        return;
+                    }
+                }
+
                 _employee.CurrentlyEmployed = value;
                 OnPropertyChanged("CurrentlyEmployed");
 
@@ -491,7 +504,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     return;
                 }
 
-                if (!CanChangeUserType())
+                if (!CanChangePropertyOfLastAdmin(Resources.EmployeeWrapperViewModel_MsgBox_CantChangeAdminUserType))
                 {
                     // TODO: Find a way to go back to the Administrator item, since changing it when it's the last
                     // administrator, it does shows the Error messageBox, but the combobox element is changed to the
@@ -1059,13 +1072,14 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             temp._employee.WorkTime = employee.WorkTime;
             temp.Address = employee.Address;
             temp.WorkTimeType = employee.WorkTime;
+            temp._employee.CurrentlyEmployed = employee.CurrentlyEmployed; // Bypassed to avoid the validation.
             /* _selectedUserType assignment to bypass the set accessor of UserType property and therefore
              * the CanChangeUser validation. This caused to show the modal: "Can't edit User type because it's the last admin".
              * Happened when we open the edit view of the last admin, closed it, and then open any other user.
             */
             temp._selectedUserType = employee.UserType;
+
             temp.UserType = employee.UserType;
-            temp.CurrentlyEmployed = employee.CurrentlyEmployed;
 
             // TODO: Here put default values for the comboboxes Birthdate and Jornada if null.
             // TODO: I think they're some validate functions that repeats this functionality?
@@ -1168,12 +1182,13 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
             OnPropertyChanged("DeleteToolTip");
         }
 
-        bool CanChangeUserType()
+        // CanChangePropertyOfLastAdmin
+        bool CanChangePropertyOfLastAdmin(string errorMsg)
         {
             if (this.UserType == Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator &&
                 _employeeRepository.TotalActiveAdmins() <= 1)
             {
-                MessageBox.Show(Resources.EmployeeWrapperViewModel_MsgBox_CantChangeAdminUserType, Resources.ListEmployeesViewModel_Warning_Self,
+                MessageBox.Show(errorMsg, Resources.ListEmployeesViewModel_Warning_Self,
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
             }
