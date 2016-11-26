@@ -337,18 +337,25 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     return;
                 }
 
-                /*if (!CanChangePropertyOfLastAdmin("No se puede despedir al último administrador"))
+                // validation only happens when we're editing the user, and the checkbox is false (fired)
+                if (_isEditingUser && !value)
                 {
-                    return;
-                }*/
+                    if (EmployeeIsAdmin(_temporalEmployeeID))
+                    {
+                        if (!CanChangePropertyOfLastAdmin(Resources.EmployeeWrapperViewModel_MsgBox_CantFireLastAdmin))
+                        {
+                            return;
+                        }
+                    }
+                }
 
-                if (!value) // validation only happens when the checkbox is false (fired)
+                /*if (!value) // validation only happens when the checkbox is false (fired)
                 {
                     if (!CanChangePropertyOfLastAdmin(Resources.EmployeeWrapperViewModel_MsgBox_CantFireLastAdmin))
                     {
                         return;
                     }
-                }
+                }*/
 
                 _employee.CurrentlyEmployed = value;
                 OnPropertyChanged("CurrentlyEmployed");
@@ -507,7 +514,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 
                 if (_isEditingUser)
                 {
-                    if (EmployeeIsAdmin(_temporalEmployeeID))
+                    if (EmployeeIsAdmin(_temporalEmployeeID) && this.CurrentlyEmployed)
                     {
                         if (!CanChangePropertyOfLastAdmin(Resources.EmployeeWrapperViewModel_MsgBox_CantChangeAdminUserType))
                         {
