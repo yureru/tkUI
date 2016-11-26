@@ -70,6 +70,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         static bool _isEditingUser;
         static bool _isModalSpawned;
         static Employee _employeeBeingEdited;
+        static int _temporalEmployeeID;
 
         #endregion // Fields
 
@@ -336,18 +337,25 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                     return;
                 }
 
-                /*if (!CanChangePropertyOfLastAdmin("No se puede despedir al último administrador"))
+                // validation only happens when we're editing the user, and the checkbox is false (fired)
+                if (_isEditingUser && !value)
                 {
-                    return;
-                }*/
+                    if (EmployeeIsAdmin(_temporalEmployeeID))
+                    {
+                        if (!CanChangePropertyOfLastAdmin(Resources.EmployeeWrapperViewModel_MsgBox_CantFireLastAdmin))
+                        {
+                            return;
+                        }
+                    }
+                }
 
-                if (!value) // validation only happens when the checkbox is false (fired)
+                /*if (!value) // validation only happens when the checkbox is false (fired)
                 {
                     if (!CanChangePropertyOfLastAdmin(Resources.EmployeeWrapperViewModel_MsgBox_CantFireLastAdmin))
                     {
                         return;
                     }
-                }
+                }*/
 
                 _employee.CurrentlyEmployed = value;
                 OnPropertyChanged("CurrentlyEmployed");
@@ -503,19 +511,26 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 {
                     return;
                 }
-
-                if (!CanChangePropertyOfLastAdmin(Resources.EmployeeWrapperViewModel_MsgBox_CantChangeAdminUserType))
+                
+                if (_isEditingUser)
                 {
-                    // TODO: Find a way to go back to the Administrator item, since changing it when it's the last
-                    // administrator, it does shows the Error messageBox, but the combobox element is changed to the
-                    // selected. Stills, even when we save, the Combobox changes aren't saved so we're "safe".
-                    // But it is bad UX since it shows the change in the Combobox.
-                    // The following lines doesn't works to keep the Administrator item selected.
-                    /*_editingCurrentEmployee._selectedUserType = Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator;
-                    _selectedUserType = Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator;*/
-                    // Now, I've thinked about this and we can simply deactive the Combobox element, and show a tooltip
-                    // warning the user that we can't do the changes in the Combobox since it's the last administrator.
-                    return;
+                    if (EmployeeIsAdmin(_temporalEmployeeID) && this.CurrentlyEmployed)
+                    {
+                        if (!CanChangePropertyOfLastAdmin(Resources.EmployeeWrapperViewModel_MsgBox_CantChangeAdminUserType))
+                        {
+                            
+                            // TODO: Find a way to go back to the Administrator item, since changing it when it's the last
+                            // administrator, it does shows the Error messageBox, but the combobox element is changed to the
+                            // selected. Stills, even when we save, the Combobox changes aren't saved so we're "safe".
+                            // But it is bad UX since it shows the change in the Combobox.
+                            // The following lines doesn't works to keep the Administrator item selected.
+                            /*_editingCurrentEmployee._selectedUserType = Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator;
+                            _selectedUserType = Resources.EmployeeWrapperViewModel_UserTypeOptions_Administrator;*/
+                            // Now, I've thinked about this and we can simply deactive the Combobox element, and show a tooltip
+                            // warning the user that we can't do the changes in the Combobox since it's the last administrator.
+                            return;
+                        } 
+                    }
                 }
 
                 _selectedUserType = value;
@@ -1059,6 +1074,7 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
         void CopyEmployeeFields(Employee employee, EmployeeWrapperViewModel temp)
         {
             temp.LastUserSaved = null;
+            _temporalEmployeeID = employee.ID;
             temp.FirstName = employee.FirstName;
             temp.LastName = employee.LastName;
             temp._employee.Gender = employee.Gender;
@@ -1193,6 +1209,11 @@ namespace tkUI.Subpages.EmployeesCRUD.ViewModels
                 return false;
             }
             return true;
+        }
+
+        bool EmployeeIsAdmin(int id)
+        {
+            return _employeeRepository.IsAdmin(id);
         }
 
         /// <summary>
