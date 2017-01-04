@@ -1,7 +1,17 @@
 # tkUI
 ------
-UI implementation for timekeeping app, hopefully going to do this with the MVVM pattern while learning it.
+UI implementation for timekeeping app. It allow us to manage the employees' data in a company.
+It's written with the MVVM pattern to allow low coupling and high scalability.
+
+Currently being continually developed.
 
 # Screenshots
 ------
-![](tkUI/screenshots/currentMain.png)
+Login view.
+![](https://github.com/yureru/yureru.github.io/blob/master/assets/images/timekeeping_login.png)
+
+Dashboard.
+![](https://github.com/yureru/yureru.github.io/blob/master/assets/images/timekeeping_dashboard.png)
+
+Employees CRUD.
+![](https://github.com/yureru/yureru.github.io/blob/master/assets/images/timekeeping_employees_crud.png)
